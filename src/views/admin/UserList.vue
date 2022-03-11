@@ -29,7 +29,8 @@
       :search="search"
       :items-per-page="5"
       class="table-kitchen-sink"
-    
+      :loading ="loading"
+      loading-text="Loading... Please wait"
     >
       <!-- users list -->
       <template #[`item.email`]="{item}">
@@ -80,7 +81,7 @@
                     color="success"
                     @click="deleteItemConfirm"
                 >
-                   OK
+                   YES
                 </v-btn>
                 <v-spacer></v-spacer>
                 </v-card-actions>
@@ -106,6 +107,7 @@ export default {
            dialog: false,
            dialogDelete: false,
            search:"",
+           loading: false,
            headers: [
             {text:"FULLNAME", value:"name"},
             {text:"EMAIL", value:"email"},
@@ -113,7 +115,7 @@ export default {
             {text:"ACTION", value:"actions"}
            ],
            userList: [],
-           
+           editedItem: {},
            icons: {
                mdiMagnify,
                mdiDeleteOutline,
@@ -123,14 +125,26 @@ export default {
     },
     methods:{
         viewListOfUsers(){
+            this.loading = true
             axios
               .get("http://localhost:3000/api/users")
               .then((response)=>{
                   this.userList = response.data
+                  this.loading = false
                   console.log(response.data)
               })     
+        },
+        removeUser(userId){
+             
+             this.dialogDelete = true
+             console.log("Delete button clicked"); 
+        },
+        editUser(userId){
+             console.log("edit button clicked"); 
         }
+
     },
+
     mounted: function(){
        this.viewListOfUsers()
     }

@@ -62,12 +62,6 @@
             </div>
 
             <div class="d-flex align-center justify-space-between flex-wrap">
-              <!--<v-checkbox
-                label="Remember Me"
-                hide-details
-                class="me-3 mt-3"
-              >
-              </v-checkbox> -->
               <a
                 href="javascript:void(0)"
                 class="mt-3"

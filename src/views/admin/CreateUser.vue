@@ -6,35 +6,63 @@
     class="pa-3 mt-2 col-md-7"
   >
   <div class=col-md-8>
-    <v-card-text class="d-flex">
+    <v-card-text elevation="1" class="d-flex">
+        
       <v-avatar
         rounded
         size="120"
         class="me-6"
+        flat
       >
-        <v-img :src="require('@/assets/profile.png')"></v-img>
-      </v-avatar>
-
+        <v-img :src="PhotoPath+imagename"></v-img> 
+      </v-avatar> 
       <!-- upload photo -->
-       <div>
-        <v-btn
+       <!--<div>
+       <v-btn
           color="primary"
           class="me-3 mt-15" 
+          @click="handleFileImport"
          >
           <v-icon class="d-sm-none">
             {{ icons.mdiCloudUploadOutline }}
           </v-icon>
           <span class="d-none d-sm-block">Upload user photo</span>
-        </v-btn>
+        </v-btn> 
 
         <input
-         
+          @change="OnFileChanged"
           type="file"
-          accept=".jpeg,.png,.jpg,GIF"
-          :hidden="true"
+          ref="uploader"
+          accept=".jpeg,.png,.jpg,GIF"    
+          hidden="true"      
         />
-      
-      </div>
+      </div> -->
+
+       <div>
+      <v-btn
+        color="primary"
+        class="text-none me-3 mt-10"
+        round
+        depressed
+        :loading="isSelecting"
+        @click="onButtonClick"
+      >
+         <v-icon class="d-sm-none">
+            {{ icons.mdiCloudUploadOutline }}
+          </v-icon>
+          <span class="d-none d-sm-block">Upload user photo</span>
+      </v-btn>
+      <input
+        ref="uploader"
+        class="d-none"
+        type="file"
+        accept="image/*"
+        @change="onImageUpload"
+      >
+         <p class="text-sm mt-5">
+          Allowed JPG, GIF or PNG.
+        </p>
+    </div>
     </v-card-text>
 
    <!-- form begins -->
@@ -69,7 +97,7 @@
       class="mt-3"
       dense
       outlined
-      v-model="select"
+      v-model="userrole"
       :items="items"
       :rules="[v => !!v || 'userrole is required']"
       label="User role"
@@ -93,7 +121,7 @@
     <v-btn
       color="primary"
       class="mr-4 mt-4"
-      @click="reset()"
+      @click="createUserAccount()"
     >
      Register
     </v-btn>
@@ -121,6 +149,9 @@ import { mdiAccountOutline, mdiEmailOutline,
  
  } from '@mdi/js'
 
+import VueSweetAlert from "vue-sweetalert2"
+import axios from 'axios'
+
 export default {
        data(){
            return{
@@ -129,9 +160,13 @@ export default {
       email:"",
       mobile:"",
       password:"",
+      userrole:"",
       checkbox:false,
       valid: true,
       name: '',
+      imagename:'null_profile.png',
+      PhotoPath:"http://localhost:3000/api/upload_user_imagefile/",
+
       nameRules: [
         v => !!v || 'Name is required',
       ],
@@ -162,19 +197,53 @@ export default {
         mdiEyeOffOutline,mdiEyeOutline
       },
 
+      selectedFile: null,
+      isSelecting: false
        }
+    },
+    computed: {
+        buttonText(){
+            return this.selectedFile  
+        }
     },
 
      methods: {
-      validate() {
-        this.form.validate()
+      createUserAccount(){
+          if(!this.name || !this.email || this.userrole || this.password){
+            this.$swal("Please fill in all required fields")
+          }else{
+            axios
+              .post("http://localhost:3000/api/register",{
+                  name: this.name,
+                  email: this.email,
+                  userrole: this.userrole,
+                  password: this.password,
+                  imagename: this.imagename
+              }).then((response)=>{
+
+              })
+          } 
       },
-      reset () {
-        this.form.reset()
-      },
-      resetValidation () {
-        this.form.resetValidation()
-      },
+
+      onButtonClick() {
+      this.isSelecting = true
+      window.addEventListener('focus', () => {
+        this.isSelecting = false
+      }, { once: true })
+
+      this.$refs.uploader.click()
     },
+    onImageUpload(e) {
+      this.selectedFile = e.target.files[0]
+      
+      // do something
+    }
+  },
 }
 </script>
+
+<style lang="css">
+.v-icon--left {
+  margin-right: 8px;
+}
+</style>

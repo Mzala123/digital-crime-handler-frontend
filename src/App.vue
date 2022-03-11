@@ -1,7 +1,6 @@
 <template>
   <component :is="resolveLayout">
     <router-view></router-view>
-   
   </component>
 </template>
 
