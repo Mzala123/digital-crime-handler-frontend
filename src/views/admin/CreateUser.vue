@@ -12,7 +12,6 @@
         rounded
         size="120"
         class="me-6"
-        flat
       >
         <v-img :src="PhotoPath+imagename"></v-img> 
       </v-avatar> 
@@ -165,7 +164,7 @@ export default {
       valid: true,
       name: '',
       imagename:'null_profile.png',
-      PhotoPath:"http://localhost:3000/api/upload_user_imagefile/",
+      PhotoPath:"http://localhost:3000/images/",
 
       nameRules: [
         v => !!v || 'Name is required',
@@ -209,7 +208,7 @@ export default {
 
      methods: {
       createUserAccount(){
-          if(!this.name || !this.email || this.userrole || this.password){
+          if(!this.name || !this.email || !this.userrole || !this.password){
             this.$swal("Please fill in all required fields")
           }else{
             axios
@@ -220,7 +219,14 @@ export default {
                   password: this.password,
                   imagename: this.imagename
               }).then((response)=>{
-
+                  console.log(response.status)
+                  if(response.status == 201){
+                      this.$swal("Information","User Registered", "success")
+                  } else {
+                      this.$swal("error","There was an error creating a user account ", "error")
+                  }
+              }).catch((error)=>{
+                 this.$swal("Error", error + ", couldn't reach API", "error");   
               })
           } 
       },
@@ -234,8 +240,14 @@ export default {
       this.$refs.uploader.click()
     },
     onImageUpload(e) {
-      this.selectedFile = e.target.files[0]
-      
+      //this.selectedFile = e.target.files[0]
+      let formData = new FormData
+      formData.append('file',e.target.files[0]);
+      axios.post("http://localhost:3000/api/upload_user_imagefile",
+          formData)
+          .then((response)=>{
+          this.imagename = response.data
+      })
       // do something
     }
   },
