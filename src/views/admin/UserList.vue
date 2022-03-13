@@ -5,8 +5,7 @@
     <v-card-text>
       <v-row>
         <v-col
-          cols="12"
-          offset-md="8"
+          cols="6"
           md="4"
         >
           <v-text-field
@@ -18,7 +17,21 @@
             dense
             outlined
           ></v-text-field>
+          
         </v-col>
+
+       <!-- <v-col
+           cols="6"
+           md="4"
+        >
+            <v-btn
+            color="primary"
+            class="mr-4 mt-4"
+            @click="createUserAccount()"
+          >
+         Export 
+          </v-btn>
+        </v-col> -->
       </v-row>
     </v-card-text>
 
@@ -33,33 +46,86 @@
       loading-text="Loading... Please wait"
     >
       <!-- users list -->
-      <template #[`item.email`]="{item}">
+     <!-- <template #[`item.email`]="{item}">
         <div class="d-flex flex-column">
           <div class="d-flex align-center">
           </div>
           <span class="text-xs text-no-wrap">{{ item.email }}</span>
         </div>
-      </template>
+      </template> -->
 
       <template #[`item.actions`]="{ item }">
         <v-icon
           small
           class="me-2"
-          @click="editUser(item)"
+          @click="editUser(item._id)"
         >
           {{ icons.mdiPencilOutline }}
         </v-icon>
         <v-icon
           small
-          @click="removeUser(item)"
+          @click="removeUser(item._id)"
         >
           {{ icons.mdiDeleteOutline }}
         </v-icon>
-      </template>
+      </template> 
 
 
     </v-data-table>
     </v-card>
+
+        <!-- edit dialog box!-->
+
+      <v-dialog
+            v-model="dialog"
+            max-width="500px"
+          >
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Change Userrole</span>
+              </v-card-title>
+            <v-card-text>
+                <v-container>
+                  <v-row>
+                   <v-select
+                    class="mt-3"
+                    dense
+                    outlined
+                    v-model="userrole"
+                    :items="items"
+                    :rules="[v => !!v || 'userrole is required']"
+                    label="User role"
+                    required
+                  >
+                   
+                  </v-select>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+  
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="close"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="save"
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+        <!--end of edit dialog box!-->
+
+        
         <v-dialog
             v-model="dialogDelete"
             max-width="500px"
@@ -73,16 +139,22 @@
                 <v-btn
                     color="error"
                     outlined
-                    @click="closeDelete"
+                    @click="closeDeleteModal"
                 >
                     Cancel
                 </v-btn>
                 <v-btn
                     color="success"
-                    @click="deleteItemConfirm"
+                    @click="deleteUserConfirm"
                 >
                    YES
                 </v-btn>
+                
+                <div class="input-group mb-3">
+                <input type="hidden" class="form-control"  aria-label="Username" 
+                aria-describedby="basic-addon1" v-model="userId">
+                </div> 
+              
                 <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
@@ -108,6 +180,10 @@ export default {
            dialogDelete: false,
            search:"",
            loading: false,
+           items: [
+              'Police Officer',
+              'Station Officer',  
+            ],
            headers: [
             {text:"FULLNAME", value:"name"},
             {text:"EMAIL", value:"email"},
@@ -115,7 +191,11 @@ export default {
             {text:"ACTION", value:"actions"}
            ],
            userList: [],
-           editedItem: {},
+           user: {
+             userrole: null
+           },
+           userrole:"",
+           userId:"",
            icons: {
                mdiMagnify,
                mdiDeleteOutline,
@@ -135,13 +215,39 @@ export default {
               })     
         },
         removeUser(userId){
-             
-             this.dialogDelete = true
-             console.log("Delete button clicked"); 
+              this.dialogDelete = true
+              this.userId = userId
+              console.log(userId)
+              console.log("Delete button clicked"); 
+              console.log();
         },
         editUser(userId){
-             console.log("edit button clicked"); 
-        }
+             this.dialog = true
+             this.userId = userId
+             console.log(userId); 
+             console.log("Edit button clicked");
+        },
+        deleteUserConfirm(){
+             axios
+             .delete("http://localhost:3000/api/delete_user/"+this.userId)
+             .then((response)=>{
+               if(response.status === 204){
+                   console.log("The status code is "+response.status);
+                   this.dialogDelete = false
+                   this.viewListOfUsers()
+               }else{
+                  this.$swal("error","There was an error deleting a user account ", "error")
+               }
+             }).catch((error)=>{
+                 this.$swal("Error", error + ", couldn't reach API", "error");   
+              })
+        },
+        closeDeleteModal(){
+           this.dialogDelete = false
+        },
+      close () {
+      this.dialog = false
+       },
 
     },
 

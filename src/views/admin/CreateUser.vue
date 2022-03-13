@@ -222,6 +222,7 @@ export default {
                   console.log(response.status)
                   if(response.status == 201){
                       this.$swal("Information","User Registered", "success")
+                      
                   } else {
                       this.$swal("error","There was an error creating a user account ", "error")
                   }
