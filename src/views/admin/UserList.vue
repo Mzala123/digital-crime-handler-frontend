@@ -20,7 +20,7 @@
           
         </v-col>
 
-       <!-- <v-col
+       <!--q2<v-col
            cols="6"
            md="4"
         >
@@ -91,13 +91,12 @@
                     class="mt-3"
                     dense
                     outlined
-                    v-model="userrole"
-                    :items="items"
+                    v-model="user.userrole"
+                    :items="userroles"
                     :rules="[v => !!v || 'userrole is required']"
                     label="User role"
-                    required
+                    required 
                   >
-                   
                   </v-select>
                   </v-row>
                 </v-container>
@@ -106,16 +105,16 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                  color="blue darken-1"
-                  text
+                  color="error"
+                  outlined
                   @click="close"
                 >
                   Cancel
                 </v-btn>
                 <v-btn
-                  color="blue darken-1"
-                  text
-                  @click="save"
+                  color="success"
+                  outlined
+                  @click="editUserRole"
                 >
                   Save
                 </v-btn>
@@ -145,6 +144,7 @@
                 </v-btn>
                 <v-btn
                     color="success"
+                     outlined
                     @click="deleteUserConfirm"
                 >
                    YES
@@ -180,7 +180,7 @@ export default {
            dialogDelete: false,
            search:"",
            loading: false,
-           items: [
+           userroles: [
               'Police Officer',
               'Station Officer',  
             ],
@@ -224,8 +224,15 @@ export default {
         editUser(userId){
              this.dialog = true
              this.userId = userId
-             console.log(userId); 
-             console.log("Edit button clicked");
+             axios
+              .get("http://localhost:3000/api/read_one_user/"+this.userId)
+              .then((response)=>{
+                if(response.status === 200){
+                   this.user = response.data
+                   console.log(this.user)
+                } 
+              })
+             //console.log("Edit button clicked");
         },
         deleteUserConfirm(){
              axios
@@ -233,8 +240,8 @@ export default {
              .then((response)=>{
                if(response.status === 204){
                    console.log("The status code is "+response.status);
-                   this.dialogDelete = false
-                   this.viewListOfUsers()
+                    this.viewListOfUsers()
+                    this.dialogDelete = false
                }else{
                   this.$swal("error","There was an error deleting a user account ", "error")
                }
@@ -248,6 +255,23 @@ export default {
       close () {
       this.dialog = false
        },
+       editUserRole(){
+         axios
+           .put("http://localhost:3000/api/update_userrole/"+this.userId,{
+               userrole : this.user.userrole
+           })
+           .then((response)=>{
+             if(response.status === 200){
+               this.viewListOfUsers()
+               this.dialog = false
+             }else{
+               this.$swal("error","There was an error which changing a userrole", "error")
+             }
+           }).catch((error)=>{
+               this.$swal("Error", error + ", couldn't reach API", "error");  
+           })
+
+       }
 
     },
 

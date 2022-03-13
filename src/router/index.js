@@ -65,6 +65,11 @@ const routes = [
     name:'create-account',
     component: CreateUser
   },
+  {
+    path: '/authentication/profile',
+    name: 'profile',
+    component: () => import('@/views/admin/Profile.vue'),
+  },
 
   {
     path: '/error-404',
