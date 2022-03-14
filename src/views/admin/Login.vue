@@ -1,7 +1,9 @@
 <template>
   <div class="auth-wrapper auth-v1">
     <div class="auth-inner">
-      <v-card class="auth-card"  elevation="1">
+      <v-card class="auth-card" 
+       elevation="1">
+     
         <v-card-title class="d-flex align-center justify-center">
               <v-img
               :src="require('@/assets/police_logo.png')"
@@ -71,12 +73,13 @@
             </div>
 
             <v-btn
+             @click="SignIn()"
               block
               color="primary"
               class="mt-6"
               :append-icon ="icons.mdiEmail"
             >
-              Login
+              SignIn
             </v-btn>
           </v-form>
         </v-card-text>
@@ -93,6 +96,17 @@
             </v-icon>
           </v-btn>
         </v-card-actions>
+
+ <!-- overray-->
+
+       <v-overlay absolute opacity="0" :value="overlay">
+                <v-progress-circular
+                   indeterminate
+                   size="64"
+               ></v-progress-circular>
+             </v-overlay>
+             <!-- overray-->
+
       </v-card>
     </div>
   </div>
@@ -100,6 +114,7 @@
 
 <script>
 import {mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline, mdiEmail, mdiLogin } from '@mdi/js'
+import axios from 'axios'
 
 export default {
   name: 'LoginView',
@@ -107,9 +122,12 @@ export default {
     return {
 
       isPasswordVisible : false,
-      email : '',
-      password : '',
-      socialLink : [
+     
+      email: '',
+      password: '',
+      overlay: false,
+
+     socialLink : [
             {
               icon: mdiFacebook,
               color: '#4267b2',
@@ -142,9 +160,51 @@ export default {
   },
 
   methods: {
-    Login(){
+    SignIn(){
+      if(!this.email || !this.password){
+        this.$swal("Field Validation","Please Fill in all required fields")
+      }else{
+        this.overlay = true
+        let authEndpoint = `${sessionStorage.getItem("BASE_URL")}login`;
+        console.log(authEndpoint);
+        axios
+          .post(authEndpoint,{
+               email : this.email,
+               password: this.password
+          })
+          .then((response)=>{
+            console.log(response.status)
+                 if(response.status === 201){
+                   sessionStorage.setItem("Authorization", response.data.token)
+                   console.log(sessionStorage.getItem("Authorization"))
+                   sessionStorage.setItem("user", JSON.stringify(response.data.user))
+                   console.log(sessionStorage.getItem("user"))
+                   sessionStorage.setItem("temp_pass", this.password)
+                   console.log(sessionStorage.getItem("temp_pass"))
+                   this.overlay = false
+                   const user = JSON.parse(sessionStorage.getItem("user"))
+                   let userrole = user.userrole
+                   console.log("userole" +userrole)
+                   sessionStorage.setItem("role", userrole)
+                   if(userrole === "Admin"){
+                     this.$router.push('/dashboard')
+                   }else if(userrole === "Police Officer"){
 
+                   }else if(userrole === "Station Officer"){
+
+                   }
+                 }else{
+                   this.$swal()
+                 }
+          }).catch((error)=>{
+              this.$swal("Error", error + ", Couldn't reach API", "error")
+              this.overlay = false
+          })
+      }
     }
+  },
+  mounted(){
+     sessionStorage.setItem("BASE_URL","http://localhost:3000/api/")
   }
      
 }

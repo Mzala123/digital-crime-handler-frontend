@@ -7,10 +7,18 @@ import CreateUser from '@/views/admin/CreateUser.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
+ {
     path: '/',
-    redirect: 'dashboard',
-  },
+    redirect: 'login',
+  }, 
+ /* {
+    path: '/',
+    name: 'login',
+    component: LoginView,
+    meta: {
+      layout: 'blank',
+    },
+  },*/
   {
     path: '/dashboard',
     name: 'dashboard',
