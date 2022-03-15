@@ -21,7 +21,7 @@
           v-bind="attrs"
           v-on="on"
         >
-          <v-img :src="require('@/assets/images/avatars/1.png')"></v-img>
+          <v-img :src="PhotoPath+imagename"></v-img>
         </v-avatar>
       </v-badge>
     </template>
@@ -37,39 +37,25 @@
           dot
         >
           <v-avatar size="40px">
-            <v-img :src="require('@/assets/images/avatars/1.png')"></v-img>
+            <v-img :src="PhotoPath+imagename"></v-img>
           </v-avatar>
         </v-badge>
         <div
           class="d-inline-flex flex-column justify-center ms-3"
           style="vertical-align:middle"
         >
-          <span class="text--primary font-weight-semibold mb-n1">
-            John Doe
-          </span>
-          <small class="text--disabled text-capitalize">Admin</small>
+          <small><span class="text--primary font-weight-semibold mb-n1"> 
+            {{username}}
+          </span> </small>
+          <small class="text--disabled text-capitalize">{{userrole}}</small>
         </div>
       </div>
 
       <v-divider></v-divider>
-
-      <!-- Profile -->
-      <v-list-item link
-       :to="{name: 'profile'}"
-      >
-
-        <v-list-item-icon class="me-2">
-          <v-icon size="22">
-            {{ icons.mdiAccountOutline }}
-          </v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>Profile</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
         <!-- Settings -->
-      <v-list-item link>
+      <v-list-item link
+        :to="{name: 'settings'}"
+      >
         <v-list-item-icon class="me-2">
           <v-icon size="22">
             {{ icons.mdiCogOutline }}
@@ -83,14 +69,14 @@
       <v-divider class="my-2"></v-divider>
 
       <!-- Logout -->
-      <v-list-item link>
+      <v-list-item link @click="signOut()">
         <v-list-item-icon class="me-2">
           <v-icon size="22">
             {{ icons.mdiLogoutVariant }}
           </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>Logout</v-list-item-title>
+          <v-list-item-title>LogOut</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
     </v-list>
@@ -122,11 +108,34 @@ export default {
         mdiHelpCircleOutline,
         mdiLogoutVariant,
       },
-     
-     
+     username:"",
+     imagename:"",
+     userrole:"",
+     userId :"",
+     PhotoPath:"http://localhost:3000/images/",
 
     }
   },
+
+  methods: {
+       setUserDetails(){
+         const user = JSON.parse(sessionStorage.getItem("user"))
+         this.username = user.name
+         this.userrole = user.userrole
+         this.imagename = user.imagename
+         this.userId = user._id
+         console.log(this.imagename)
+         console.log(this.userId)
+       },
+       signOut(){
+         sessionStorage.removeItem("Authorization");
+         this.$router.push({path:"/authentication/login"})
+       }
+  },
+
+  mounted(){
+      this.setUserDetails()
+  }
 }
 </script>
 

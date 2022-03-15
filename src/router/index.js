@@ -73,10 +73,15 @@ const routes = [
     name:'create-account',
     component: CreateUser
   },
-  {
+  /*{
     path: '/authentication/profile',
     name: 'profile',
-    component: () => import('@/views/admin/Profile.vue'),
+    component: () => import('@/views/admin/account_settings/Profile.vue'),
+  }, */
+  {
+    path: '/authentication/settings',
+    name: 'settings',
+    component: () => import('@/views/admin/account_settings/AccountSettings.vue'),
   },
 
   {

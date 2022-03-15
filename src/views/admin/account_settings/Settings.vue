@@ -13,7 +13,7 @@
         size="120"
         class="me-6"
       >
-        <v-img :src="PhotoPath+imagename"></v-img> 
+        <v-img :src="PhotoPath+user.imagename"></v-img> 
       </v-avatar> 
        <div>
       <v-btn
@@ -46,13 +46,12 @@
 <v-form
     v-model="valid"
     lazy-validation
-  
   >
     <v-text-field
       class="mt-5"
       outlined
       dense
-      v-model="name"
+      v-model="user.name"
       :rules="nameRules"
       label="Full name"
       required
@@ -61,53 +60,28 @@
     <v-text-field
       class="mt-3"
       dense
-      v-model="email"
+      v-model="user.email"
       :rules="emailRules"
       label="E-mail"
       required
       outlined
     ></v-text-field>
 
-    <v-select
-      class="mt-3"
-      dense
-      outlined
-      v-model="userrole"
-      :items="items"
-      :rules="[v => !!v || 'userrole is required']"
-      label="User role"
-      required
-    ></v-select>
-
-     <v-text-field
-              v-model="password"
-              class="mt-3"
-              outlined
-              dense
-              :rules="passwordRules"
-              :type="isPasswordVisible ? 'text' : 'password'"
-              label="Password"
-              placeholder=""
-              :append-icon="isPasswordVisible ? icons.mdiEyeOffOutline : icons.mdiEyeOutline"
-              hide-details
-              @click:append="isPasswordVisible = !isPasswordVisible"
-            ></v-text-field> 
-
     <v-btn
       color="primary"
       class="mr-4 mt-4"
-      @click="createUserAccount()"
+      @click="updateUser()"
     >
-     Register
+     Update
     </v-btn>
 
-    <v-btn
+    <!--<v-btn
       color="success"
       class="mr-4 mt-4"
       @click="resetValidation()"
      >
       Cancel
-    </v-btn>
+    </v-btn> -->
   </v-form>
      </v-card-text>  
     <!--panotu-->
@@ -124,7 +98,7 @@ import { mdiAccountOutline, mdiEmailOutline,
  
  } from '@mdi/js'
 
-import VueSweetAlert from "vue-sweetalert2"
+
 import axios from 'axios'
 
 export default {
@@ -138,9 +112,15 @@ export default {
       userrole:"",
       checkbox:false,
       valid: true,
-      name: '',
-      imagename:'null_profile.png',
       PhotoPath:"http://localhost:3000/images/",
+      userId :"",
+
+       user: {
+             name: null,
+             email:null,
+             imagename: "null_profile.png"
+           },
+
 
       nameRules: [
         v => !!v || 'Name is required',
@@ -183,28 +163,25 @@ export default {
     },
 
      methods: {
-      createUserAccount(){
-          if(!this.name || !this.email || !this.userrole || !this.password){
-            this.$swal("Please fill in all required fields")
-          }else{
-            axios
-              .post("http://localhost:3000/api/register",{
-                  name: this.name,
-                  email: this.email,
-                  userrole: this.userrole,
-                  password: this.password,
-                  imagename: this.imagename
-              }).then((response)=>{
-                  console.log(response.status)
-                  if(response.status == 201){
-                      this.$swal("Information","User Registered", "success")
-                  } else {
-                      this.$swal("error","There was an error creating a user account ", "error")
-                  }
-              }).catch((error)=>{
-                 this.$swal("Error", error + ", couldn't reach API", "error");   
-              })
-          } 
+      updateUser(){
+         const user = JSON.parse(sessionStorage.getItem("user"))
+         this.userId = user._id
+         console.log("the new image is "+this.user.imagename)
+           axios
+           .put("http://localhost:3000/api/update_admin_name_and_email/"+this.userId,{
+               name : this.user.name,
+               email : this.user.email,
+               imagename: this.user.imagename
+           })
+           .then((response)=>{
+             if(response.status === 200){
+                    this.$swal("Information","User Updated", "success")
+             }else{
+               this.$swal("error","There was an error which changing a userrole", "error")
+             }
+           }).catch((error)=>{
+               this.$swal("Error", error + ", couldn't reach API", "error");  
+           })
       },
 
       onButtonClick() {
@@ -222,11 +199,28 @@ export default {
       axios.post("http://localhost:3000/api/upload_user_imagefile",
           formData)
           .then((response)=>{
-          this.imagename = response.data
+          this.user.imagename = response.data
       })
       // do something
-    }
+    },
+     setUserDetails(){
+         const user = JSON.parse(sessionStorage.getItem("user"))
+         this.userId = user._id
+         console.log("The retrieved id is "+this.userId)
+          axios
+              .get("http://localhost:3000/api/read_one_user/"+this.userId)
+              .then((response)=>{
+                if(response.status === 200){
+                   this.user = response.data
+                   console.log(this.user)
+                } 
+              })
+       },
   },
+
+  mounted(){
+     this.setUserDetails();
+  }
 }
 </script>
 

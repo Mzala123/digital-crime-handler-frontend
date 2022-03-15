@@ -274,7 +274,6 @@ export default {
        }
 
     },
-
     mounted: function(){
        this.viewListOfUsers()
     }

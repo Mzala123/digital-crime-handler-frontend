@@ -33,12 +33,28 @@
     </div>
 
     <!-- Navigation Items -->
-    <v-list
-      expand
-      
+    <v-list expand
       class="vertical-nav-menu-items pr-5"
     >
-      <nav-menu-link
+    <div v-if="userrole === 'Admin' ">
+      <nav-menu-link 
+          v-for="item in admin"
+          :key="item.title"
+          :title="item.title"
+          :to="{name: item.name}"
+          :icon="item.icon"
+      ></nav-menu-link>
+    </div>
+      <div v-if="userrole === 'Police Officer' ">
+      <nav-menu-link 
+          v-for="item in police_officer"
+          :key="item.title"
+          :title="item.title"
+          :to="{name: item.name}"
+          :icon="item.icon"
+      ></nav-menu-link>
+    </div>
+     <!-- <nav-menu-link
         title="Dashboard"
         :to="{ name: 'dashboard' }"
         :icon="icons.mdiHomeOutline"
@@ -53,7 +69,7 @@
         title="User List"
         :to="{ name: 'user-list'}"
         :icon="icons.mdiFormatListBulletedSquare"
-      ></nav-menu-link> 
+      ></nav-menu-link> -->
     </v-list>
   
   </v-navigation-drawer>
@@ -70,7 +86,9 @@ import {
   mdiFileOutline,
   mdiFormSelect,
   mdiAccountCogOutline,
-  mdiFormatListBulletedSquare
+  mdiFormatListBulletedSquare,
+  mdiHuman,
+  mdiHumanMaleFemale,
 } from '@mdi/js'
 import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
 import NavMenuGroup from './components/NavMenuGroup.vue'
@@ -99,10 +117,30 @@ export default {
         mdiFileOutline,
         mdiFormSelect,
         mdiAccountCogOutline,
-        mdiFormatListBulletedSquare
+        mdiFormatListBulletedSquare,
+        mdiHuman,
+        mdiHumanMaleFemale
       },
+       userrole: "",
+       admin: [
+         {title: 'Dashboard', icon:mdiHomeOutline, name:'dashboard'},
+         {title: 'Create Account', icon:mdiAccountCogOutline, name:'create-account'},
+         {title: 'List of Users', icon:mdiFormatListBulletedSquare, name:'user-list'}
+       ],
+       
+       police_officer:[
+         {title: 'Dashboard', icon:mdiHomeOutline, name:'dashboard'},
+         {title: 'Add Person', icon:mdiHuman, name:'person'},
+         {title: 'List of Persons', icon:mdiHomeOutline, name:'person-list'},
+         {title: 'Criminal List', icon:mdiHumanMaleFemale, name:'criminal-list'},
+       ]
+
     }
   },
+  mounted(){
+    this.userrole = sessionStorage.getItem("role")
+  }
+   
 }
 </script>
 

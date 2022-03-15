@@ -184,22 +184,25 @@ export default {
                    this.overlay = false
                    const user = JSON.parse(sessionStorage.getItem("user"))
                    let userrole = user.userrole
-                   console.log("userole" +userrole)
+                   let userId = user._id
+
                    sessionStorage.setItem("role", userrole)
+                   sessionStorage.setItem("userId", userId)
+                   
                    if(userrole === "Admin"){
                      this.$router.push('/dashboard')
                    }else if(userrole === "Police Officer"){
-
+                    this.$router.push('/dashboard')
                    }else if(userrole === "Station Officer"){
 
                    }
-                 }else{
-                   this.$swal()
+                 }else {
+                   this.$swal("Warning", response.data.info, "warning")
                  }
           }).catch((error)=>{
               this.$swal("Error", error + ", Couldn't reach API", "error")
               this.overlay = false
-          })
+          }) 
       }
     }
   },
