@@ -87,8 +87,10 @@ import {
   mdiFormSelect,
   mdiAccountCogOutline,
   mdiFormatListBulletedSquare,
+  mdiFormatListBulleted,
   mdiHuman,
   mdiHumanMaleFemale,
+
 } from '@mdi/js'
 import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
 import NavMenuGroup from './components/NavMenuGroup.vue'
@@ -119,7 +121,8 @@ export default {
         mdiAccountCogOutline,
         mdiFormatListBulletedSquare,
         mdiHuman,
-        mdiHumanMaleFemale
+        mdiHumanMaleFemale,
+        mdiFormatListBulleted,
       },
        userrole: "",
        admin: [
@@ -129,10 +132,10 @@ export default {
        ],
        
        police_officer:[
-         {title: 'Dashboard', icon:mdiHomeOutline, name:'dashboard'},
-         {title: 'Add Person', icon:mdiHuman, name:'person'},
-         {title: 'List of Persons', icon:mdiHomeOutline, name:'person-list'},
-         {title: 'Criminal List', icon:mdiHumanMaleFemale, name:'criminal-list'},
+         {title: 'Dashboard', icon:mdiHomeOutline, name:'police-dashboard'},
+         {title: 'Add Suspect', icon:mdiHuman, name:'add-suspect'},
+         {title: 'List of Suspects', icon:mdiFormatListBulleted, name:'suspect-list'},
+         {title: 'Criminal List', icon:mdiFormatListBulletedSquare, name:'criminal-list'},
        ]
 
     }

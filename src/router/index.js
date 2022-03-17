@@ -23,38 +23,7 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('@/views/dashboard/Dashboard.vue'),
-  },
-  {
-    path: '/typography',
-    name: 'typography',
-    component: () => import('@/views/typography/Typography.vue'),
-  },
-  {
-    path: '/icons',
-    name: 'icons',
-    component: () => import('@/views/icons/Icons.vue'),
-  },
-  {
-    path: '/cards',
-    name: 'cards',
-    component: () => import('@/views/cards/Card.vue'),
-  },
-  {
-    path: '/simple-table',
-    name: 'simple-table',
-    component: () => import('@/views/simple-table/SimpleTable.vue'),
-  },
-  {
-    path: '/form-layouts',
-    name: 'form-layouts',
-    component: () => import('@/views/form-layouts/FormLayouts.vue'),
-  },
-  {
-    path: '/pages/account-settings',
-    name: 'pages-account-settings',
-    component: () => import('@/views/pages/account-settings/AccountSettings.vue'),
   }, 
-  
   {
     path: '/authentication/login',
     name: 'login',
@@ -73,15 +42,33 @@ const routes = [
     name:'create-account',
     component: CreateUser
   },
-  /*{
-    path: '/authentication/profile',
-    name: 'profile',
-    component: () => import('@/views/admin/account_settings/Profile.vue'),
-  }, */
   {
     path: '/authentication/settings',
     name: 'settings',
     component: () => import('@/views/admin/account_settings/AccountSettings.vue'),
+  },
+  {
+    path: '/police_dashboard',
+    name: 'police-dashboard',
+    component: () => import('@/views/police_officer/police_dashboard.vue'),
+  },
+
+  {
+    path: '/add_suspect',
+    name: 'add-suspect',
+    component: () => import('@/views/police_officer/add_suspect.vue'),
+  },
+
+  {
+    path: '/list_suspects',
+    name: 'suspect-list',
+    component: () => import('@/views/police_officer/list_suspects.vue'),
+  },
+
+  {
+    path: '/criminal_suspects',
+    name: 'criminal-list',
+    component: () => import('@/views/police_officer/criminal_lists.vue'),
   },
 
   {
