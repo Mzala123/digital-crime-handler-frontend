@@ -20,18 +20,6 @@
           
         </v-col>
 
-       <!--q2<v-col
-           cols="6"
-           md="4"
-        >
-            <v-btn
-            color="primary"
-            class="mr-4 mt-4"
-            @click="createUserAccount()"
-          >
-         Export 
-          </v-btn>
-        </v-col> -->
       </v-row>
     </v-card-text>
 
@@ -46,14 +34,6 @@
       loading-text="Loading... Please wait"
     >
       <!-- users list -->
-     <!-- <template #[`item.email`]="{item}">
-        <div class="d-flex flex-column">
-          <div class="d-flex align-center">
-          </div>
-          <span class="text-xs text-no-wrap">{{ item.email }}</span>
-        </div>
-      </template> -->
-
       <template #[`item.actions`]="{ item }">
         <v-icon
           small

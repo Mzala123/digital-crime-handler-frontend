@@ -113,7 +113,7 @@
       dense
       outlined
       v-model="gender"
-      :items="gender"
+      :items="genderOptions"
       :rules="[v => !!v || 'Gender is required']"
       label="Gender(mandotory)"
       required
@@ -219,6 +219,15 @@
     <!--panotu-->
   </div>
  </v-row>
+
+       <v-overlay absolute opacity="0" :value="overlay">
+                <v-progress-circular
+                   indeterminate
+                   size="64"
+               ></v-progress-circular>
+        </v-overlay>
+
+
  </v-card>
  </v-container>
 </template>
@@ -245,12 +254,32 @@ export default {
         mdiEyeOutline  
       },
 
-      gender: [
+      genderOptions: [
           "Male",
           "Female"
       ],
+      overlay: false,
+
+      nationalId: "",
+      firstname:"",
+      lastname:"",
+      age:"",
+      gender:"",
+      dob:"",
+      middlename:"",
+      city_origin:"",
+      race:"",
+      height:"",
+      weight:"",
+      eye_color:"",
+      hair_color:"",
+      current_city:"",
+      address:"",
+      skin_tone:"",
+      known_aliases:"",
 
       imagename:'null_profile.png',
+
       PhotoPath:"http://localhost:3000/images/",
 
        selectedFile: null,
@@ -264,7 +293,49 @@ export default {
     },
 
     methods: {
-           
+
+      addSuspect(){
+         if(!this.nationalId || !this.firstname || !this.lastname || !this.age
+            || !this.gender || !this.dob){
+                this.$swal("Warning","Please fill in all required fields","warning")
+         }else{
+            this.overlay = true
+            axios
+            .post("http://localhost:3000/api/add_person_suspect",{
+               
+                nationalId:this.nationalId,
+                firstname:this.firstname,
+                lastname:this.lastname,
+                age: this.age,
+                gender: this.gender,
+                dob: this.dob,
+                middlename: this.middlename,
+                profile_photo: this.imagename,
+                city_origin: this.city_origin,
+                race: this.race,
+                height: this.height,
+                weight: this.weight,
+                eye_color: this.eye_color,
+                hair_color: this.hair_color,
+                current_city: this.current_city,
+                address: this.address,
+                skin_tone: this.skin_tone,
+                known_aliases: this.known_aliases
+
+            }).then((response)=>{
+                if(response.status === 201){
+                     this.overlay=false
+                     this.$swal("Info","Suspect details added", "success")
+                }else if(response.status === 404){
+                     this.$swal("error","Failed to add suspect record", "error")
+                }
+
+            }).catch((error)=>{
+
+            })
+         }
+      },
+
       onButtonClick() {
       this.isSelecting = true
       window.addEventListener('focus', () => {

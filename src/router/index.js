@@ -7,10 +7,19 @@ import CreateUser from '@/views/admin/CreateUser.vue'
 Vue.use(VueRouter)
 
 const routes = [
- {
+  /*{
     path: '/',
     redirect: 'login',
-  }, 
+  }, */
+  {
+    path: '/',
+    name: 'login',
+    component: LoginView,
+    meta: {
+      layout: 'blank',
+    },
+
+  },
  /* {
     path: '/',
     name: 'login',
@@ -24,14 +33,6 @@ const routes = [
     name: 'dashboard',
     component: () => import('@/views/dashboard/Dashboard.vue'),
   }, 
-  {
-    path: '/authentication/login',
-    name: 'login',
-    component: LoginView,
-    meta: {
-      layout: 'blank',
-    },
-  },
   {
     path:'/authentication/userList',
     name:'user-list',
