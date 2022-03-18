@@ -18,7 +18,6 @@ const routes = [
     meta: {
       layout: 'blank',
     },
-
   },
  /* {
     path: '/',
