@@ -51,7 +51,7 @@
         size="120"
         class="me-6"
       >
-       <v-img :src="imageDB"></v-img> 
+       <v-html :src="imagename"></v-html> 
         
       </v-avatar> 
 
@@ -379,7 +379,7 @@ export default {
       })
       // do something
     },
-   /* retrieveSuspectImage(){
+    retrieveSuspectImage(){
           var base = this;
           this.imageId = sessionStorage.getItem("imageId")
           console.log("The id for the image is "+this.imageId)
@@ -387,13 +387,9 @@ export default {
            .get("http://localhost:3000/api/get_user_profile_image/"+this.imageId)
            .then((response)=>{
              this.imagename = response.data.img
-               let base64String = btoa(
-               String.fromCharCode.apply(null, new Uint8Array(response.data.img))
-              )
-              base.imageDB = "data:image/jpg;base64"+ base64String
-             console.log(response.data)
+             
            })
-    }*/
+    }
 
     },
     mounted(){
