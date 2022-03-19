@@ -43,8 +43,26 @@
         </p>
     </div>
     </v-card-text>
+
      <v-card-text>
 
+        <v-avatar
+        rounded
+        size="120"
+        class="me-6"
+      >
+       <v-img :src="imageDB"></v-img> 
+        
+      </v-avatar> 
+
+      <v-btn
+      color="primary"
+      class="mr-4 mt-4"
+      @click="retrieveSuspectImage()"
+    >
+    retrieved image
+    </v-btn>
+      
 <v-form
     v-model="valid"
     lazy-validation
@@ -113,7 +131,7 @@
       dense
       outlined
       v-model="gender"
-      :items="genderOptions"
+      :items="genderOptions "
       :rules="[v => !!v || 'Gender is required']"
       label="Gender(mandotory)"
       required
@@ -279,6 +297,8 @@ export default {
       known_aliases:"",
 
       imagename:'null_profile.png',
+      imageDB: "",
+      imageId:"",
 
       PhotoPath:"http://localhost:3000/images/",
 
@@ -349,15 +369,38 @@ export default {
       //this.selectedFile = e.target.files[0]
       let formData = new FormData
       formData.append('file',e.target.files[0]);
-      axios.post("http://localhost:3000/api/upload_user_imagefile",
+      axios.post("http://localhost:3000/api/upload_user_profile",
           formData)
           .then((response)=>{
-          this.imagename = response.data
+          this.imagename = response.data.imagename
+          this.imageId = response.data._id
+          sessionStorage.setItem("imageId", Object(response.data._id))
+          console.log("The image id is "+this.imageId)
       })
       // do something
-    }
+    },
+   /* retrieveSuspectImage(){
+          var base = this;
+          this.imageId = sessionStorage.getItem("imageId")
+          console.log("The id for the image is "+this.imageId)
+          axios
+           .get("http://localhost:3000/api/get_user_profile_image/"+this.imageId)
+           .then((response)=>{
+             this.imagename = response.data.img
+               let base64String = btoa(
+               String.fromCharCode.apply(null, new Uint8Array(response.data.img))
+              )
+              base.imageDB = "data:image/jpg;base64"+ base64String
+             console.log(response.data)
+           })
+    }*/
+
+    },
+    mounted(){
+     //  this.retrieveSuspectImage()
     }
 
+    
 
 }
 </script>
