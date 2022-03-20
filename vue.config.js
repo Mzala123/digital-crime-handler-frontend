@@ -3,8 +3,8 @@ const { mergeSassVariables } = require('@vuetify/cli-plugin-utils')
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production' ? '/digital-crime-handler-frontend' : '/',
   lintOnSave: false,
-  transpileDependencies: ['vuetify']
-  /*chainWebpack: config => {
+  transpileDependencies: ['vuetify'],
+  chainWebpack: config => {
     const modules = ['vue-modules', 'vue', 'normal-modules', 'normal']
     modules.forEach(match => {
       config.module
@@ -18,5 +18,5 @@ module.exports = {
         .use('sass-loader')
         .tap(opt => mergeSassVariables(opt, "'@/styles/variables.scss';"))
     })
-  },*/
+  },
 }

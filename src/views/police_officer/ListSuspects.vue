@@ -3,13 +3,10 @@
     <v-card flat
     class="pa-3 mt-2">
     <v-card-text>
+     LIST OF SUSPECTS
+    </v-card-text>
+    <v-card-text>
       <v-row>
-        <v-col
-          cols="6"
-          md="4"
-        >
-          LIST OF SUSPECTS
-        </v-col>
         <v-col
           cols="6"
           md="4"
@@ -99,12 +96,9 @@ import {
     mdiEye,
     mdiPlusCircleOutline
 } from '@mdi/js'
-import EditSuspectDetails from '@/views/police_officer/EditSuspectDetails.vue'
+
 
 export default {
-  components:{
-        EditSuspectDetails
-  },
     data(){
         return{
          suspectList : [],

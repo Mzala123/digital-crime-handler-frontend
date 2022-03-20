@@ -4,10 +4,6 @@
     flat
     class="pa-3 mt-2 col-md-7"
     >
-    <div id="edit-suspect-details">
-       {{suspectId}}
-    </div>
-
  <v-row justify="center">
   <div class=col-md-10>
     <v-card-text class="bold">
@@ -19,7 +15,7 @@
         size="120"
         class="me-6"
       >
-        <v-img :src="PhotoPath+imagename"></v-img> 
+        <v-img :src="PhotoPath+suspect.profile_photo"></v-img> 
       </v-avatar> 
        <div>
       <v-btn
@@ -61,7 +57,7 @@
       class="mt-4"
       outlined
       dense
-      v-model="suspectList.nationalId"
+      v-model="suspect.nationalId"
       :rules="nameRules"
       label="National Id(mandotory)"
       required
@@ -75,7 +71,7 @@
       class="mt-4"
       outlined
       dense
-      v-model="firstname"
+      v-model="suspect.firstname"
       :rules="nameRules"
       label="First name(mandotory)"
       required
@@ -88,7 +84,7 @@
       class="mt-2"
       outlined
       dense
-      v-model="lastname"
+      v-model="suspect.lastname"
       :rules="nameRules"
       label="Last name(mandotory)"
     ></v-text-field> </v-col>
@@ -98,7 +94,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="middlename"
+      v-model="suspect.middlename"
       :rules="emailRules"
       label="Middle name"
       required
@@ -110,7 +106,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="age"
+      v-model="suspect.age"
       label="Suspect Age(mandotory)"
       type="number"
       required
@@ -122,7 +118,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="dob"
+      v-model="suspect.dob"
       label="Date of birth(mandotory)"
       type="date"
       required
@@ -135,7 +131,7 @@
       class="mt-2"
       dense
       outlined
-      v-model="gender"
+      v-model="suspect.gender"
       :items="genderOptions "
       :rules="[v => !!v || 'Gender is required']"
       label="Gender(mandotory)"
@@ -145,7 +141,7 @@
      <v-textarea
       class="mt-2"
       dense
-      v-model="address"
+      v-model="suspect.address"
       label="Address"
       outlined
     ></v-textarea>
@@ -157,7 +153,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="known_aliases"
+      v-model="suspect.known_aliases"
       label="Known ALiases"
       outlined
     ></v-text-field> </v-col>
@@ -167,7 +163,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="city_origin"
+      v-model="suspect.city_origin"
       label="City of origin"
       outlined
     ></v-text-field> </v-col>
@@ -177,7 +173,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="current_city"
+      v-model="suspect.current_city"
       label="Current City"
       outlined
     ></v-text-field> </v-col>
@@ -187,7 +183,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="race"
+      v-model="suspect.race"
       label="Race/Tribe"
       outlined
     ></v-text-field> </v-col>
@@ -197,7 +193,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="height"
+      v-model="suspect.height"
       label="Height"
       outlined
     ></v-text-field> </v-col>
@@ -207,7 +203,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="weight"
+      v-model="suspect.weight"
       label="Weight"
       outlined
     ></v-text-field> </v-col>
@@ -217,7 +213,7 @@
      <v-text-field
       class="mt-2"
       dense
-      v-model="eye_color"
+      v-model="suspect.eye_color"
       label="Eye Color"
       outlined
     ></v-text-field> </v-col>
@@ -227,7 +223,7 @@
      <v-text-field
       class="mt-2"
       dense
-      v-model="hair_color"
+      v-model="suspect.hair_color"
       label="Hair Color"
       outlined
     ></v-text-field> </v-col>
@@ -237,7 +233,7 @@
     <v-text-field
       class="mt-2"
       dense
-      v-model="skin_tone"
+      v-model="suspect.skin_tone"
       label="Skin Tone"
       outlined
     ></v-text-field>
@@ -264,15 +260,6 @@
     <!--panotu-->
   </div>
  </v-row>
-
-       <v-overlay absolute opacity="0" :value="overlay">
-                <v-progress-circular
-                   indeterminate
-                   size="64"
-               ></v-progress-circular>
-        </v-overlay>
-
-
  </v-card>
  </v-container>
 </template>
@@ -282,12 +269,11 @@ import { mdiAccountOutline, mdiEmailOutline,
  mdiCellphone, mdiLockOutline, mdiAlertOutline,
  mdiCloudUploadOutline, mdiEyeOffOutline,mdiEyeOutline
  } from '@mdi/js'
-import axios from "axios"
+import axios from 'axios'
 
 export default {
     data(){
         return{
-        suspectList:[],
         icons: {
                 mdiAccountOutline,
                 mdiEmailOutline,
@@ -303,27 +289,28 @@ export default {
           "Male",
           "Female"
       ],
-      overlay: false,
-      suspectId:"",
-      nationalId: "",
-      firstname:"",
-      lastname:"",
-      age:"",
-      gender:"",
-      dob:"",
-      middlename:"",
-      city_origin:"",
-      race:"",
-      height:"",
-      weight:"",
-      eye_color:"",
-      hair_color:"",
-      current_city:"",
-      address:"",
-      skin_tone:"",
-      known_aliases:"",
+     
+      suspect: {
+              nationalId: null,
+              firstname:null,
+              lastname:null,
+              age:null,
+              gender:null,
+              dob:null,
+              middlename:null,
+              city_origin:null,
+              race:null,
+              height:null,
+              weight:null,
+              eye_color:null,
+              hair_color:null,
+              current_city:null,
+              address:null,
+              skin_tone:null,
+              known_aliases:null,
+              profile_photo:'null_profile.png'
+      },
 
-      imagename:'null_profile.png',
       imageDB: "",
       imageId:"",
 
@@ -333,18 +320,42 @@ export default {
     }
   },
   methods: {
-       get_list_of_suspects_by_Id(suspectId){
+       get_list_of_suspects_by_Id(id){
              axios
-              .get("http://localhost:3000/api/read_one_person_suspect/"+suspectId)
+              .get("http://localhost:3000/api/read_one_person_suspect/"+id)
               .then((response)=>{
-                  this.suspectList = response.data
-                  this.loading = false
-                  console.log(response.data)
+                  this.suspect = response.data
+                  this.suspect.imagename = response.data.imagename
+                  console.log(this.suspect)
               })  
-       }
+       },
+       onButtonClick() {
+      this.isSelecting = true
+      window.addEventListener('focus', () => {
+        this.isSelecting = false
+      }, { once: true })
+
+      this.$refs.uploader.click()
+    },
+
+    onImageUpload(e) {
+      //this.selectedFile = e.target.files[0]
+      let formData = new FormData
+      formData.append('file',e.target.files[0]);
+      axios.post("http://localhost:3000/api/upload_user_imagefile",
+          formData)
+          .then((response)=>{
+          this.imagename = response.data
+         /* this.imageId = response.data._id
+          sessionStorage.setItem("imageId", Object(response.data._id)) */
+          console.log("The image id is "+this.imagename)
+      })
+      // do something
+    },
   },
-  created: function(){
-    this.get_list_of_suspects_by_Id($this.$route.params.id)
+
+  mounted() {
+    this.get_list_of_suspects_by_Id(this.$route.params.id)
   }
 }
 </script>
