@@ -72,6 +72,12 @@ const routes = [
   },
 
   {
+    path: '/view_suspect_details/:id',
+    name: 'suspect-details',
+    component: () => import('@/views/police_officer/SuspectDetails.vue'),
+  },
+
+  {
     path: '/criminal_suspects',
     name: 'criminal-list',
     component: () => import('@/views/police_officer/CriminalLists.vue'),

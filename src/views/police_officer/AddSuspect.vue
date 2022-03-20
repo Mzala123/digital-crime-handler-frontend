@@ -1,8 +1,9 @@
 <template>
   <v-container>
     <v-card
+    elevation="1"
     flat
-    class="pa-3 mt-2 col-md-7"
+    class="pa-3 mt-2"
     >
  <v-row justify="center">
   <div class=col-md-10>
@@ -368,6 +369,9 @@ export default {
                 if(response.status === 201){
                      this.overlay=false
                      this.$swal("Info","Suspect details added", "success")
+                       .then(()=>{
+                         this.$router.push({path:"/list_suspects"})
+                      })
                 }else if(response.status === 404){
                      this.$swal("error","Failed to add suspect record", "error")
                 }
@@ -395,12 +399,12 @@ export default {
           formData)
           .then((response)=>{
           this.imagename = response.data
-         /* this.imageId = response.data._id
-          sessionStorage.setItem("imageId", Object(response.data._id)) */
+     
           console.log("The image id is "+this.imagename)
       })
       // do something
     },
+
     retrieveSuspectImage(){
           var base = this;
           this.imageId = sessionStorage.getItem("imageId")

@@ -1,6 +1,7 @@
 <template>
  <div>
     <v-card flat
+    elevation="1"
     class="pa-3 mt-2">
     <v-card-text>
      LIST OF SUSPECTS
@@ -27,8 +28,6 @@
           cols="6"
           md="4"
         >
-        
-  
         </v-col>
 
       </v-row>
@@ -48,34 +47,36 @@
       <template #[`item.actions`]="{ item }">
 
         <v-icon
-          medium
+          small
           class="me-2"
           color="blue"
           @click="AddCrime(item._id)"
         >
           {{ icons.mdiPlusCircleOutline }}
         </v-icon>
-
+        <router-link v-bind:to="'/view_suspect_details/'+item._id">
         <v-icon
-          medium
+           small
           class="me-2"
           color="blue"
           @click="viewMore(item._id)"
         >
           {{ icons.mdiEye }}
         </v-icon>
+        </router-link>
 
          <router-link v-bind:to="'/edit_suspect/'+item._id">
         <v-icon
-           medium
+             small
           class="me-2"
         >
           
           {{ icons.mdiPencilOutline }}
         </v-icon>
          </router-link>
+
         <v-icon
-           medium
+            small
           @click="delete_suspect(item._id)"
         >
           {{ icons.mdiDeleteOutline }}
@@ -84,6 +85,9 @@
     </v-data-table>
     </v-card>
  </div>
+
+
+
 </template>
 
 <script>
@@ -159,12 +163,7 @@ export default {
               }
             })           
          },
-
-         /*edit_suspect_information(suspectId){
-               console.log(suspectId)
-               this.$router.push({path:"/edit_suspect"})
-         },*/
-
+    
          add_crime_to_suspect(){
 
          }

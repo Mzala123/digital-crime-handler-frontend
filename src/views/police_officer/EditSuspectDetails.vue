@@ -2,6 +2,7 @@
     <v-container>
     <v-card
     flat
+    elevation="1"
     class="pa-3 mt-2 col-md-7"
     >
  <v-row justify="center">
@@ -238,13 +239,22 @@
       outlined
     ></v-text-field>
 
-  
+  <v-text-field
+      class="mt-2"
+      dense
+      hidden="true"
+      v-show="false"
+      v-model="suspect._id"
+      label="suspect id"
+      outlined
+    ></v-text-field>
+    
 
     <v-btn
       color="primary"
       class="mr-4 mt-4"
       @click="editSuspectDetails()"
-    >
+     >
      Edit Suspect
     </v-btn>
 
@@ -289,8 +299,9 @@ export default {
           "Male",
           "Female"
       ],
-     
+      
       suspect: {
+              _id:null,
               nationalId: null,
               firstname:null,
               lastname:null,
@@ -311,8 +322,6 @@ export default {
               profile_photo:'null_profile.png'
       },
 
-      imageDB: "",
-      imageId:"",
 
       PhotoPath:"http://localhost:3000/images/",
        selectedFile: null,
@@ -320,6 +329,42 @@ export default {
     }
   },
   methods: {
+       editSuspectDetails() {
+        axios
+           .put("http://localhost:3000/api/update_person_suspect/"+this.suspect._id,{
+                nationalId:this.suspect.nationalId,
+                firstname:this.suspect.firstname,
+                lastname:this.suspect.lastname,
+                age: this.suspect.age,
+                gender: this.suspect.gender,
+                dob: this.suspect.dob,
+                middlename: this.suspect.middlename,
+                profile_photo: this.suspect.profile_photo,
+                city_origin: this.suspect.city_origin,
+                race: this.suspect.race,
+                height: this.suspect.height,
+                weight: this.suspect.weight,
+                eye_color: this.suspect.eye_color,
+                hair_color: this.suspect.hair_color,
+                current_city: this.suspect.current_city,
+                address: this.suspect.address,
+                skin_tone: this.suspect.skin_tone,
+                known_aliases: this.suspect.known_aliases
+           })
+           .then((response)=>{
+             if(response.status === 200){
+                    this.$swal("Information","Suspect Details Updated", "success")
+                      .then(()=>{
+                         this.$router.push({path:"/list_suspects"})
+                      })
+             }else{
+               this.$swal("error","There was an error which updating suspect details", "error")
+             }
+           }).catch((error)=>{
+               this.$swal("Error", error + ", couldn't reach API", "error");  
+           })
+       },
+
        get_list_of_suspects_by_Id(id){
              axios
               .get("http://localhost:3000/api/read_one_person_suspect/"+id)
@@ -345,17 +390,19 @@ export default {
       axios.post("http://localhost:3000/api/upload_user_imagefile",
           formData)
           .then((response)=>{
-          this.imagename = response.data
+          this.suspect.profile_photo = response.data
          /* this.imageId = response.data._id
           sessionStorage.setItem("imageId", Object(response.data._id)) */
           console.log("The image id is "+this.imagename)
       })
       // do something
     },
+
   },
 
   mounted() {
     this.get_list_of_suspects_by_Id(this.$route.params.id)
+   
   }
 }
 </script>
