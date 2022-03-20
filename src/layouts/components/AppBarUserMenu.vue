@@ -127,10 +127,12 @@ export default {
          console.log(this.imagename)
          console.log(this.userId)
        },
+
        signOut(){
          sessionStorage.removeItem("Authorization");
-         this.$router.push({path:"/authentication/login"})
+         this.$router.push({path:"/"})
        }
+
   },
 
   mounted(){

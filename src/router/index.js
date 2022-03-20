@@ -50,25 +50,31 @@ const routes = [
   {
     path: '/police_dashboard',
     name: 'police-dashboard',
-    component: () => import('@/views/police_officer/police_dashboard.vue'),
+    component: () => import('@/views/police_officer/PoliceDashboard.vue'),
   },
 
   {
     path: '/add_suspect',
     name: 'add-suspect',
-    component: () => import('@/views/police_officer/add_suspect.vue'),
+    component: () => import('@/views/police_officer/AddSuspect.vue'),
+  },
+
+  {
+    path: '/edit_suspect/:id',
+    name: 'edit-suspect-details',
+    component: () => import('@/views/police_officer/EditSuspectDetails.vue')
   },
 
   {
     path: '/list_suspects',
     name: 'suspect-list',
-    component: () => import('@/views/police_officer/list_suspects.vue'),
+    component: () => import('@/views/police_officer/ListSuspects.vue'),
   },
 
   {
     path: '/criminal_suspects',
     name: 'criminal-list',
-    component: () => import('@/views/police_officer/criminal_lists.vue'),
+    component: () => import('@/views/police_officer/CriminalLists.vue'),
   },
 
   {

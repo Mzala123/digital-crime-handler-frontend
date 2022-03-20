@@ -8,11 +8,18 @@
           cols="6"
           md="4"
         >
+          LIST OF SUSPECTS
+        </v-col>
+        <v-col
+          cols="6"
+          md="4"
+          mt="4"
+        >
           <v-text-field
             v-model="search"
             :append-icon="icons.mdiMagnify"
-            label="Search"
-            single-line
+            label="Find Suspect"
+         
             hide-details
             dense
             outlined
@@ -61,22 +68,22 @@
           {{ icons.mdiEye }}
         </v-icon>
 
+         <router-link v-bind:to="'/edit_suspect/'+item._id">
         <v-icon
            medium
           class="me-2"
-          @click="editUser(item._id)"
         >
+          
           {{ icons.mdiPencilOutline }}
         </v-icon>
+         </router-link>
         <v-icon
            medium
-          @click="removeUser(item._id)"
+          @click="delete_suspect(item._id)"
         >
           {{ icons.mdiDeleteOutline }}
         </v-icon>
       </template> 
-
-
     </v-data-table>
     </v-card>
  </div>
@@ -92,8 +99,12 @@ import {
     mdiEye,
     mdiPlusCircleOutline
 } from '@mdi/js'
+import EditSuspectDetails from '@/views/police_officer/EditSuspectDetails.vue'
 
 export default {
+  components:{
+        EditSuspectDetails
+  },
     data(){
         return{
          suspectList : [],
@@ -114,7 +125,9 @@ export default {
                mdiPencilOutline,
                mdiPlusCircleOutline,
                mdiEye
-           }
+           },
+
+           suspectId : ""
 
         }
     },
@@ -128,7 +141,40 @@ export default {
                   this.loading = false
                   console.log(response.data)
               })  
+         },
+
+         delete_suspect(suspectId){
+             this.suspectId = suspectId
+             console.log("The id is ",this.suspectId)
+            this.$swal({
+              title: "Are you sure?",
+              text: "Once deleted, you will no longer have such suspect details!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            }).then((result)=>{
+              if(result.isConfirmed){
+                  axios.delete("http://localhost:3000/api/delete_person_suspect/"+this.suspectId)
+                  .then((response)=>{
+                    if(response.status === 204){
+                        this.$swal("Message", "Suspect details removed", "success").then(() => {
+                         this.list_of_suspects()
+                       })
+                    }
+                  })
+              }
+            })           
+         },
+
+         /*edit_suspect_information(suspectId){
+               console.log(suspectId)
+               this.$router.push({path:"/edit_suspect"})
+         },*/
+
+         add_crime_to_suspect(){
+
          }
+
     },
 
     mounted(){

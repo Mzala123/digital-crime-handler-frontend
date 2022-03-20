@@ -5,7 +5,7 @@
     class="pa-3 mt-2 col-md-7"
     >
  <v-row justify="center">
-  <div class=col-md-8>
+  <div class=col-md-10>
     <v-card-text class="bold">
         ADD SUSPECT DETAILS
      </v-card-text>
@@ -45,28 +45,14 @@
     </v-card-text>
 
      <v-card-text>
-
-        <v-avatar
-        rounded
-        size="120"
-        class="me-6"
-      >
-       <v-html :src="imagename"></v-html> 
-        
-      </v-avatar> 
-
-      <v-btn
-      color="primary"
-      class="mr-4 mt-4"
-      @click="retrieveSuspectImage()"
-    >
-    retrieved image
-    </v-btn>
-      
 <v-form
     v-model="valid"
     lazy-validation
   >
+  <v-row justify="center">
+
+    <v-col md="6"
+     cols="12">
      <v-text-field
       class="mt-4"
       outlined
@@ -76,9 +62,13 @@
       label="National Id(mandotory)"
       required
     ></v-text-field>
+      </v-col>
+
+      <v-col md="6"
+     cols="12">
 
     <v-text-field
-      class="mt-2"
+      class="mt-4"
       outlined
       dense
       v-model="firstname"
@@ -86,7 +76,10 @@
       label="First name(mandotory)"
       required
     ></v-text-field>
+    </v-col>
 
+     <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       outlined
@@ -94,8 +87,10 @@
       v-model="lastname"
       :rules="nameRules"
       label="Last name(mandotory)"
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+     <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
@@ -104,8 +99,10 @@
       label="Middle name"
       required
       outlined
-    ></v-text-field>
-    
+    ></v-text-field> </v-col>
+
+    <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
@@ -114,8 +111,10 @@
       type="number"
       required
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+    <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
@@ -124,7 +123,9 @@
       type="date"
       required
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
+
+    </v-row>
 
     <v-select
       class="mt-2"
@@ -145,69 +146,89 @@
       outlined
     ></v-textarea>
 
+   <v-row>
+
+     <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
       v-model="known_aliases"
       label="Known ALiases"
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+   <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
       v-model="city_origin"
       label="City of origin"
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+    <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
       v-model="current_city"
       label="Current City"
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+    <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
       v-model="race"
       label="Race/Tribe"
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+   <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
       v-model="height"
       label="Height"
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+    <v-col md="6"
+     cols="12">
     <v-text-field
       class="mt-2"
       dense
       v-model="weight"
       label="Weight"
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+   <v-col md="6"
+     cols="12">
      <v-text-field
       class="mt-2"
       dense
       v-model="eye_color"
       label="Eye Color"
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
 
+    <v-col md="6"
+     cols="12">
      <v-text-field
       class="mt-2"
       dense
       v-model="hair_color"
       label="Hair Color"
       outlined
-    ></v-text-field>
+    ></v-text-field> </v-col>
+
+   </v-row>
 
     <v-text-field
       class="mt-2"
@@ -216,6 +237,8 @@
       label="Skin Tone"
       outlined
     ></v-text-field>
+
+  
 
     <v-btn
       color="primary"
@@ -301,7 +324,6 @@ export default {
       imageId:"",
 
       PhotoPath:"http://localhost:3000/images/",
-
        selectedFile: null,
        isSelecting: false
         }
@@ -369,13 +391,13 @@ export default {
       //this.selectedFile = e.target.files[0]
       let formData = new FormData
       formData.append('file',e.target.files[0]);
-      axios.post("http://localhost:3000/api/upload_user_profile",
+      axios.post("http://localhost:3000/api/upload_user_imagefile",
           formData)
           .then((response)=>{
-          this.imagename = response.data.imagename
-          this.imageId = response.data._id
-          sessionStorage.setItem("imageId", Object(response.data._id))
-          console.log("The image id is "+this.imageId)
+          this.imagename = response.data
+         /* this.imageId = response.data._id
+          sessionStorage.setItem("imageId", Object(response.data._id)) */
+          console.log("The image id is "+this.imagename)
       })
       // do something
     },
@@ -386,8 +408,9 @@ export default {
           axios
            .get("http://localhost:3000/api/get_user_profile_image/"+this.imageId)
            .then((response)=>{
-             this.imagename = response.data.img
-             
+             this.imagename = response.data.img.data.toString('base64')
+             console.log("The content type is", this.imagename)
+             console.log(response.data)
            })
     }
 
