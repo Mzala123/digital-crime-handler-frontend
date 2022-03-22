@@ -323,7 +323,7 @@ export default {
       },
 
 
-      PhotoPath:"http://localhost:3000/images/",
+       PhotoPath:"http://localhost:3000/images/",
        selectedFile: null,
        isSelecting: false
     }
@@ -402,7 +402,6 @@ export default {
 
   mounted() {
     this.get_list_of_suspects_by_Id(this.$route.params.id)
-   
   }
 }
 </script>
