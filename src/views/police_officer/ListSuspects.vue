@@ -46,14 +46,16 @@
       <!-- users list -->
       <template #[`item.actions`]="{ item }">
 
+      <router-link v-bind:to="'/add_crime/'+item._id">       
         <v-icon
           small
           class="me-2"
           color="blue"
-          @click="AddCrime(item._id)"
         >
           {{ icons.mdiPlusCircleOutline }}
         </v-icon>
+      </router-link>
+
         <router-link v-bind:to="'/view_suspect_details/'+item._id">
         <v-icon
            small

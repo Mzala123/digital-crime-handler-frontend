@@ -1,7 +1,6 @@
 <template>
 
        <v-container>
-   
         <v-row justify="center">
         <div class=col-md-10>
            <h2 class="mt-4"> SUSPECT PROFILE DETAILS </h2> 
@@ -38,7 +37,7 @@
                                         dark
                                         color="primary"
                                     >
-                                   National Id - {{ suspect.nationalId }}
+                                  National Id - {{ suspect.nationalId }} 
                                 </v-system-bar>
                                 <v-card-text class="mt-3 black--text">
                                 

@@ -377,7 +377,7 @@ export default {
                 }
 
             }).catch((error)=>{
-
+                  this.$swal("error",error+"Failed to reach end point", "error")
             })
          }
       },

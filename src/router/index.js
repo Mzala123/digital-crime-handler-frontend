@@ -82,6 +82,12 @@ const routes = [
     name: 'criminal-list',
     component: () => import('@/views/police_officer/CriminalLists.vue'),
   },
+  {
+    path: '/add_crime/:id',
+    name: 'add-crime',
+    component: () => import('@/views/police_officer/AddCrime.vue'),
+  },
+
 
   {
     path: '/error-404',
