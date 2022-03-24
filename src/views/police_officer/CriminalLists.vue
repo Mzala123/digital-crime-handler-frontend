@@ -41,7 +41,21 @@
                                 <v-img :src="PhotoPath+item.profile_photo"></v-img>
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                <v-list-item-title v-html="item.firstname +' '+ item.lastname"></v-list-item-title>
+
+                                <router-link v-bind:to="'/suspect_crime_details/'+item._id">
+                                <v-list-item-title v-html="item.firstname +' '+ item.lastname">
+                                <v-icon
+                                small
+                                class="me-2"
+                                color="blue"
+                                @click="viewMore(item._id)"
+                                >
+                                {{ icons.mdiEye }}
+                                </v-icon> 
+                                </v-list-item-title>
+                               
+                                </router-link>
+
                                 <v-list-item-subtitle v-html="item.crimes[0].offenseDescription"></v-list-item-subtitle>
                                
                                 </v-list-item-content>
