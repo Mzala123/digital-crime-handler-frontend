@@ -17,7 +17,6 @@
             v-model="search"
             :append-icon="icons.mdiMagnify"
             label="Find Suspect"
-         
             hide-details
             dense
             outlined

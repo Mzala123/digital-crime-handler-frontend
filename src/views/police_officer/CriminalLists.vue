@@ -1,8 +1,12 @@
 <template>
-     <v-container>
+      <v-container>
+    <v-card
+    flat
+    class="pa-3 mt-2"
+    >
         <v-row justify="center">
         <div class=col-md-10>
-           <h2 class="mt-2"> LIST OF SUSPECTS </h2> 
+           <h3 class="mt-2"> List of alleged criminals </h3> 
              <p> <v-divider> </v-divider> </p>
              <v-row>
                <v-col class="col-xs-12">
@@ -20,45 +24,49 @@
                      </v-col>
                        
                     </v-row>
-                     <v-card class="mt-4">
+                     <v-card class="auth-card mt-4" elevation="1">
 
                          <v-list three-line>
-                            <template v-for="(item, index) in items">
-                            <v-subheader
-                                v-if="item.header"
-                                :key="item.header"
-                                v-text="item.header"
-                            ></v-subheader>
-                    
-                            <v-divider
-                                v-else-if="item.divider"
+                            <template v-for="(item, index) in suspectList">
+                
+                             <v-divider
                                 :key="index"
                                 :inset="item.inset"
                             ></v-divider>
-                    
                             <v-list-item
-                                v-else
                                 :key="item.title"
                             >
+
                                 <v-list-item-avatar>
-                                <v-img :src="item.avatar"></v-img>
+                                <v-img :src="PhotoPath+item.profile_photo"></v-img>
                                 </v-list-item-avatar>
-                    
                                 <v-list-item-content>
-                                <v-list-item-title v-html="item.title"></v-list-item-title>
-                                <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+                                <v-list-item-title v-html="item.firstname +' '+ item.lastname"></v-list-item-title>
+                                <v-list-item-subtitle v-html="item.crimes[0].offenseDescription"></v-list-item-subtitle>
+                               
                                 </v-list-item-content>
+
                             </v-list-item>
 
                             </template>
                         </v-list>
 
+                             <v-overlay absolute opacity="0" :value="overlay">
+                                <v-progress-circular
+                                indeterminate
+                                size="64"
+                            ></v-progress-circular>
+                           </v-overlay>
+
                      </v-card>
+                     
                </v-col>
              </v-row>
-       </div>
+          </div>
        </v-row>
-  </v-container>
+       </v-card>
+   </v-container>
+    
 </template>
 
 <script>
@@ -74,6 +82,10 @@ import {
 export default {
     data(){
         return{
+              suspectList :[],
+
+               overlay: false,
+               search:"",
                icons: {
                mdiMagnify,
                mdiDeleteOutline,
@@ -92,18 +104,19 @@ export default {
                 },
                 { divider: true, inset: true },
                 ],
-            
+
+            PhotoPath:"http://localhost:3000/images/",
 
         }
     },
     methods: {
            list_of_suspects(){
-            this.loading = true
+            this.overlay = true
             axios
-              .get("http://localhost:3000/api/get_list_of_person_suspects")
+              .get("http://localhost:3000/api/get_list_of_suspects_with_alleged_crime")
               .then((response)=>{
                   this.suspectList = response.data
-                  this.loading = false
+                  this.overlay = false
                   console.log(response.data)
               })  
          },

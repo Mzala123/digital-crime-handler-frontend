@@ -2,7 +2,7 @@
 
        <v-container>
         <v-row justify="center">
-        <div class=col-md-10>
+        <div class="col-md-10 auth-card">
            <h2 class="mt-4"> SUSPECT PROFILE DETAILS </h2> 
              <p> <v-divider> </v-divider> </p>
             <v-row>
@@ -107,6 +107,14 @@
                  </v-row> 
                 </v-col>
             </v-row>
+
+            <v-overlay absolute opacity="0" :value="overlay">
+                                <v-progress-circular
+                                indeterminate
+                                size="64"
+                            ></v-progress-circular>
+            </v-overlay>
+
          </div>
        </v-row>
   </v-container>
@@ -117,7 +125,8 @@ import axios from "axios"
 export default {
     data(){
         return{
- 
+  
+               overlay: false,
                 suspect: {
                         _id:null,
                         nationalId: null,
@@ -141,30 +150,17 @@ export default {
                       },
                     PhotoPath:"http://localhost:3000/images/",
 
-                    classes: [
-                    ['h1', 'Heading 1', '6rem', '300', '-.015625em', -1],
-                    ['h2', 'Heading 2', '3.75rem', '300', '-.0083333333em', 0],
-                    ['h3', 'Heading 3', '3rem', '400', 'normal', 1],
-                    ['h4', 'Heading 4', '2.125rem', '400', '.0073529412em', 2],
-                    ['h5', 'Heading 5', '1.5rem', '400', 'normal', 2],
-                    ['h6', 'Heading 6', '1.25rem', '500', '.0125em', 3],
-                    ['subtitle-1', 'Subtitle 1', '1rem', '400', '.009375em', 4],
-                    ['subtitle-2', 'Subtitle 2', '0.875rem', '500', '.0071428571em', 4],
-                    ['body-1', 'Body 1', '1rem', '400', '.03125em', 4],
-                    ['body-2', 'Body 2', '0.875rem', '400', '.0178571429em', 4],
-                    ['button', 'Button', '0.875rem', '500', '.0892857143em', 4],
-                    ['caption', 'Caption', '0.75rem', '400', '.0333333333em', 4],
-                    ['overline', 'Overline', '0.75rem', '500', '.1666666667em', 4],
-                    ],
 
         }
     },
     methods: {
             get_list_of_suspects_by_Id(id){
+                       this.overlay = true
                         axios
                         .get("http://localhost:3000/api/read_one_person_suspect/"+id)
                         .then((response)=>{
                             this.suspect = response.data
+                            this.overlay = false
                             console.log(this.suspect)
                         })  
                 },
