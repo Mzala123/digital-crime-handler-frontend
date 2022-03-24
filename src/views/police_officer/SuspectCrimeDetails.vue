@@ -93,11 +93,11 @@
                               <v-card flat class="mb-2">
                               <v-system-bar
                                         dark
-                                        color="primary"
+                                        color="#26c6da"
                                     >
                                   {{item.category}} | Recorded By Officer {{ item.registeringOfficer}}
                                 </v-system-bar>
-
+                               
                                  <v-chip-group
                                     
                                     class="deep-purple accent-4 black--text ml-4"
