@@ -127,7 +127,7 @@ export default {
       },
        userrole: "",
        admin: [
-         {title: 'Dashboard', icon:mdiHomeOutline, name:'dashboard'},
+         {title: 'Dashboard', icon:mdiHomeOutline, name:'admin-dashboard'},
          {title: 'Create Account', icon:mdiAccountCogOutline, name:'create-account'},
          {title: 'List of Users', icon:mdiFormatListBulletedSquare, name:'user-list'}
        ],
