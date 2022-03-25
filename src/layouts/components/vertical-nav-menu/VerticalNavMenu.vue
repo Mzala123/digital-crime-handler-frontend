@@ -34,7 +34,7 @@
 
     <!-- Navigation Items -->
     <v-list expand
-      rounded
+      shaped
       class="vertical-nav-menu-items pr-5"
     >
     <div v-if="userrole === 'Admin' ">

@@ -93,7 +93,7 @@
                               <v-card flat class="mb-2">
                               <v-system-bar
                                         dark
-                                        color="#26c6da"
+                                        color="primary"
                                     >
                                   {{item.category}} | Recorded By Officer {{ item.registeringOfficer}}
                                 </v-system-bar>
