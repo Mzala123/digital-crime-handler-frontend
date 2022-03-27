@@ -214,6 +214,7 @@ export default {
               })
              //console.log("Edit button clicked");
         },
+        
         deleteUserConfirm(){
              axios
              .delete("http://localhost:3000/api/delete_user/"+this.userId)
@@ -229,9 +230,11 @@ export default {
                  this.$swal("Error", error + ", couldn't reach API", "error");   
               })
         },
+
         closeDeleteModal(){
            this.dialogDelete = false
         },
+
       close () {
       this.dialog = false
        },

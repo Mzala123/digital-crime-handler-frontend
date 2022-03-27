@@ -17,7 +17,7 @@
                                 dense
                                 outlined
                                 v-model="category"
-                                :items="categoryOptions "
+                                :items="categoryOptions"
                                 label="Crime category(*)"
                                 required
                                 ></v-select>
@@ -115,8 +115,10 @@ export default {
                 "Damage of property",
                 "Robbery",
                 "Fraud",
-                "Kidnapping"
+                "Kidnapping",
+                "Murder"
             ],
+
             category:"",
             counts:"",
             offenseDate:"",

@@ -126,17 +126,17 @@
                               <v-card-text class="text-right">
                                    <div class="">
 
-                                 <router-link v-bind:to="'/view_suspect_details/'+item._id">
                                         <v-btn
                                         class=""
                                         color="primary"
                                         fab
                                         x-small
                                         dark
+                                        @click="editCrimeDetail(item._id)"
                                       >
                                         <v-icon> {{icons.mdiPencilOutline }}</v-icon>
                                       </v-btn>
-                                </router-link>
+                               
 
                                       <v-btn
                                         class="ml-3"
@@ -169,6 +169,103 @@
 
          </div>
        </v-row>
+
+     <!-- edit dialog box!-->
+
+      <v-dialog
+            v-model="dialog"
+            max-width="800px"
+          >
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Modify Crime Details</span>
+              </v-card-title>
+                       <v-form
+                            v-model="valid"
+                            lazy-validation
+                        >
+                            <v-select
+                               class="mr-8 ml-8 pt-4"
+                                dense
+                                outlined
+                                v-model="crimeList.category"
+                                 :items="categoryOptions "
+                                label="Crime category(*)"
+                                required
+                                ></v-select>
+
+                             <v-text-field
+                            class="mr-8 ml-8 pt-1"
+                            outlined
+                            dense
+                            v-model="crimeList.counts"
+                            label="Counts(*)"
+                            type="number"
+                            required
+                            ></v-text-field>
+
+                            <v-text-field
+                            class="mr-8 ml-8 pt-1"
+                            dense
+                            v-model="crimeList.offenseDate"
+                            label="Offense Date(*)"
+                            type="date"
+                            required
+                            outlined
+                            ></v-text-field>
+
+                            <v-textarea
+                                class="mr-8 ml-8 pt-1"
+                                dense
+                                v-model="crimeList.offenseDescription"
+                                label="Crime Description(*)"
+                                outlined
+                             ></v-textarea>
+                            
+                            <!-- <v-text-field
+                            class="mr-8 ml-8 pt-1"
+                            dense
+                            v-model="username"
+                            required
+                            outlined
+                            v-show="false"
+                            ></v-text-field> -->
+
+                            <v-text-field
+                            class="mr-8 ml-8 pt-1"
+                            dense
+                            v-model="suspect._id"
+                            required
+                            outlined
+                            v-show="false"
+                            ></v-text-field>
+  
+                       </v-form>
+
+  
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="error"
+                  outlined
+                  @click="close"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  outlined
+                  @click="saveCrimeDetails"
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+        <!--end of edit dialog box!-->
+
+
   </v-container>
 </template>
 
@@ -196,6 +293,7 @@ export default {
                mdiEye
                },
                overlay: false,
+               dialog: false,
 
                 suspect: {
                         _id:null,
@@ -220,8 +318,23 @@ export default {
                       },
                     PhotoPath:"http://localhost:3000/images/",
 
-                    
+                    crimeList: {
+                        category:null,
+                        counts:null,
+                        offenseDate:null,
+                        offenseDescription:null,
+                    },
 
+                categoryOptions: [
+                "Theft",
+                "Physical Assault",
+                "Drug Dealing",
+                "Damage of property",
+                "Robbery",
+                "Fraud",
+                "Kidnapping",
+                 "Murder"
+            ],
 
         }
     },
@@ -258,6 +371,28 @@ export default {
                   })
                 }
              })     
+            },
+            editCrimeDetail(crimeId){
+              this.crimeId = crimeId
+              this.suspectId = this.suspect._id
+              this.dialog = true
+              console.log("The id is is"+this.crimeId)
+              //read_one_person_suspect/:suspectId/crimes/:crimeId
+              axios
+                .get("http://localhost:3000/api/read_one_person_suspect/"+this.suspectId+"/crimes/"+this.crimeId)
+                .then((response)=>{
+                  if(response.status === 200){
+                     this.crimeList  = response.data
+                     console.log(this.crimeList)
+                  }
+                })
+
+            },
+            close () {
+              this.dialog = false
+            },
+            saveCrimeDetails(){
+
             }
 
     },
