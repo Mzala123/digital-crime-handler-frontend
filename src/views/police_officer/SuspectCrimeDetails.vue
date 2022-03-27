@@ -9,6 +9,12 @@
                 <v-row>
                      <v-col class="col-xs-12 col-sm-7">
                        <div>
+                         <v-text-field
+                          v-model="suspect._id"
+                          v-show="false"
+                         > 
+                           okay
+                         </v-text-field>
                          <h3 class="mb-1 ml-1"> {{suspect.firstname}} {{suspect.lastname}} </h3> 
                          <v-card flat class="mx-auto">
                               <v-system-bar
@@ -38,6 +44,7 @@
                                         color="primary"
                                     >
                                  Physical Appearance Description
+
                                 </v-system-bar>
 
                                  <v-chip-group
@@ -47,7 +54,7 @@
                                     >
                                        <v-chip>Height - {{ suspect.height}}</v-chip>
                                        <v-chip>Weight - {{ suspect.weight}}</v-chip>
-                                       <v-chip>Eye Color - {{ suspect.weight}}</v-chip>
+                                       <v-chip>Eye Color - {{ suspect.eye_color}}</v-chip>
                                         <v-chip>Hair color - {{ suspect.hair_color}}</v-chip>
                                  </v-chip-group>
 
@@ -96,7 +103,9 @@
                                         color="primary"
                                     >
                                   {{item.category}} | Recorded By Officer {{ item.registeringOfficer}}
-                                </v-system-bar>
+                                
+                                
+                              </v-system-bar>
                                
                                  <v-chip-group
                                     
@@ -110,8 +119,39 @@
                                 <v-card-text class="mt-3 black--text">
                                 <div>
                                     Offense Description - {{ item.offenseDescription }}
+                                   
                                 </div>
                                  </v-card-text>
+                              
+                              <v-card-text class="text-right">
+                                   <div class="">
+
+                                 <router-link v-bind:to="'/view_suspect_details/'+item._id">
+                                        <v-btn
+                                        class=""
+                                        color="primary"
+                                        fab
+                                        x-small
+                                        dark
+                                      >
+                                        <v-icon> {{icons.mdiPencilOutline }}</v-icon>
+                                      </v-btn>
+                                </router-link>
+
+                                      <v-btn
+                                        class="ml-3"
+                                        color="error"
+                                        fab
+                                        x-small
+                                        dark
+                                        @click="removeCrimeDetail(item._id)"
+                                      >
+                                        <v-icon> {{icons.mdiDeleteOutline }}</v-icon>
+                                      </v-btn>
+                                     
+
+                                   </div>            
+                           </v-card-text>
 
                             </v-card>
                              </div>
@@ -134,11 +174,29 @@
 
 <script>
 import axios from "axios"
+
+import {
+    mdiMagnify,
+    mdiDeleteOutline,
+    mdiPencilOutline,
+    mdiEye,
+    mdiPlusCircleOutline
+} from '@mdi/js'
+
 export default {
     data(){
         return{
-  
+               crimeId: "",
+               suspectId: "",
+                 icons: {
+               mdiMagnify,
+               mdiDeleteOutline,
+               mdiPencilOutline,
+               mdiPlusCircleOutline,
+               mdiEye
+               },
                overlay: false,
+
                 suspect: {
                         _id:null,
                         nationalId: null,
@@ -162,6 +220,8 @@ export default {
                       },
                     PhotoPath:"http://localhost:3000/images/",
 
+                    
+
 
         }
     },
@@ -176,6 +236,29 @@ export default {
                             console.log(this.suspect)
                         })  
                 },
+            removeCrimeDetail(crimeId){
+                this.crimeId = crimeId
+                this.suspectId = this.suspect._id
+                  this.$swal({
+              title: "Are you sure?",
+              text: "Once deleted, you will no longer have such crime details!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            }).then((result)=>{
+                if(result.isConfirmed){
+                 axios
+                  .delete("http://localhost:3000/api/read_one_person_suspect/"+this.suspectId+"/crimes/"+this.crimeId)
+                    .then((response)=>{
+                    if(response.status === 204){
+                        this.$swal("Message", "Crime details removed", "success").then(() => {
+                         this.get_list_of_suspects_by_Id(this.suspectId);
+                       })
+                    }
+                  })
+                }
+             })     
+            }
 
     },
     
