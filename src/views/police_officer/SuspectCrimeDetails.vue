@@ -239,6 +239,15 @@
                             outlined
                             v-show="false"
                             ></v-text-field>
+
+                                 <v-text-field
+                            class="mr-8 ml-8 pt-1"
+                            dense
+                            v-model="username"
+                            required
+                            outlined
+                            v-show="false"
+                            ></v-text-field>
   
                        </v-form>
 
@@ -325,6 +334,8 @@ export default {
                         offenseDescription:null,
                     },
 
+                    username: "",
+
                 categoryOptions: [
                 "Theft",
                 "Physical Assault",
@@ -392,13 +403,45 @@ export default {
               this.dialog = false
             },
             saveCrimeDetails(){
+                  console.log("Hello" +this.crimeId)
+                  this.suspectId = this.suspect._id
+                  console.log("well well "+this.suspectId);
+                  axios
+                   .put("http://localhost:3000/api/read_one_person_suspect/"+this.suspectId+"/crimes/"+this.crimeId,{
+                        
+                        category: this.crimeList.category,
+                        counts: this.crimeList.counts,
+                        offenseDate: this.crimeList.offenseDate,
+                        offenseDescription: this.crimeList.offenseDescription,
+                        officer: this.username
 
-            }
+                   }).then((response)=>{
+                       if(response.status === 200){
+                          this.$swal("Info","Crime details modified", "success")
+                          .then(()=>{
+                            this.get_list_of_suspects_by_Id(this.suspectId)
+                            this.dialog = false
+                          })
+                       }else{
+                           this.$swal("error","There was an error modifying crime details", "error")
+                       }
+                   }).catch((error)=>{
+                        
+                   })
+            },
+            setUserDetails(){
+         const user = JSON.parse(sessionStorage.getItem("user"))
+         this.username = user.name
+         this.userId = user._id
+         console.log(this.imagename)
+         console.log(this.userId)
+       },
 
     },
     
     mounted() {
       this.get_list_of_suspects_by_Id(this.$route.params.id)
+      this.setUserDetails()
     }
 }
 </script>

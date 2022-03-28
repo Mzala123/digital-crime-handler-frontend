@@ -214,7 +214,7 @@ export default {
               })
              //console.log("Edit button clicked");
         },
-        
+
         deleteUserConfirm(){
              axios
              .delete("http://localhost:3000/api/delete_user/"+this.userId)
