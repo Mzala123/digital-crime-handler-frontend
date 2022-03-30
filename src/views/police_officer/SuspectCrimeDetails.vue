@@ -19,7 +19,7 @@
                          <v-card flat class="mx-auto">
                               <v-system-bar
                                         dark
-                                        color="primary"
+                                        color="secondary"
                                     >
                                   National Id - {{ suspect.nationalId }} 
                                 </v-system-bar>
@@ -41,7 +41,7 @@
                      <v-card flat>
                               <v-system-bar
                                         dark
-                                        color="primary"
+                                        color="secondary"
                                     >
                                  Physical Appearance Description
 
@@ -77,7 +77,8 @@
                            <v-card flat >
                                 <v-system-bar
                                         dark
-                                        color="primary"
+                                        color="secondary"
+                                        class="text--white"
                                     >
                                   Suspect Profile
                                 </v-system-bar>
@@ -100,7 +101,7 @@
                               <v-card flat class="mb-2">
                               <v-system-bar
                                         dark
-                                        color="primary"
+                                        color="secondary"
                                     >
                                   {{item.category}} | Recorded By Officer {{ item.registeringOfficer}}
                                 
@@ -108,7 +109,7 @@
                               </v-system-bar>
                                
                                  <v-chip-group
-                                    
+ 
                                     class="deep-purple accent-4 black--text ml-4"
                                     column
                                     >
@@ -280,6 +281,7 @@
 
 <script>
 import axios from "axios"
+import config  from "@/config"
 
 import {
     mdiMagnify,
@@ -288,6 +290,7 @@ import {
     mdiEye,
     mdiPlusCircleOutline
 } from '@mdi/js'
+
 
 export default {
     data(){
@@ -325,7 +328,7 @@ export default {
                         known_aliases:null,
                         profile_photo:'null_profile.png'
                       },
-                    PhotoPath:"http://localhost:3000/images/",
+                    PhotoPath:`${config.Base_URL}/images/`,
 
                     crimeList: {
                         category:null,

@@ -12,7 +12,7 @@
                            <v-card flat >
                                 <v-system-bar
                                         dark
-                                        color="primary"
+                                        color="secondary"
                                     >
                                   Suspect Profile
                                 </v-system-bar>
@@ -35,7 +35,7 @@
                          <v-card flat class="mx-auto">
                               <v-system-bar
                                         dark
-                                        color="primary"
+                                        color="secondary"
                                     >
                                   National Id - {{ suspect.nationalId }} 
                                 </v-system-bar>
@@ -77,7 +77,7 @@
                               <v-card flat>
                               <v-system-bar
                                         dark
-                                        color="primary"
+                                        color="secondary"
                                     >
                                  Physical Appearance Description
                                 </v-system-bar>
