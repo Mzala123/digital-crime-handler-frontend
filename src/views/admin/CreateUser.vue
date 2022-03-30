@@ -140,6 +140,7 @@ export default {
       valid: true,
       name: '',
       imagename:'null_profile.png',
+      
       PhotoPath:"http://localhost:3000/images/",
 
       nameRules: [

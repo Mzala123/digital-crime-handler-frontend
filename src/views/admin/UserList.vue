@@ -146,6 +146,8 @@
 
 <script>
 import axios from 'axios'
+import config from '@/config'
+
 import {
     mdiMagnify,
     mdiDeleteOutline,
@@ -187,7 +189,7 @@ export default {
         viewListOfUsers(){
             this.loading = true
             axios
-              .get("http://localhost:3000/api/users")
+              .get(`${config.Base_URL}/api/users`)
               .then((response)=>{
                   this.userList = response.data
                   this.loading = false
@@ -205,7 +207,7 @@ export default {
              this.dialog = true
              this.userId = userId
              axios
-              .get("http://localhost:3000/api/read_one_user/"+this.userId)
+              .get(`${config.Base_URL}/api/read_one_user/`+this.userId)
               .then((response)=>{
                 if(response.status === 200){
                    this.user = response.data
@@ -217,7 +219,7 @@ export default {
 
         deleteUserConfirm(){
              axios
-             .delete("http://localhost:3000/api/delete_user/"+this.userId)
+             .delete(`${config.Base_URL}/api/delete_user/`+this.userId)
              .then((response)=>{
                if(response.status === 204){
                    console.log("The status code is "+response.status);
@@ -240,7 +242,7 @@ export default {
        },
        editUserRole(){
          axios
-           .put("http://localhost:3000/api/update_userrole/"+this.userId,{
+           .put(`${config.Base_URL}api/update_userrole/`+this.userId,{
                userrole : this.user.userrole
            })
            .then((response)=>{
