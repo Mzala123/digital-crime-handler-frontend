@@ -55,6 +55,16 @@
           :icon="item.icon"
       ></nav-menu-link>
     </div>
+
+    <div v-if="userrole === 'Station Officer' ">
+      <nav-menu-link 
+          v-for="item in station_officer"
+          :key="item.title"
+          :title="item.title"
+          :to="{name: item.name}"
+          :icon="item.icon"
+      ></nav-menu-link>
+    </div>
      <!-- <nav-menu-link
         title="Dashboard"
         :to="{ name: 'dashboard' }"
@@ -137,6 +147,11 @@ export default {
          {title: 'Add Suspect', icon:mdiHuman, name:'add-suspect'},
          {title: 'List of Suspects', icon:mdiFormatListBulleted, name:'suspect-list'},
          {title: 'Criminal List', icon:mdiFormatListBulletedSquare, name:'criminal-list'},
+       ],
+
+        station_officer:[
+         {title: 'Dashboard', icon:mdiHomeOutline, name:'station-officer-dashboard'},
+         {title: 'Alleged Offenders', icon:mdiFormatListBulletedSquare, name:'criminal-list'},
        ]
 
     }

@@ -98,6 +98,11 @@ const routes = [
     component: () => import('@/views/police_officer/AddCrime.vue'),
   },
 
+{
+    path: '/station_officer_dashboard',
+    name: 'station-officer-dashboard',
+    component: () => import('@/views/station_officer/StationOfficerDashboard.vue'),
+ },
 
   {
     path: '/error-404',

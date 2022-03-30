@@ -189,7 +189,7 @@ export default {
         viewListOfUsers(){
             this.loading = true
             axios
-              .get(`${config.Base_URL}/api/users`)
+              .get(`${config.Base_URL}api/users`)
               .then((response)=>{
                   this.userList = response.data
                   this.loading = false
@@ -207,7 +207,7 @@ export default {
              this.dialog = true
              this.userId = userId
              axios
-              .get(`${config.Base_URL}/api/read_one_user/`+this.userId)
+              .get(`${config.Base_URL}api/read_one_user/`+this.userId)
               .then((response)=>{
                 if(response.status === 200){
                    this.user = response.data
@@ -219,7 +219,7 @@ export default {
 
         deleteUserConfirm(){
              axios
-             .delete(`${config.Base_URL}/api/delete_user/`+this.userId)
+             .delete(`${config.Base_URL}api/delete_user/`+this.userId)
              .then((response)=>{
                if(response.status === 204){
                    console.log("The status code is "+response.status);

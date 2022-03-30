@@ -195,7 +195,7 @@ export default {
                    }else if(userrole === "Police Officer"){
                     this.$router.push('/list_suspects')
                    }else if(userrole === "Station Officer"){
-
+                     this.$router.push('/station_officer_dashboard')
                    }
                  }else {
                    this.$swal("Warning", response.data.info, "warning")
