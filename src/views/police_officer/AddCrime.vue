@@ -96,6 +96,7 @@
 
 <script>
 import axios  from 'axios'
+import config from '@/config'
 
 export default {
     data(){
@@ -135,7 +136,7 @@ export default {
                }
                else{
                 axios
-                 .post("http://localhost:3000/api/add_person_suspect/"+this.suspect._id+"/add_crime_details",{
+                 .post(`${config.Base_URL}api/add_person_suspect/`+this.suspect._id+"/add_crime_details",{
                     category: this.category,
                     counts: this.counts,
                     offenseDate: this.offenseDate,
@@ -151,7 +152,7 @@ export default {
 
          get_list_of_suspects_by_Id(id){
                         axios
-                        .get("http://localhost:3000/api/read_one_person_suspect/"+id)
+                        .get(`${config.Base_URL}api/read_one_person_suspect/`+id)
                         .then((response)=>{
                             this.suspect = response.data
                             console.log(this.suspect)

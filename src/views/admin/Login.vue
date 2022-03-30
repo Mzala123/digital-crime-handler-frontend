@@ -115,6 +115,7 @@
 <script>
 import {mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline, mdiEmail, mdiLogin } from '@mdi/js'
 import axios from 'axios'
+import config from '@/config'
 
 export default {
   name: 'LoginView',
@@ -165,7 +166,7 @@ export default {
         this.$swal("Field Validation","Please Fill in all required fields")
       }else{
         this.overlay = true
-        let authEndpoint = `${sessionStorage.getItem("BASE_URL")}login`;
+        let authEndpoint = `${sessionStorage.getItem("BASE_URL")}api/login`;
         console.log(authEndpoint);
         axios
           .post(authEndpoint,{
@@ -207,7 +208,7 @@ export default {
     }
   },
   mounted(){
-     sessionStorage.setItem("BASE_URL","http://localhost:3000/api/")
+     sessionStorage.setItem("BASE_URL",`${config.Base_URL}`)
   }
      
 }

@@ -60,7 +60,6 @@
            small
           class="me-2"
           color="blue"
-          @click="viewMore(item._id)"
         >
           {{ icons.mdiEye }}
         </v-icon>
@@ -101,6 +100,7 @@ import {
     mdiEye,
     mdiPlusCircleOutline
 } from '@mdi/js'
+import config from '@/config'
 
 
 export default {
@@ -134,7 +134,7 @@ export default {
          list_of_suspects(){
             this.loading = true
             axios
-              .get("http://localhost:3000/api/get_list_of_person_suspects")
+              .get(`${config.Base_URL}api/get_list_of_person_suspects`)
               .then((response)=>{
                   this.suspectList = response.data
                   this.loading = false
@@ -153,7 +153,7 @@ export default {
               dangerMode: true,
             }).then((result)=>{
               if(result.isConfirmed){
-                  axios.delete("http://localhost:3000/api/delete_person_suspect/"+this.suspectId)
+                  axios.delete(`${config.Base_URL}api/delete_person_suspect/`+this.suspectId)
                   .then((response)=>{
                     if(response.status === 204){
                         this.$swal("Message", "Suspect details removed", "success").then(() => {

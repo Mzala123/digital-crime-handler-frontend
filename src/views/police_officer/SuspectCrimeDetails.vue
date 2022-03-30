@@ -56,17 +56,8 @@
                                        <v-chip>Weight - {{ suspect.weight}}</v-chip>
                                        <v-chip>Eye Color - {{ suspect.eye_color}}</v-chip>
                                         <v-chip>Hair color - {{ suspect.hair_color}}</v-chip>
-                                 </v-chip-group>
-
-                                <v-chip-group
-                                    
-                                    class="deep-purple accent-4 black--text ml-4"
-                                    column
-                                    >
-                                      
-                                       <v-chip>Skin tone - {{ suspect.skin_tone}}</v-chip>
-                                     
-                                 </v-chip-group>
+                                        <v-chip>Skin tone - {{ suspect.skin_tone}}</v-chip>
+                                 </v-chip-group> 
 
                             </v-card>
                         </div> 
@@ -356,7 +347,7 @@ export default {
             get_list_of_suspects_by_Id(id){
                        this.overlay = true
                         axios
-                        .get("http://localhost:3000/api/read_one_person_suspect/"+id)
+                        .get(`${config.Base_URL}api/read_one_person_suspect/`+id)
                         .then((response)=>{
                             this.suspect = response.data
                             this.overlay = false
@@ -375,7 +366,7 @@ export default {
             }).then((result)=>{
                 if(result.isConfirmed){
                  axios
-                  .delete("http://localhost:3000/api/read_one_person_suspect/"+this.suspectId+"/crimes/"+this.crimeId)
+                  .delete(`${config.Base_URL}api/read_one_person_suspect/`+this.suspectId+"/crimes/"+this.crimeId)
                     .then((response)=>{
                     if(response.status === 204){
                         this.$swal("Message", "Crime details removed", "success").then(() => {
@@ -393,7 +384,7 @@ export default {
               console.log("The id is is"+this.crimeId)
               //read_one_person_suspect/:suspectId/crimes/:crimeId
               axios
-                .get("http://localhost:3000/api/read_one_person_suspect/"+this.suspectId+"/crimes/"+this.crimeId)
+                .get(`${config.Base_URL}api/read_one_person_suspect/`+this.suspectId+"/crimes/"+this.crimeId)
                 .then((response)=>{
                   if(response.status === 200){
                      this.crimeList  = response.data
@@ -410,14 +401,12 @@ export default {
                   this.suspectId = this.suspect._id
                   console.log("well well "+this.suspectId);
                   axios
-                   .put("http://localhost:3000/api/read_one_person_suspect/"+this.suspectId+"/crimes/"+this.crimeId,{
-                        
+                   .put(`${config.Base_URL}api/read_one_person_suspect/`+this.suspectId+"/crimes/"+this.crimeId,{
                         category: this.crimeList.category,
                         counts: this.crimeList.counts,
                         offenseDate: this.crimeList.offenseDate,
                         offenseDescription: this.crimeList.offenseDescription,
                         officer: this.username
-
                    }).then((response)=>{
                        if(response.status === 200){
                           this.$swal("Info","Crime details modified", "success")

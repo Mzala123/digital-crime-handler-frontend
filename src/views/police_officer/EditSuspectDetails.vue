@@ -280,6 +280,7 @@ import { mdiAccountOutline, mdiEmailOutline,
  mdiCloudUploadOutline, mdiEyeOffOutline,mdiEyeOutline
  } from '@mdi/js'
 import axios from 'axios'
+import config from '@/config'
 
 export default {
     data(){
@@ -323,7 +324,8 @@ export default {
       },
 
 
-       PhotoPath:"http://localhost:3000/images/",
+        PhotoPath:`${config.Base_URL}images/`,
+
        selectedFile: null,
        isSelecting: false
     }
@@ -331,7 +333,7 @@ export default {
   methods: {
        editSuspectDetails() {
         axios
-           .put("http://localhost:3000/api/update_person_suspect/"+this.suspect._id,{
+           .put(`${config.Base_URL}api/update_person_suspect/`+this.suspect._id,{
                 nationalId:this.suspect.nationalId,
                 firstname:this.suspect.firstname,
                 lastname:this.suspect.lastname,
@@ -367,7 +369,7 @@ export default {
 
        get_list_of_suspects_by_Id(id){
              axios
-              .get("http://localhost:3000/api/read_one_person_suspect/"+id)
+              .get(`${config.Base_URL}api/read_one_person_suspect/`+id)
               .then((response)=>{
                   this.suspect = response.data
                   this.suspect.imagename = response.data.imagename
@@ -387,15 +389,12 @@ export default {
       //this.selectedFile = e.target.files[0]
       let formData = new FormData
       formData.append('file',e.target.files[0]);
-      axios.post("http://localhost:3000/api/upload_user_imagefile",
+      axios.post(`${config.Base_URL}api/upload_user_imagefile`,
           formData)
           .then((response)=>{
           this.suspect.profile_photo = response.data
-         /* this.imageId = response.data._id
-          sessionStorage.setItem("imageId", Object(response.data._id)) */
           console.log("The image id is "+this.imagename)
       })
-      // do something
     },
 
   },

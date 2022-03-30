@@ -126,6 +126,7 @@ import { mdiAccountOutline, mdiEmailOutline,
 
 import VueSweetAlert from "vue-sweetalert2"
 import axios from 'axios'
+import config from '@/config'
 
 export default {
        data(){
@@ -141,7 +142,7 @@ export default {
       name: '',
       imagename:'null_profile.png',
       
-      PhotoPath:"http://localhost:3000/images/",
+      PhotoPath:`${config.Base_URL}images/`,
 
       nameRules: [
         v => !!v || 'Name is required',
@@ -189,7 +190,7 @@ export default {
             this.$swal("Please fill in all required fields")
           }else{
             axios
-              .post("http://localhost:3000/api/register",{
+              .post(`${config.Base_URL}api/register`,{
                   name: this.name,
                   email: this.email,
                   userrole: this.userrole,
@@ -220,7 +221,7 @@ export default {
       //this.selectedFile = e.target.files[0]
       let formData = new FormData
       formData.append('file',e.target.files[0]);
-      axios.post("http://localhost:3000/api/upload_user_imagefile",
+      axios.post(`${config.Base_URL}api/upload_user_imagefile`,
           formData)
           .then((response)=>{
           this.imagename = response.data

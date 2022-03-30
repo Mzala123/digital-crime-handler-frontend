@@ -85,6 +85,7 @@
 
 <script>
 import axios from 'axios'
+import config from '@/config'
 import {
     mdiMagnify,
     mdiDeleteOutline,
@@ -92,6 +93,7 @@ import {
     mdiEye,
     mdiPlusCircleOutline
 } from '@mdi/js'
+
 
 export default {
     data(){
@@ -119,7 +121,7 @@ export default {
                 { divider: true, inset: true },
                 ],
 
-            PhotoPath:"http://localhost:3000/images/",
+            PhotoPath:`${config.Base_URL}images/`,
 
         }
     },
@@ -127,7 +129,7 @@ export default {
            list_of_suspects(){
             this.overlay = true
             axios
-              .get("http://localhost:3000/api/get_list_of_suspects_with_alleged_crime")
+              .get(`${config.Base_URL}api/get_list_of_suspects_with_alleged_crime`)
               .then((response)=>{
                   this.suspectList = response.data
                   this.overlay = false

@@ -53,24 +53,6 @@
                          </v-card>
                         </div>
 
-                       <!-- <div>
-                       <v-card elevation="1" class="mx-auto mt-6">
-                              <v-system-bar
-                                        dark
-                                        color="primary"
-                                    >
-                                 Physical Appearance Description
-                                </v-system-bar>
-                                <v-card-text class="mt-3 black--text">
-                                    <div> Gender - {{ suspect.gender}}  </div>
-                                    <div> Age - {{ suspect.age}} </div>
-                                    <div> Date of birth - {{ suspect.dob}} </div>
-                                    <div> Known ALiases - {{ suspect.known_aliases}} </div>
-                                    <div> Home Address - {{suspect.address }}</div>
-                                </v-card-text>
-                         </v-card>
-                        </div> -->
-
                      </v-col>
                       
                          <v-col class="col-xl-12">
@@ -122,6 +104,7 @@
 
 <script>
 import axios from "axios"
+import config from '@/config'
 export default {
     data(){
         return{
@@ -148,7 +131,7 @@ export default {
                         known_aliases:null,
                         profile_photo:'null_profile.png'
                       },
-                    PhotoPath:"http://localhost:3000/images/",
+                     PhotoPath:`${config.Base_URL}images/`,
 
 
         }
@@ -157,7 +140,7 @@ export default {
             get_list_of_suspects_by_Id(id){
                        this.overlay = true
                         axios
-                        .get("http://localhost:3000/api/read_one_person_suspect/"+id)
+                        .get(`${config.Base_URL}api/read_one_person_suspect/`+id)
                         .then((response)=>{
                             this.suspect = response.data
                             this.overlay = false

@@ -281,6 +281,7 @@ import { mdiAccountOutline, mdiEmailOutline,
  } from '@mdi/js'
 
 import axios from 'axios'
+import config from '@/config'
 
 export default {
     data(){
@@ -324,7 +325,7 @@ export default {
       imageDB: "",
       imageId:"",
 
-      PhotoPath:"http://localhost:3000/images/",
+       PhotoPath:`${config.Base_URL}images/`,
        selectedFile: null,
        isSelecting: false
         }
@@ -344,7 +345,7 @@ export default {
          }else{
             this.overlay = true
             axios
-            .post("http://localhost:3000/api/add_person_suspect",{
+            .post(`${config}api/add_person_suspect`,{
                
                 nationalId:this.nationalId,
                 firstname:this.firstname,
@@ -395,7 +396,7 @@ export default {
       //this.selectedFile = e.target.files[0]
       let formData = new FormData
       formData.append('file',e.target.files[0]);
-      axios.post("http://localhost:3000/api/upload_user_imagefile",
+      axios.post(`${config.Base_URL}api/upload_user_imagefile`,
           formData)
           .then((response)=>{
           this.imagename = response.data
@@ -410,7 +411,7 @@ export default {
           this.imageId = sessionStorage.getItem("imageId")
           console.log("The id for the image is "+this.imageId)
           axios
-           .get("http://localhost:3000/api/get_user_profile_image/"+this.imageId)
+           .get(`${config.Base_URL}api/get_user_profile_image/`+this.imageId)
            .then((response)=>{
              this.imagename = response.data.img.data.toString('base64')
              console.log("The content type is", this.imagename)
