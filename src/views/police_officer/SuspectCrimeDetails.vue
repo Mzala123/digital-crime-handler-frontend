@@ -129,10 +129,11 @@
                                         <v-icon> {{icons.mdiPencilOutline }}</v-icon>
                                       </v-btn>
                                
-
+                                 
                                       <v-btn
                                         class="ml-3"
                                         color="error"
+                                        v-show="userrole !='Police Officer'"
                                         fab
                                         x-small
                                         dark
@@ -329,6 +330,7 @@ export default {
                     },
 
                     username: "",
+                    userrole:"",
 
                 categoryOptions: [
                 "Theft",
@@ -405,8 +407,8 @@ export default {
                         category: this.crimeList.category,
                         counts: this.crimeList.counts,
                         offenseDate: this.crimeList.offenseDate,
-                        offenseDescription: this.crimeList.offenseDescription,
-                        officer: this.username
+                        offenseDescription: this.crimeList.offenseDescription
+                       //officer: this.username
                    }).then((response)=>{
                        if(response.status === 200){
                           this.$swal("Info","Crime details modified", "success")
@@ -424,9 +426,11 @@ export default {
             setUserDetails(){
          const user = JSON.parse(sessionStorage.getItem("user"))
          this.username = user.name
+         this.userrole = user.userrole
          this.userId = user._id
          console.log(this.imagename)
          console.log(this.userId)
+         console.log("The userrole "+this.userrole)
        },
 
     },

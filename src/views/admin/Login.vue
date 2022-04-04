@@ -84,19 +84,6 @@
           </v-form>
         </v-card-text>
 
-        <v-card-actions class="d-flex justify-center">
-          <v-btn
-            v-for="link in socialLink"
-            :key="link.icon"
-            icon
-            class="ms-1"
-          >
-            <v-icon :color="$vuetify.theme.dark ? link.colorInDark : link.color">
-              {{ link.icon }}
-            </v-icon>
-          </v-btn>
-        </v-card-actions>
-
  <!-- overray-->
 
        <v-overlay absolute opacity="0" :value="overlay">

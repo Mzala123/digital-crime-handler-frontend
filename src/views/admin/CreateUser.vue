@@ -196,7 +196,12 @@ export default {
                   userrole: this.userrole,
                   password: this.password,
                   imagename: this.imagename
-              }).then((response)=>{
+              },
+               {
+                 headers: {Authorization: `Bearer${sessionStorage.getItem('Authorization')}`}
+               },
+
+              ).then((response)=>{
                   console.log(response.status)
                   if(response.status == 201){
                       this.$swal("Information","User Registered", "success")
