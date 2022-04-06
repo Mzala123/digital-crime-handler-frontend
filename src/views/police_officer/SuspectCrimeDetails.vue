@@ -113,10 +113,9 @@
                                        <v-chip>Date offense record - {{ item.chargeFiled}}</v-chip>
                                  </v-chip-group>
                                 <v-card-text class="mt-3 black--text">
-                                <div>
-                                    Offense Description - {{ item.offenseDescription }}
-                                   
-                                </div>
+                                <div> Offense Description - {{ item.offenseDescription }} </div>
+                                <div> Case status - {{ item.status}} </div>  
+                                <div>   Status Description - {{ item.statusDescription}} </div>
                                  </v-card-text>
                               
                               <v-card-text class="text-right">
@@ -212,17 +211,17 @@
                         >
                         <v-card-text>
                             <v-select
-                               class="mr-8 ml-8 mt-4 pt-4"
+                               class="mr-6 ml-6 mt-4 pt-4"
                                 dense
                                 outlined
                                 v-model="crimeList.category"
-                                 :items="categoryOptions "
+                                 :items="categoryOptions"
                                 label="Crime category(*)"
                                 required
-                                ></v-select>
+                             ></v-select>
 
                              <v-text-field
-                            class="mr-8 ml-8 pt-1"
+                            class="mr-6 ml-6 pt-1"
                             outlined
                             dense
                             v-model="crimeList.counts"
@@ -232,7 +231,7 @@
                             ></v-text-field>
 
                             <v-text-field
-                            class="mr-8 ml-8 pt-1"
+                            class="mr-6 ml-6 pt-1"
                             dense
                             v-model="crimeList.offenseDate"
                             label="Offense Date(*)"
@@ -242,7 +241,7 @@
                             ></v-text-field>
 
                             <v-textarea
-                                class="mr-8 ml-8 pt-1"
+                                class="mr-6 ml-6 pt-1"
                                 dense
                                 v-model="crimeList.offenseDescription"
                                 label="Crime Description(*)"
@@ -250,7 +249,7 @@
                              ></v-textarea>
                           
                             <v-text-field
-                            class="mr-8 ml-8 pt-1"
+                            class="mr-6 ml-6 pt-1"
                             dense
                             v-model="suspect._id"
                             required
@@ -259,7 +258,7 @@
                             ></v-text-field>
 
                                  <v-text-field
-                            class="mr-8 ml-8 pt-1"
+                            class="mr-6 ml-6 pt-1"
                             dense
                             v-model="username"
                             required
@@ -270,7 +269,7 @@
                        </v-form>
              <v-card-text>
                  <v-btn
-                  class="mr-2 ml-8 mb-4"
+                  class="mr-2 ml-6 mb-4"
                   color="primary"
                   outlined
                   @click="saveCrimeDetails"
@@ -346,7 +345,6 @@
                                 dense
                                 v-model="mail.message"
                                 label="Message"
-                              
                              ></v-textarea>
 
 
@@ -366,6 +364,59 @@
               </v-dialog>
 
         <!--End of Email notification dialog -->
+
+        <!-- start of status dialog -->
+           <v-dialog
+                  v-model="statusDialog"
+                  max-width="700px"
+            >
+              
+                  <v-card
+                    elevation="1"
+                  >
+                    <v-system-bar
+                          dark
+                          color="secondary"
+                          style="color: white; font-weight:bold; height:40px"
+                          
+                      >
+                          Provide Current Case Status
+                      </v-system-bar>
+                      <v-form>
+
+                             <v-select
+                               class="mr-5 ml-5 mt-4 pt-4"
+                                dense
+                                v-model="crimeList.status"
+                                 :items="statusOptions"
+                                label="Status"
+                                required
+                             ></v-select>
+
+                             <v-textarea
+                                class="mr-5 ml-5 pt-3 mt-1"
+                                dense
+                                v-model="crimeList.statusDescription"
+                                label="Status description"
+                             ></v-textarea>
+
+                              <v-btn
+                            color="primary"
+                            class="mr-5 ml-5 pt-1 mt-5 mb-5"
+                            @click="saveStatus"
+                            elevation="1"
+                          >
+                            Save
+                          </v-btn>
+
+                      </v-form>
+                  
+                  </v-card>
+
+
+           </v-dialog>
+
+        <!-- end of status dialog-->
 
 
   </v-container>
@@ -404,6 +455,7 @@ export default {
                overlay: false,
                dialog: false,
                emailDialog: false,
+               statusDialog:  false,
 
                emailRules: [
                     v => !!v || 'E-mail is required',
@@ -438,6 +490,8 @@ export default {
                         counts:null,
                         offenseDate:null,
                         offenseDescription:null,
+                        status: null,
+                        statusDescription: null
                     },
 
                     username: "",
@@ -453,6 +507,14 @@ export default {
                 "Kidnapping",
                  "Murder"
             ],
+               
+               statusOptions: [
+                 "Pending",
+                 "Ongoing",
+                 "Closed",
+                 "Dismissed",
+                 "Transferred"
+               ],
 
                    mail: {
                      from: "",
@@ -474,6 +536,7 @@ export default {
                             console.log(this.suspect)
                         })  
                 },
+
             removeCrimeDetail(crimeId){
                 this.crimeId = crimeId
                 this.suspectId = this.suspect._id
@@ -578,8 +641,21 @@ export default {
                       })
                   }
             },
-
-
+           provideCrimeUpdate(crimeId){
+                this.statusDialog = true
+                this.crimeId = crimeId
+                this.suspectId = this.suspect._id
+                   console.log("The id is is"+this.crimeId)
+              //read_one_person_suspect/:suspectId/crimes/:crimeId
+              axios
+                .get(`${config.Base_URL}api/read_one_person_suspect/`+this.suspectId+"/crimes/"+this.crimeId)
+                .then((response)=>{
+                  if(response.status === 200){
+                     this.crimeList  = response.data
+                     console.log(this.crimeList)
+                  }
+                })
+           },
 
             setUserDetails(){
          const user = JSON.parse(sessionStorage.getItem("user"))

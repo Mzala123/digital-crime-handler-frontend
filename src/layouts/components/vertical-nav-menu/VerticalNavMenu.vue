@@ -151,7 +151,8 @@ export default {
 
         station_officer:[
          {title: 'Dashboard', icon:mdiHomeOutline, name:'station-officer-dashboard'},
-         {title: 'Alleged Offenders', icon:mdiFormatListBulletedSquare, name:'criminal-list'},
+         {title: 'Ongoing Cases', icon:mdiFormatListBulletedSquare, name:'criminal-list'},
+        // {title: 'Closed Cases', icon:mdiFormatListBulletedSquare, name:'criminal-list-clos'},
        ]
 
     }
