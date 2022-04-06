@@ -20,6 +20,7 @@
                               <v-system-bar
                                         dark
                                         color="secondary"
+                                        style="color: white; font-weight:bold"
                                     >
                                   National Id - {{ suspect.nationalId }} 
                                 </v-system-bar>
@@ -42,6 +43,7 @@
                               <v-system-bar
                                         dark
                                         color="secondary"
+                                        style="color: white; font-weight:bold"
                                     >
                                  Physical Appearance Description
 
@@ -69,7 +71,7 @@
                                 <v-system-bar
                                         dark
                                         color="secondary"
-                                        class="text--white"
+                                        style="color: white; font-weight:bold"
                                     >
                                   Suspect Profile
                                 </v-system-bar>
@@ -93,6 +95,8 @@
                               <v-system-bar
                                         dark
                                         color="secondary"
+                                        style="color: white; font-weight:bold"
+                                        class="text--light"
                                     >
                                   {{item.category}} | Recorded By Officer {{ item.registeringOfficer}}
                                 
@@ -120,16 +124,39 @@
 
                                         <v-btn
                                         class=""
+                                        color="secondary"
+                                        fab
+                                        x-small
+                                        dark
+                                        v-show="userrole !='Police Officer'"
+                                        @click="provideCrimeUpdate(item._id)"
+                                      >
+                                        <v-icon> {{icons.mdiListStatus }}</v-icon>
+                                      </v-btn>
+                                       <v-btn
+                                       class="ml-3"
+                                        color="success"
+                                        fab
+                                        x-small
+                                        dark
+                                        v-show="userrole !='Police Officer'"
+                                        @click="sendNofication(item._id)"
+                                      >
+                                        <v-icon> {{icons.mdiEmail}}</v-icon>
+                                      </v-btn>
+
+                                        <v-btn
+                                        class="ml-3"
                                         color="primary"
                                         fab
                                         x-small
                                         dark
+                                       
                                         @click="editCrimeDetail(item._id)"
                                       >
                                         <v-icon> {{icons.mdiPencilOutline }}</v-icon>
                                       </v-btn>
                                
-                                 
                                       <v-btn
                                         class="ml-3"
                                         color="error"
@@ -241,10 +268,7 @@
                             outlined
                             v-show="false"
                             ></v-text-field>
-  
                        </v-form>
-
-  
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
@@ -267,6 +291,19 @@
 
         <!--end of edit dialog box!-->
 
+        <!--Email notification dialog -->
+              <v-dialog
+                  v-model="emailDialog"
+                  max-width="700px"
+                >
+
+                
+
+
+              </v-dialog>
+
+        <!--End of Email notification dialog -->
+
 
   </v-container>
 </template>
@@ -280,7 +317,9 @@ import {
     mdiDeleteOutline,
     mdiPencilOutline,
     mdiEye,
-    mdiPlusCircleOutline
+    mdiPlusCircleOutline,
+    mdiListStatus,
+    mdiEmail
 } from '@mdi/js'
 
 
@@ -294,7 +333,10 @@ export default {
                mdiDeleteOutline,
                mdiPencilOutline,
                mdiPlusCircleOutline,
-               mdiEye
+               mdiEye,
+               mdiListStatus,
+               mdiEmail
+               
                },
                overlay: false,
                dialog: false,

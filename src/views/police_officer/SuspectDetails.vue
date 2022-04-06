@@ -13,6 +13,7 @@
                                 <v-system-bar
                                         dark
                                         color="secondary"
+                                        style="color: white; font-weight:bold"
                                     >
                                   Suspect Profile
                                 </v-system-bar>
@@ -36,6 +37,7 @@
                               <v-system-bar
                                         dark
                                         color="secondary"
+                                        style="color: white; font-weight:bold"
                                     >
                                   National Id - {{ suspect.nationalId }} 
                                 </v-system-bar>
@@ -60,6 +62,7 @@
                               <v-system-bar
                                         dark
                                         color="secondary"
+                                        style="color: white; font-weight:bold"
                                     >
                                  Physical Appearance Description
                                 </v-system-bar>
