@@ -21,7 +21,7 @@
                                         dark
                                         color="secondary"
                                         style="color: white; font-weight:bold"
-                                    >
+                                >
                                   National Id - {{ suspect.nationalId }} 
                                 </v-system-bar>
                                 <v-card-text class="mt-3 black--text">
@@ -197,9 +197,15 @@
             max-width="800px"
           >
             <v-card>
-              <v-card-title>
-                <span class="text-h5">Modify Crime Details</span>
-              </v-card-title>
+                <v-system-bar
+                                        dark
+                                        color="secondary"
+                                        style="color: white; font-weight:bold; height:40px"
+                                       
+                                    >
+                                  MODIFY CRIME DETAILS
+                      </v-system-bar>
+              
                        <v-form
                             v-model="valid"
                             lazy-validation
@@ -241,16 +247,7 @@
                                 label="Crime Description(*)"
                                 outlined
                              ></v-textarea>
-                            
-                            <!-- <v-text-field
-                            class="mr-8 ml-8 pt-1"
-                            dense
-                            v-model="username"
-                            required
-                            outlined
-                            v-show="false"
-                            ></v-text-field> -->
-
+                          
                             <v-text-field
                             class="mr-8 ml-8 pt-1"
                             dense
@@ -296,10 +293,71 @@
                   v-model="emailDialog"
                   max-width="700px"
                 >
+               
+                  <v-card
+                    class="flat"
+                    elevation="1"
+                  >
+                    <v-system-bar
+                                        dark
+                                        color="secondary"
+                                        style="color: white; font-weight:bold; height:40px"
+                                       
+                                    >
+                                  Send Notification to Suspect
+                      </v-system-bar>
+                      <v-form
+                            v-model="valid"
+                            lazy-validation
+                        >
+                           <v-text-field
+                            class="mr-5 ml-5 pt-1 mt-5"
+                            dense
+                            v-model="mail.from"
+                            label="From"
+                            :rules="emailRules"
+                            required
+                            ></v-text-field>
 
-                
+                             <v-text-field
+                            class="mr-5 ml-5 pt-1 mt-1"
+                            dense
+                            v-model="mail.to"
+                            label="To"
+                            :rules="emailRules"
+                            required
+                            ></v-text-field>
+
+                            <v-text-field
+                            class="mr-5 ml-5 pt-1 mt-1"
+                            dense
+                            v-model="mail.subject"
+                            label="Subject"
+                            required
+                            ></v-text-field>
+
+                            <v-textarea
+                                class="mr-5 ml-5 pt-1 mt-1"
+                                dense
+                                v-model="mail.message"
+                                label="Message"
+                              
+                             ></v-textarea>
 
 
+                           <v-btn
+                            color="primary"
+                            class="mr-5 ml-5 pt-1 mt-5 mb-5"
+                            @click="sendEmail"
+                            elevation="1"
+                          >
+                            Send
+                          </v-btn>
+
+                      </v-form>
+
+                  </v-card>
+    
               </v-dialog>
 
         <!--End of Email notification dialog -->
@@ -340,6 +398,12 @@ export default {
                },
                overlay: false,
                dialog: false,
+               emailDialog: false,
+
+               emailRules: [
+                    v => !!v || 'E-mail is required',
+                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                  ],
 
                 suspect: {
                         _id:null,
@@ -384,6 +448,13 @@ export default {
                 "Kidnapping",
                  "Murder"
             ],
+
+                   mail: {
+                     from: "",
+                     to: "",
+                     subject: "",
+                     message: ""
+                   }
 
         }
     },
@@ -440,6 +511,7 @@ export default {
             close () {
               this.dialog = false
             },
+            
             saveCrimeDetails(){
                   console.log("Hello" +this.crimeId)
                   this.suspectId = this.suspect._id
@@ -465,6 +537,45 @@ export default {
                         
                    })
             },
+
+           sendNofication(crimeId){
+               this.crimeId = crimeId
+               this.suspectId = this.suspect._id
+               this.emailDialog = true
+            },
+
+            sendEmail(){
+                console.log("Hello" +this.crimeId)
+                  if(!this.mail.from || !this.mail.to || !this.mail.subject || !this.mail.message){
+                      this.$swal("warning","Fill in all required field","warning")
+                  }else{
+                    axios 
+                      .post(`${config.Base_URL}api/send_nofification_email_to_suspect`,{
+                          from: this.mail.from,
+                          to: this.mail.to,
+                          subject: this.mail.subject,
+                          text: this.mail.message,  
+                          crimeId: this.crimeId
+                      },
+                       {
+                            headers: {Authorization: `Bearer${sessionStorage.getItem('Authorization')}`}
+                       },
+                      ).then((response)=>{
+                        if(response.status === 201){
+                          this.$swal("Info","Notification sent", "success")
+                          .then(()=>{
+                            this.get_list_of_suspects_by_Id(this.suspectId)
+                            this.emailDialog = false
+                          })
+                        }else{
+                            this.$swal("Error","Failed to send Notification", "error")
+                        }
+                      })
+                  }
+            },
+
+
+
             setUserDetails(){
          const user = JSON.parse(sessionStorage.getItem("user"))
          this.username = user.name
