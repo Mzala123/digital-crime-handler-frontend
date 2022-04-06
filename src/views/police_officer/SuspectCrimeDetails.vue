@@ -403,7 +403,7 @@
                               <v-btn
                             color="primary"
                             class="mr-5 ml-5 pt-1 mt-5 mb-5"
-                            @click="saveStatus"
+                            @click="saveStatusDetails"
                             elevation="1"
                           >
                             Save
@@ -655,6 +655,30 @@ export default {
                      console.log(this.crimeList)
                   }
                 })
+           },
+
+           saveStatusDetails(){
+               if(!this.crimeList.status || !this.crimeList.statusDescription){
+                 this.$swal("Info","Fill in all required fields","warning")
+               }else{
+                 axios
+                   .put(`${config.Base_URL}api/update_crime_case_status_details/`+this.suspectId+"/crimes/"+this.crimeId,{
+                         status: this.crimeList.status,
+                         statusDescription: this.crimeList.statusDescription
+                   })
+                   .then((response)=>{
+                     if(response.status===200){
+                         this.$swal("info","case status details updated","success")
+                         .then(()=>{
+                            this.get_list_of_suspects_by_Id(this.suspectId)
+                            this.statusDialog = false
+                         })
+                         
+                     }else{
+                         this.$swal("Error","Failed to update case status details","error")
+                     }
+                   })
+               }
            },
 
             setUserDetails(){
