@@ -210,8 +210,9 @@
                             v-model="valid"
                             lazy-validation
                         >
+                        <v-card-text>
                             <v-select
-                               class="mr-8 ml-8 pt-4"
+                               class="mr-8 ml-8 mt-4 pt-4"
                                 dense
                                 outlined
                                 v-model="crimeList.category"
@@ -265,24 +266,28 @@
                             outlined
                             v-show="false"
                             ></v-text-field>
+                            </v-card-text>
                        </v-form>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                  color="error"
-                  outlined
-                  @click="close"
-                >
-                  Cancel
-                </v-btn>
-                <v-btn
+             <v-card-text>
+                 <v-btn
+                  class="mr-2 ml-8 mb-4"
                   color="primary"
                   outlined
                   @click="saveCrimeDetails"
                 >
                   Save
                 </v-btn>
-              </v-card-actions>
+
+                <v-btn
+                  class="mb-4"
+                  color="error"
+                  outlined
+                  @click="close"
+                >
+                  Close
+                </v-btn>
+               
+              </v-card-text>
             </v-card>
           </v-dialog>
 
