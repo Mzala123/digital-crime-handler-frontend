@@ -61,14 +61,18 @@
             max-width="500px"
           >
             <v-card>
-              <v-card-title>
-                <span class="text-h5">Change Userrole</span>
-              </v-card-title>
+         
+              <v-system-bar
+                                        dark
+                                        color="secondary"
+                                        style="color: white; font-weight:bold; height:40px"
+                                       
+                                    >
+                                  Change Userrole
+                </v-system-bar>
             <v-card-text>
-                <v-container>
-                  <v-row>
                    <v-select
-                    class="mt-3"
+                    class="mt-5 mr-4 ml-4"
                     dense
                     outlined
                     v-model="user.userrole"
@@ -78,27 +82,28 @@
                     required 
                   >
                   </v-select>
-                  </v-row>
-                </v-container>
               </v-card-text>
   
-              <v-card-actions>
-                <v-spacer></v-spacer>
+              <v-card-text>
                 <v-btn
-                  color="error"
-                  outlined
-                  @click="close"
-                >
-                  Cancel
-                </v-btn>
-                <v-btn
-                  color="success"
+                  class="mr-2 ml-4 mb-1"
+                  color="primary"
                   outlined
                   @click="editUserRole"
                 >
                   Save
                 </v-btn>
-              </v-card-actions>
+
+                 <v-btn
+                  class="mr-4 mb-1"
+                  color="error"
+                  outlined
+                  @click="close"
+                >
+                  Close
+                </v-btn>
+
+               </v-card-text>
             </v-card>
           </v-dialog>
 
