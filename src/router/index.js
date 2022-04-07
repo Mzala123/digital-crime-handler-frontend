@@ -104,6 +104,20 @@ const routes = [
     component: () => import('@/views/station_officer/StationOfficerDashboard.vue'),
  },
 
+ {
+     path: '/list_of_cases',
+     name: 'list-cases',
+     component: () =>import('@/views/station_officer/cases/ListOfCases.vue')
+ },
+
+ {
+  path: '/ongoing_case_details/:id',
+  name: 'ongoing-case-details',
+  component: () => import('@/views/station_officer/cases/OngoingCaseDetails.vue'),
+},
+
+
+
   {
     path: '/error-404',
     name: 'error-404',

@@ -6,7 +6,7 @@
     >
         <v-row justify="center">
         <div class=col-md-10>
-           <h3 class="mt-2"> List of crimes and associated alleged criminals </h3> 
+           <h3 class="mt-2"> List of Ongoing Cases</h3> 
              <p> <v-divider> </v-divider> </p>
              <v-row>
                <v-col class="col-xs-12">
@@ -42,7 +42,7 @@
                                 </v-list-item-avatar>
                                 <v-list-item-content>
 
-                                <router-link v-bind:to="'/suspect_crime_details/'+item._id">
+                                <router-link v-bind:to="'/ongoing_case_details/'+item._id">
                                 <v-list-item-title v-html="item.firstname +' '+ item.lastname">
                                 <v-icon
                                 small

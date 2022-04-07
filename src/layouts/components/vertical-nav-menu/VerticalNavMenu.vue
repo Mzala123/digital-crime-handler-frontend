@@ -101,6 +101,7 @@ import {
   mdiFormatListBulleted,
   mdiHuman,
   mdiHumanMaleFemale,
+  mdiFileAccountOutline,
 
 } from '@mdi/js'
 import NavMenuSectionTitle from './components/NavMenuSectionTitle.vue'
@@ -146,13 +147,14 @@ export default {
          {title: 'Dashboard', icon:mdiHomeOutline, name:'police-dashboard'},
          {title: 'Add Suspect', icon:mdiHuman, name:'add-suspect'},
          {title: 'List of Suspects', icon:mdiFormatListBulleted, name:'suspect-list'},
-         {title: 'Criminal List', icon:mdiFormatListBulletedSquare, name:'criminal-list'},
+         {title: 'List of Cases', icon:mdiFormatListBulletedSquare, name:'criminal-list'},
        ],
 
         station_officer:[
          {title: 'Dashboard', icon:mdiHomeOutline, name:'station-officer-dashboard'},
          {title: 'Ongoing Cases', icon:mdiFormatListBulletedSquare, name:'criminal-list'},
-        // {title: 'Closed Cases', icon:mdiFormatListBulletedSquare, name:'criminal-list-clos'},
+         
+         {title: 'List of Cases', icon:mdiFileAccountOutline, name:'list-cases'},
        ]
 
     }
