@@ -86,36 +86,11 @@
                                     </v-avatar> 
                                 </div>
                            </v-card>
-             </v-col>
-
-                        <v-col class="col-xl-12 col-sm-12">
-                           <v-system-bar
-                                        dark
-                                        color="secondary"
-                                        style="color: white; font-weight:bold"
-                                        class="text--light"
-                                    >
-                                    Notifications
-                               </v-system-bar>
-
-                            <div v-for="item in suspect.crimeDocs " :key="item._id"> 
-                               <v-card flat class="mb-1">
-                                    <v-card-text class="black--text" style="font-size:12px">
-                                  <div>  From - {{ item.from }} </div>
-                                  <div>  To   - {{item.to}}      </div>
-                                  <div>  Subject   - {{item.subject}}   </div>
-                                  <div>  Message   - {{item.text}}    </div>
-                                  <div>  Date sent   - {{item.sentDate}}  </div>
-                                  <v-divider> </v-divider>
-                                    </v-card-text>
-                               </v-card>
-                            </div>
-
-                        </v-col>
+                       </v-col>
                       
-                         <v-col class="col-xl-12 col-sm-12">
-                             <h3 class="ml-1"> Associated Alleged Crime </h3>
-                            <!-- <div v-for="item in suspect.crimes " :key="item._id"> -->
+                         <v-col class="col-xl-12">
+                             <h3 class="ml-1"> Associated Alleged Crimes</h3>
+                             <div v-for="item in suspect.crimes " :key="item._id">
                               <v-card flat class="mb-2">
                               <v-system-bar
                                         dark
@@ -123,24 +98,19 @@
                                         style="color: white; font-weight:bold"
                                         class="text--light"
                                     >
-                                  {{suspect.crimes.category}} | Recorded By Officer {{ suspect.crimes.registeringOfficer}}
                                 
-                                
+                                 <router-link 
+                                 style="color:#66CCFF;"
+                                 v-bind:to="'/crime_details_for_suspect/'+suspect._id+'/crimes/'+item._id">  
+                                 
+                                 {{ item.category }} 
+
+                                 </router-link>
+                                 
                               </v-system-bar>
                                
-                                 <v-chip-group
- 
-                                    class="deep-purple accent-4 black--text ml-4"
-                                    column
-                                    >
-                                       <v-chip>Counts - {{ suspect.crimes.counts }}</v-chip>
-                                       <v-chip>Date offense commited - {{ suspect.crimes.offenseDate}}</v-chip>
-                                       <v-chip>Date offense record - {{ suspect.crimes.chargeFiled}}</v-chip>
-                                 </v-chip-group>
                                 <v-card-text class="mt-3 black--text">
-                                <div> Offense Description - {{ suspect.crimes.offenseDescription }} </div>
-                                <div> Case status - {{ suspect.crimes.status}} </div>  
-                                <div> Status Description - {{ suspect.crimes.statusDescription}} </div>
+                                <div> Offense Description - {{ item.offenseDescription }} </div>
                                  </v-card-text>
                               
                               <v-card-text class="text-right">
@@ -153,7 +123,7 @@
                                         x-small
                                         dark
                                         v-show="userrole !='Police Officer'"
-                                        @click="provideCrimeUpdate(suspect.crimes._id)"
+                                        @click="provideCrimeUpdate(item._id)"
                                       >
                                         <v-icon> {{icons.mdiListStatus }}</v-icon>
                                       </v-btn>
@@ -164,7 +134,7 @@
                                         x-small
                                         dark
                                         v-show="userrole !='Police Officer'"
-                                        @click="sendNofication(suspect.crimes._id)"
+                                        @click="sendNofication(item._id)"
                                       >
                                         <v-icon> {{icons.mdiEmail}}</v-icon>
                                       </v-btn>
@@ -176,7 +146,7 @@
                                         x-small
                                         dark
                                        
-                                        @click="editCrimeDetail(suspect.crimes._id)"
+                                        @click="editCrimeDetail(item._id)"
                                       >
                                         <v-icon> {{icons.mdiPencilOutline }}</v-icon>
                                       </v-btn>
@@ -188,7 +158,7 @@
                                         fab
                                         x-small
                                         dark
-                                        @click="removeCrimeDetail(suspect.crimes._id)"
+                                        @click="removeCrimeDetail(item._id)"
                                       >
                                         <v-icon> {{icons.mdiDeleteOutline }}</v-icon>
                                       </v-btn>
@@ -198,7 +168,7 @@
                            </v-card-text>
 
                             </v-card>
-                            <!-- </div> -->
+                             </div>
                          </v-col>
                  </v-row> 
                 </v-col>
@@ -222,12 +192,13 @@
           >
             <v-card>
                 <v-system-bar
-                          dark
-                          color="secondary"
-                          style="color: white; font-weight:bold; height:40px"       
-                      >
-                    MODIFY CRIME DETAILS
-                </v-system-bar>
+                                        dark
+                                        color="secondary"
+                                        style="color: white; font-weight:bold; height:40px"
+                                       
+                                    >
+                                  MODIFY CRIME DETAILS
+                      </v-system-bar>
               
                        <v-form
                             v-model="valid"
@@ -375,6 +346,7 @@
                            <v-btn
                             color="primary"
                             class="mr-5 ml-5 pt-1 mt-5 mb-5"
+                            :loading="isSelecting"
                             @click="sendEmail"
                             elevation="1"
                           >
@@ -441,8 +413,6 @@
            </v-dialog>
 
         <!-- end of status dialog-->
-
-
   </v-container>
 </template>
 
@@ -485,6 +455,8 @@ export default {
                     v => !!v || 'E-mail is required',
                     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
                   ],
+
+                isSelecting: false,
 
                 suspect: {
                         _id:null,
@@ -553,7 +525,7 @@ export default {
             get_list_of_suspects_by_Id(id){
                        this.overlay = true
                         axios
-                        .get(`${config.Base_URL}api/read_nofification_email_details/`+id)
+                        .get(`${config.Base_URL}api/read_one_person_suspect/`+id)
                         .then((response)=>{
                             this.suspect = response.data
                             this.overlay = false
@@ -641,6 +613,7 @@ export default {
                   if(!this.mail.from || !this.mail.to || !this.mail.subject || !this.mail.message){
                       this.$swal("warning","Fill in all required field","warning")
                   }else{
+                    this.isSelecting = true
                     axios 
                       .post(`${config.Base_URL}api/send_nofification_email_to_suspect`,{
                           from: this.mail.from,
@@ -656,6 +629,7 @@ export default {
                         if(response.status === 201){
                           this.$swal("Info","Notification sent", "success")
                           .then(()=>{
+                            this.isSelecting = false
                             this.get_list_of_suspects_by_Id(this.suspectId)
                             this.emailDialog = false
                           })
@@ -718,6 +692,7 @@ export default {
     },
     
     mounted() {
+
       this.get_list_of_suspects_by_Id(this.$route.params.id)
       this.setUserDetails()
     }

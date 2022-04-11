@@ -114,9 +114,13 @@ const routes = [
   path: '/ongoing_case_details/:id',
   name: 'ongoing-case-details',
   component: () => import('@/views/station_officer/cases/OngoingCaseDetails.vue'),
-},
+ },
 
-
+ {
+   path: '/crime_details_for_suspect/:id/crimes/:crimeId',
+   name: 'crime-details-for-suspect',
+   component: () => import('@/views/station_officer/cases/CaseDetailsNotifications.vue'),
+ },
 
   {
     path: '/error-404',
