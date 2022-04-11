@@ -6,7 +6,7 @@
          >
               
         <v-row justify="center">
-         <div class="col-md-10 auth-card">
+         <div class="col-md-11 auth-card">
 
              <v-overlay absolute opacity="0" :value="overlay">
                                 <v-progress-circular
