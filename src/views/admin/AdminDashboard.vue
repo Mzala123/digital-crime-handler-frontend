@@ -11,17 +11,21 @@
     cols="12"
     md="8"
     >
-      
+      <users-by-role-comp> </users-by-role-comp>
     </v-col>
 
     </v-row>
 </template>
 
 <script>
+
 import allUsersComp from '@/views/admin/AdminDashComponents/AllUsersComp.vue'
+import usersByRoleComp  from '@/views/admin/AdminDashComponents/UsersByRoleComp.vue'
+
 export default {
     components:{
-          allUsersComp
+          allUsersComp,
+          usersByRoleComp
     },
 
     data(){

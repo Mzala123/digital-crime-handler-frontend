@@ -178,7 +178,7 @@ export default {
                    sessionStorage.setItem("userId", userId)
                    
                    if(userrole === "Admin"){
-                     this.$router.push('/authentication/userList')
+                     this.$router.push('/admin_dashboard')
                    }else if(userrole === "Police Officer"){
                     this.$router.push('/list_suspects')
                    }else if(userrole === "Station Officer"){

@@ -1,32 +1,39 @@
 <template>
+
     <v-card class="greeting-card">
-          <v-row class="ma-0 pa-0">
-               <v-col cols="8">
-        <v-card-title class="text-no-wrap d-flex align-center mt-2 pb-2 ps-2 ">
-          All System Users
-        </v-card-title>
-        <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
-          <div>
-                   <v-icon
-          x-large
-         
-          height="108"
-          max-width="83"
-        > {{icons.mdiAccountGroupOutline}}</v-icon>
-            <p class="text-xl font-weight-semibold  mb-2">
-                
-              {{ count_users }} users in total
-            </p>
-          
-          </div>
-        </v-card-text>
-      </v-col>
-      
-      <v-col cols="4">
-        
+      <v-system-bar
+                dark
+                color="primary"
+                style="color: white; font-weight:bold; height:10px"
+        >
+        </v-system-bar>
 
-      </v-col>
+          <v-row class="ma-0 pa-0" justify="center">
+               
+                <v-col cols="8">
+                  
+                <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
+                  <div>
+                      System Users
+                    <p class="text-l font-weight-semibold  mb-2">
+                      {{ count_users }} 
+                    </p>
+                  </div>
+                </v-card-text>
+              </v-col>
 
+              <v-col cols="4">
+
+                    <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
+                        <v-icon
+                        color="#66CCFF"
+                        x-large
+                        style="height:100; width:100;"
+                    > {{icons.mdiAccountBoxMultipleOutline}}
+                    </v-icon>
+                    </v-card-text>
+                  </v-col>
+  
           </v-row>
     </v-card>
 </template>
@@ -42,7 +49,9 @@ import {
     mdiPlusCircleOutline,
     mdiListStatus,
     mdiAccountGroupOutline,
-    mdiAccountCowboyHat
+    mdiAccountCowboyHat,
+    mdiAccountBoxMultipleOutline,
+    mdiAccountGroup
 } from '@mdi/js'
 
 export default {
@@ -57,7 +66,9 @@ export default {
                mdiEye,
                mdiListStatus,
                mdiAccountGroupOutline,
-               mdiAccountCowboyHat
+               mdiAccountCowboyHat,
+               mdiAccountBoxMultipleOutline,
+               mdiAccountGroup
                
                },
         }
