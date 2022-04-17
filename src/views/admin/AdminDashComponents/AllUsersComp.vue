@@ -32,7 +32,7 @@
                     > {{icons.mdiAccountBoxMultipleOutline}}
                     </v-icon>
                     </v-card-text>
-                  </v-col>
+               </v-col>
   
           </v-row>
     </v-card>

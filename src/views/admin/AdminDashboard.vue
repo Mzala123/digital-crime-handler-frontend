@@ -14,6 +14,10 @@
       <users-by-role-comp> </users-by-role-comp>
     </v-col>
 
+    <v-col cols="12" md="6">
+     <users-by-role-chart-1> </users-by-role-chart-1>
+    </v-col>
+
     </v-row>
 </template>
 
@@ -21,11 +25,13 @@
 
 import allUsersComp from '@/views/admin/AdminDashComponents/AllUsersComp.vue'
 import usersByRoleComp  from '@/views/admin/AdminDashComponents/UsersByRoleComp.vue'
+import usersByRoleChart1  from '@/views/admin/AdminDashComponents/UsersByRoleChart1.vue'
 
 export default {
     components:{
           allUsersComp,
-          usersByRoleComp
+          usersByRoleComp,
+          usersByRoleChart1
     },
 
     data(){
