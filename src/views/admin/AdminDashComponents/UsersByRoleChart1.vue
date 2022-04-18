@@ -2,7 +2,7 @@
     <v-card>
 
           <v-row class="ma-0 pa-0">
-        <v-col cols="6"
+              <v-col cols="6"
           >
           <div id="chart">
               <apexchart 
@@ -11,12 +11,8 @@
               :series="series"></apexchart> 
           </div>     
         </v-col>
-       
-        <v-col cols="6">
+         </v-row>
 
-        </v-col>
-        
-        </v-row>
     </v-card>
 </template>
 
@@ -78,6 +74,7 @@ export default {
       },
     
       },
+      
       mounted(){
           this.user_count_list_based_on_role()
       }

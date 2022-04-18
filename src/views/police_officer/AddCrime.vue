@@ -130,7 +130,7 @@ export default {
     },
       methods: {
            addCrime(){
-               console.log("The suspect id "+this.suspect._id)
+               console.log("The suspect id"+this.suspect._id)
                if(!this.category || !this.counts || !this.offenseDate || !this.offenseDescription ){
                       this.$swal("warning","Please fill in the required details", "warning")
                }

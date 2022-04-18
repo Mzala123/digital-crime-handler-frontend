@@ -20,6 +20,16 @@
           
         </v-col>
 
+        <v-col
+          
+          cols="6"
+          md="4"
+        >
+          <v-btn  color="primary"
+          >Export</v-btn>
+          
+        </v-col>
+
       </v-row>
     </v-card-text>
 

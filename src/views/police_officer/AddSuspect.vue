@@ -22,7 +22,7 @@
       <v-btn
         color="primary"
         class="text-none me-3 mt-10"
-        round
+        rounded
         depressed
         :loading="isSelecting"
         @click="onButtonClick"
@@ -47,7 +47,7 @@
 
      <v-card-text>
 <v-form
-    v-model="valid"
+   
     lazy-validation
   >
   <v-row justify="center">
@@ -59,7 +59,6 @@
       outlined
       dense
       v-model="nationalId"
-      :rules="nameRules"
       label="National Id(mandotory)"
       required
     ></v-text-field>
@@ -73,7 +72,6 @@
       outlined
       dense
       v-model="firstname"
-      :rules="nameRules"
       label="First name(mandotory)"
       required
     ></v-text-field>
@@ -86,7 +84,6 @@
       outlined
       dense
       v-model="lastname"
-      :rules="nameRules"
       label="Last name(mandotory)"
     ></v-text-field> </v-col>
 
@@ -96,7 +93,6 @@
       class="mt-2"
       dense
       v-model="middlename"
-      :rules="emailRules"
       label="Middle name"
       required
       outlined
@@ -134,7 +130,6 @@
       outlined
       v-model="gender"
       :items="genderOptions "
-      :rules="[v => !!v || 'Gender is required']"
       label="Gender(mandotory)"
       required
     ></v-select>
@@ -324,6 +319,7 @@ export default {
       imagename:'null_profile.png',
       imageDB: "",
       imageId:"",
+      payload:"",
 
        PhotoPath:`${config.Base_URL}images/`,
        selectedFile: null,
@@ -345,8 +341,7 @@ export default {
          }else{
             this.overlay = true
             axios
-            .post(`${config}api/add_person_suspect`,{
-               
+            .post(`${config.Base_URL}api/add_person_suspect`,{   
                 nationalId:this.nationalId,
                 firstname:this.firstname,
                 lastname:this.lastname,
@@ -365,20 +360,21 @@ export default {
                 address: this.address,
                 skin_tone: this.skin_tone,
                 known_aliases: this.known_aliases
-
-            }).then((response)=>{
+               }).then((response)=>{
                 if(response.status === 201){
+                   
                      this.overlay=false
                      this.$swal("Info","Suspect details added", "success")
                        .then(()=>{
                          this.$router.push({path:"/list_suspects"})
                       })
-                }else if(response.status === 404){
+                }else if(response.status === 404 ){
+                     console.log(response.status)
                      this.$swal("error","Failed to add suspect record", "error")
                 }
 
             }).catch((error)=>{
-                  this.$swal("error",error+"Failed to reach end point", "error")
+                  this.$swal("error",error+" Failed to reach end point", "error")
             })
          }
       },
