@@ -20,6 +20,7 @@
 </template>
 
 <script>
+
 import AllSuspects from '@/views/police_officer/PoliceDashComponents/AllSuspects.vue'
 import SuspectsByGender from '@/views/police_officer/PoliceDashComponents/SuspectsByGender.vue'
 

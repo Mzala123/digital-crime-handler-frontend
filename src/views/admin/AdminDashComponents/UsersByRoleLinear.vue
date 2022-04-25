@@ -33,7 +33,7 @@ export default {
           
           userList:"",
           count: 0,
-         series: [
+          series: [
              {
             name:"count",
             data: []

@@ -55,7 +55,7 @@ const routes = [
   {
     path: '/police_dashboard',
     name: 'police-dashboard',
-    component: () => import('@/views/police_officer/PoliceDashboard.vue'),
+    component: () => import('@/views/police_officer/PoliceDashComponents/DashboardDeSuite.vue'),
   },
 
   {
