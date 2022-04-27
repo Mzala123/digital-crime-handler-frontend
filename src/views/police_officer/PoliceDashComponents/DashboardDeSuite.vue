@@ -17,11 +17,11 @@
          
          </v-col>
 
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="5">
             <suspects-by-gender> </suspects-by-gender>
           </v-col>
 
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="7">
              <crimes-by-category> </crimes-by-category>
           </v-col>
 
