@@ -180,7 +180,7 @@ export default {
                    if(userrole === "Admin"){
                      this.$router.push('/admin_dashboard')
                    }else if(userrole === "Police Officer"){
-                    this.$router.push('/list_suspects')
+                    this.$router.push('/police_dashboard')
                    }else if(userrole === "Station Officer"){
                      this.$router.push('/station_officer_dashboard')
                    }
