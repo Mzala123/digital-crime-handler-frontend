@@ -14,7 +14,7 @@
                 <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
                   <div>
                       All Crimes
-                    <p class="text-l font-weight-bold  mb-2">
+                    <p class="text-l font-weight-bold  mb-2" style="font-size:30px">
                       {{count_crimes}}
                     </p>
                   </div>

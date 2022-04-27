@@ -38,7 +38,7 @@
             <p class="text-xs mb-0">
               {{ data._id }}
             </p>
-            <h3 class="text-xl font-weight-semibold">
+            <h3 class="text-xl font-weight-bold" style="font-size:30px">
               {{ data.userroleCount }}
             </h3>
           </div>

@@ -31,15 +31,9 @@ export default {
     data(){
         return{
           
-          userList:"",
+          userList:[],
           count: 0,
-          series: [
-             {
-            name:"count",
-            data: []
-          }
-         ],
-         
+          series: [],
            chartOptions: {
             chart: {
               type: 'bar',
@@ -49,9 +43,6 @@ export default {
             dataLabels: {
               enabled: false
             },
-            xaxis: {
-              categories: [],
-            }
           },
         }
     },
@@ -61,11 +52,20 @@ export default {
              .get(`${config.Base_URL}api/read_users_count_by_userrole`)
              .then((response)=>{
                  if(response.status === 200){
-                     this.userList = response.data
-                     for(this.count=0; this.count<this.userList.length; this.count++){            
-                          this.chartOptions.xaxis.categories.push(this.userList[this.count]._id)
-                          this.series[0].data.push(this.userList[this.count].userroleCount)
-                     }
+                     this.userList = [...response.data]
+                      let _data = [];
+                       this.userList.forEach(userList=>{
+                         _data.push({
+                           y: userList.userroleCount,
+                           x: userList._id
+                         })
+                       })
+                       this.series = [
+                         {
+                           name:'count',
+                           data: _data
+                         }
+                       ]
                  }
              })
       },

@@ -3,7 +3,7 @@
     <v-row class="ma-0 pa-0">
       <v-col cols="8">
         <div id="chart">
-          <apexchart type="line" width="510" height="300" :options="chartOptions" :series="series"></apexchart>
+          <apexchart type="line" width="920" height="300" :options="chartOptions" :series="series"></apexchart>
         </div>
       </v-col>
     </v-row>
@@ -30,7 +30,7 @@ export default {
       chartOptions: {
         chart: {
           height: 300,
-          width: 510,
+          width: 920,
           type: 'line',
           zoom: {
             enabled: false,

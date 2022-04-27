@@ -15,7 +15,7 @@
                 <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
                   <div>
                       System Users
-                    <p class="text-l font-weight-semibold  mb-2" style="font-size:40px">
+                    <p class="text-l font-weight-semibold  mb-2" style="font-size:30px">
                       {{ count_users }} 
                     </p>
                   </div>
