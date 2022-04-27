@@ -1,7 +1,6 @@
 <template>
-
-    <v-card class="greeting-card">
-      <v-system-bar
+     <v-card class="greeting-card">
+             <v-system-bar
                 dark
                 color="primary"
                 style="color: white; font-weight:bold; height:10px"
@@ -14,9 +13,9 @@
                   
                 <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
                   <div>
-                      System Users
-                    <p class="text-l font-weight-semibold  mb-2" style="font-size:40px">
-                      {{ count_users }} 
+                      All Crimes
+                    <p class="text-l font-weight-bold  mb-2">
+                      {{count_crimes}}
                     </p>
                   </div>
                 </v-card-text>
@@ -29,13 +28,15 @@
                         color="#66CCFF"
                         x-large
                         style="height:100; width:100;"
-                    > {{icons.mdiAccountBoxMultipleOutline}}
+                    > 
+                    {{icons.mdiFolderAccountOutline}}
                     </v-icon>
                     </v-card-text>
                </v-col>
   
           </v-row>
-    </v-card>
+
+     </v-card>
 </template>
 
 <script>
@@ -43,50 +44,46 @@ import config from '@/config'
 import axios from 'axios'
 import {
     mdiMagnify,
-    mdiDeleteOutline,
-    mdiPencilOutline,
-    mdiEye,
-    mdiPlusCircleOutline,
-    mdiListStatus,
-    mdiAccountGroupOutline,
     mdiAccountCowboyHat,
     mdiAccountBoxMultipleOutline,
-    mdiAccountGroup
+    mdiAccountGroup,
+    mdiFolderAccountOutline,
+    mdiNaturePeople,
+
+
 } from '@mdi/js'
+
 
 export default {
     data(){
         return{
-              count_users: "",
-                  icons: {
-               mdiMagnify,
-               mdiDeleteOutline,
-               mdiPencilOutline,
-               mdiPlusCircleOutline,
-               mdiEye,
-               mdiListStatus,
-               mdiAccountGroupOutline,
-               mdiAccountCowboyHat,
-               mdiAccountBoxMultipleOutline,
-               mdiAccountGroup
-               
-               },
+                 count_crimes:'',
+                 icons:{
+                    mdiMagnify,
+                    mdiAccountCowboyHat,
+                    mdiAccountBoxMultipleOutline,
+                    mdiAccountGroup,
+                    mdiFolderAccountOutline,
+                    mdiNaturePeople
+                 },
+             
         }
     },
     methods: {
-           get_count_of_all_system_users(){
+           get_count_all_crimes(){
                axios
-                 .get(`${config.Base_URL}api/read_count_all_users_in_system`)
+                 .get(`${config.Base_URL}api/count_all_registered_crimes`)
                  .then((response)=>{
                      if(response.status === 200){
-                         this.count_users = response.data
-                         console.log(this.count_users)
+                         this.count_crimes = response.data.countCrimes
+                         console.log(this.count_crimes)
                      }
                  })
            }
     },
+
     mounted(){
-             this.get_count_of_all_system_users()
+        this.get_count_all_crimes()
     }
 }
 </script>

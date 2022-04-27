@@ -22,8 +22,6 @@
      <users-by-role-chart-1> </users-by-role-chart-1>
     </v-col>
 
-     
-
     </v-row>
 </template>
 

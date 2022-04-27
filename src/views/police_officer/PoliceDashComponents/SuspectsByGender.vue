@@ -4,9 +4,14 @@
         <v-row class="ma-0 pa-0">
         <v-col cols="8"
           >
-
+            
        <div id="chart">
-        <apexchart type="donut" :options="chartOptions" :series="series"></apexchart>
+
+           <apexchart 
+              type="pie" width="350" 
+              :options="chartOptions" 
+              :series="series"></apexchart> 
+
        </div> 
 
         </v-col>
@@ -32,13 +37,15 @@ export default {
         return{
            suspects: "",
            count: 0,
-           
-          series: [],
-          chartOptions: {
+             series: [],
+         
+         chartOptions: {
             chart: {
-              type: 'donut',
+              width: 350,
+              height: 400,
+              type: 'pie',
             },
-          
+            labels: [],
             responsive: [{
               breakpoint: 480,
               options: {
@@ -49,8 +56,8 @@ export default {
                   position: 'bottom'
                 }
               }
-            }]
-          }, 
+            }],
+            }
 
         }
     },
@@ -63,8 +70,8 @@ export default {
                        this.suspects = response.data
                        console.log(this.suspects)
                        for(this.count=0; this.count<this.suspects.length; this.count++){
-                     
-                          //this.chartOptions.labels.push(this.suspects[this.count]._id)
+                          this.chartOptions.labels.push(this.suspects[this.count]._id)
+                           //this.chartOptions.labels.push(this.userList[this.count]._id)
                           this.series.push(this.suspects[this.count].countByGender)
                        } 
                    }
