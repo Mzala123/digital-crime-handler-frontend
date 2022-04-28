@@ -1,9 +1,6 @@
 <template>
      
      <v-container>
-         <v-card
-         flat
-         >
               
         <v-row justify="center">
          <div class="col-md-11 auth-card">
@@ -116,7 +113,7 @@
 
         </div>
         </v-row>
-         </v-card>
+    
      </v-container>
 
 </template>

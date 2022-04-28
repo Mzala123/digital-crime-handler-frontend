@@ -6,23 +6,15 @@
            cols="12"
            md="6"
           >
-          <all-suspects> </all-suspects>
+          <all-suspects class="mb-4" /> 
+          <all-crimes />
          </v-col>
 
-         <v-col 
-         cols="12"
-         md="6">
-
-          <all-crimes> </all-crimes>
-         
-         </v-col>
-
-          <v-col cols="12" md="6">
-            <suspects-by-gender> </suspects-by-gender>
+         <v-col cols="12" md="6">
+            <suspects-by-gender />  
           </v-col>
-
           <v-col cols="12" md="12">
-             <crimes-by-category> </crimes-by-category>
+             <crimes-by-category /> 
           </v-col>
 
          

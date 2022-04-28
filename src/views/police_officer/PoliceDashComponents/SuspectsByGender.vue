@@ -6,7 +6,7 @@
           >
             
        <div id="chart">
-
+           <p> Suspects by Gender</p>
            <apexchart 
               type="pie" width="350" 
               :options="chartOptions" 
