@@ -6,7 +6,7 @@
     >
         <v-row justify="center">
         <div class=col-md-10>
-           <h3 class="mt-2"> List of Ongoing Cases</h3> 
+           <h3 class="mt-2"> List of Concluded Cases</h3> 
              <p> <v-divider> </v-divider> </p>
              <v-row>
                <v-col class="col-xs-12">
@@ -42,7 +42,7 @@
                                 </v-list-item-avatar>
                                 <v-list-item-content>
 
-                                <router-link v-bind:to="'/ongoing_case_details/'+item._id">
+                                <router-link v-bind:to="'/concluded_case_details/'+item._id">
                                 <v-list-item-title v-html="item.firstname +' '+ item.lastname">
                                 <v-icon
                                 small
@@ -112,12 +112,6 @@ export default {
 
                 items: [
                 { header: 'Suspects' },
-
-               /*{
-                    avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                    title: 'Brunch this weekend?',
-                    subtitle: `<span class="text--primary">Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-                },*/
                 { divider: true, inset: true },
                 ],
 
@@ -129,7 +123,7 @@ export default {
            list_of_suspects(){
             this.overlay = true
             axios
-              .get(`${config.Base_URL}api/read_all_ongoing_cases`)
+              .get(`${config.Base_URL}api/read_all_concluded_cases`)
               .then((response)=>{
                   this.suspectList = response.data
                   this.overlay = false

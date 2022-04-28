@@ -117,10 +117,24 @@ const routes = [
  },
 
  {
+  path: '/concluded_case_details/:id',
+  name: 'concluded-case-details',
+  component: () => import('@/views/station_officer/cases/ConcludedCaseDetails.vue'),
+ },
+ 
+ {
    path: '/crime_details_for_suspect/:id/crimes/:crimeId',
    name: 'crime-details-for-suspect',
    component: () => import('@/views/station_officer/cases/CaseDetailsNotifications.vue'),
  },
+
+ {
+  path: '/concuded_case_detail_notification/:id/crimes/:crimeId',
+  name: 'concuded-case-detail-notification',
+  component: () => import('@/views/station_officer/cases/ConcludedCaseNotifications.vue'),
+},
+
+
 
   {
     path: '/error-404',

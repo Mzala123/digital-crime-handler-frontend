@@ -24,6 +24,9 @@
        <v-tab-item>
           <ongoing-case-list> </ongoing-case-list>
        </v-tab-item>
+       <v-tab-item>
+           <concluded-case-list> </concluded-case-list>
+       </v-tab-item>
 
     </v-tabs-items>
 
@@ -33,10 +36,12 @@
 <script>
 import { mdiAccountOutline, mdiLockOpenOutline, mdiFolder, mdiFolderInformation} from '@mdi/js'
 import OngoingCaseList from './OngoingCasesList.vue'
+import ConcludedCaseList  from './ConcludedCaseList.vue'
 
 export default {
     components: {
-          OngoingCaseList
+          OngoingCaseList,
+          ConcludedCaseList
     },
     data(){
         return{
