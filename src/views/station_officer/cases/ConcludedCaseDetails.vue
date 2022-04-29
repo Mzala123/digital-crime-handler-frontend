@@ -127,9 +127,7 @@
             </v-overlay>
 
          </div>
-       </v-row>
-
-    
+       </v-row>    
         <!-- end of status dialog-->
   </v-container>
 </template>

@@ -192,11 +192,11 @@
           >
             <v-card>
                 <v-system-bar
-                                        dark
-                                        color="secondary"
-                                        style="color: white; font-weight:bold; height:40px"
-                                       
-                                    >
+                      dark
+                      color="secondary"
+                      style="color: white; font-weight:bold; height:40px"
+                      
+                  >
                                   MODIFY CRIME DETAILS
                       </v-system-bar>
               
@@ -436,6 +436,7 @@ export default {
         return{
                crimeId: "",
                suspectId: "",
+               
                  icons: {
                mdiMagnify,
                mdiDeleteOutline,
@@ -446,6 +447,7 @@ export default {
                mdiEmail
                
                },
+
                overlay: false,
                dialog: false,
                emailDialog: false,

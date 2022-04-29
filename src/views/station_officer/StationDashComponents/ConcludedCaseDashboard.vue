@@ -1,4 +1,5 @@
 <template>
+ 
      <v-card class="greeting-card">
              <v-system-bar
                 dark
@@ -13,9 +14,9 @@
                   
                 <v-card-text class="d-flex align-center mt-2 pb-2 ps-2">
                   <div>
-                      All Cases
+                      Concluded Cases
                     <p class="text-l font-weight-bold  mb-2" style="font-size:30px">
-                      {{count_crimes}}
+                         {{concludedCases}}
                     </p>
                   </div>
                 </v-card-text>
@@ -29,7 +30,7 @@
                         x-large
                         style="height:100; width:100;"
                     > 
-                    {{icons.mdiFolderAccountOutline}}
+                   
                     </v-icon>
                     </v-card-text>
                </v-col>
@@ -37,53 +38,37 @@
           </v-row>
 
      </v-card>
+    
 </template>
 
 <script>
-import config from '@/config'
+
 import axios from 'axios'
-import {
-    mdiMagnify,
-    mdiAccountCowboyHat,
-    mdiAccountBoxMultipleOutline,
-    mdiAccountGroup,
-    mdiFolderAccountOutline,
-    mdiNaturePeople,
-
-
-} from '@mdi/js'
-
+import config from  '@/config'
 
 export default {
     data(){
         return{
-                 count_crimes:'',
-                 icons:{
-                    mdiMagnify,
-                    mdiAccountCowboyHat,
-                    mdiAccountBoxMultipleOutline,
-                    mdiAccountGroup,
-                    mdiFolderAccountOutline,
-                    mdiNaturePeople
-                 },
-             
+           concludedCases: 0  
         }
     },
+
     methods: {
-           get_count_all_crimes(){
+        get_count_concluded_cases(){
                axios
-                 .get(`${config.Base_URL}api/count_all_registered_crimes`)
+                 .get(`${config.Base_URL}api/read_count_concluded_cases`)
                  .then((response)=>{
-                     if(response.status === 200){
-                         this.count_crimes = response.data.countCrimes
-                         console.log(this.count_crimes)
+                     if(response.status){
+                         this.concludedCases = response.data
+                         console.log(this.concludedCases)
                      }
-                 })
-           }
+                 })        
+        }
     },
 
     mounted(){
-        this.get_count_all_crimes()
+        this.get_count_concluded_cases()
     }
+
 }
 </script>

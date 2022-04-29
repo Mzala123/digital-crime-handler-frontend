@@ -16,8 +16,7 @@
           <v-col cols="12" md="12">
              <crimes-by-category /> 
           </v-col>
-
-         
+      
      </v-row>
 
 </template>

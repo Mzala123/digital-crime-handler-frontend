@@ -174,6 +174,7 @@ export default {
     },
     methods: {
          get_crime_details(id, crimeId){
+                   console.log("The crime id is "+crimeId)
                    this.overlay = true
                         axios
                         .get(`${config.Base_URL}api/read_nofification_email_details/`+id+"/crimes/"+crimeId)
