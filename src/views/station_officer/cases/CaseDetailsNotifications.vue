@@ -148,6 +148,7 @@ export default {
                         mdiArrowLeft
                         
                },
+             
              overlay: false,
              suspect: {
                         _id:null,
@@ -168,7 +169,8 @@ export default {
                         address:null,
                         skin_tone:null,
                         known_aliases:null,
-                        profile_photo:'null_profile.png'
+                        profile_photo:'null_profile.png',
+                        crimes:[]
                       },
         }
     },

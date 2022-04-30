@@ -16,7 +16,7 @@
                   <div>
                       Ongoing Cases
                     <p class="text-l font-weight-bold  mb-2" style="font-size:30px">
-                         {{ongoingCases}}
+                         {{ongoingCases.count}}
                     </p>
                   </div>
                 </v-card-text>

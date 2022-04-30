@@ -201,7 +201,7 @@
                       </v-system-bar>
               
                        <v-form
-                            v-model="valid"
+                         
                             lazy-validation
                         >
                         <v-card-text>
@@ -306,7 +306,7 @@
                                   Send Notification to Suspect
                       </v-system-bar>
                       <v-form
-                            v-model="valid"
+                          
                             lazy-validation
                         >
                            <v-text-field

@@ -138,7 +138,6 @@ export default {
          },
 
     },
-
     mounted(){
         this.list_of_suspects()
     }
