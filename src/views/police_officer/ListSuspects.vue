@@ -27,6 +27,17 @@
           cols="6"
           md="4"
         >
+        
+          <v-btn  color="primary" @click="exportSuspectList" id="reports">
+            Export
+              <v-icon
+            dark
+            right
+          >
+            {{icons.mdiFilePdfBoxOutline}}
+          </v-icon>
+          
+          </v-btn>
         </v-col>
 
       </v-row>
@@ -98,9 +109,12 @@ import {
     mdiDeleteOutline,
     mdiPencilOutline,
     mdiEye,
-    mdiPlusCircleOutline
+    mdiPlusCircleOutline,
+    mdiFilePdfBoxOutline
 } from '@mdi/js'
 import config from '@/config'
+import jsPDF from 'jspdf'
+import autoTable  from 'jspdf-autotable'
 
 
 export default {
@@ -123,7 +137,8 @@ export default {
                mdiDeleteOutline,
                mdiPencilOutline,
                mdiPlusCircleOutline,
-               mdiEye
+               mdiEye,
+               mdiFilePdfBoxOutline
            },
 
            suspectId : ""
@@ -166,6 +181,26 @@ export default {
          },
     
          add_crime_to_suspect(){
+
+         },
+
+         exportSuspectList(){
+            //console.log(this.suspectList)
+            var rows = []
+            this.suspectList.forEach(list =>{
+              var temp = [list.nationalId, list.firstname, list.lastname, list.age, list.gender, list.known_aliases, list.address]
+              rows.push(temp)
+            })
+            const doc = new jsPDF()
+            doc.text("Organisation: Malawi Police", 10, 10)
+            doc.text('Suspect List Report', 10, 20)
+            doc.line(0, 35, 400, 35)
+            autoTable(doc, {
+                  head: [['National ID', 'Firstname', 'Lastname', 'Age', 'Gender', 'Known Aliases', 'Addresses']],
+                       margin:{top:50},
+                       body:[...rows]
+            })
+            doc.save('suspect-list.pdf')
 
          }
 

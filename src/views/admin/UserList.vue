@@ -287,12 +287,7 @@ export default {
        },
 
        exportUserList(){
-         console.log("You clicked me")
-          axios
-                .get(`${config.Base_URL}api/users`)
-                .then((response)=>{
-                    this.userList = response.data
-                    console.log(response.data)
+        // console.log("You clicked me")
                     var rows = []
                     this.userList.forEach(element => {
                       var temp = [element.name, element.email, element.userrole]
@@ -310,7 +305,7 @@ export default {
                        body:[...rows]
                     })
                     doc.save('user-list.pdf')
-                })  
+             
        }
 
     },
