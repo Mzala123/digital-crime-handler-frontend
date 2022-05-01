@@ -24,9 +24,18 @@
           
           cols="6"
           md="4"
+        
         >
-          <v-btn  color="primary"
-          >Export</v-btn>
+          <v-btn  color="primary" @click="exportUserList" id="reports">
+            Export
+              <v-icon
+            dark
+            right
+          >
+            {{icons.mdiFilePdfBoxOutline}}
+          </v-icon>
+          
+          </v-btn>
           
         </v-col>
 
@@ -73,12 +82,12 @@
             <v-card>
          
               <v-system-bar
-                                        dark
-                                        color="secondary"
-                                        style="color: white; font-weight:bold; height:40px"
-                                       
-                                    >
-                                  Change Userrole
+                      dark
+                      color="secondary"
+                      style="color: white; font-weight:bold; height:40px"
+                      
+                  >
+                      Change Userrole
                 </v-system-bar>
             <v-card-text>
                    <v-select
@@ -162,11 +171,14 @@
 <script>
 import axios from 'axios'
 import config from '@/config'
+import jsPDF from 'jspdf'
+import autoTable  from 'jspdf-autotable'
 
 import {
     mdiMagnify,
     mdiDeleteOutline,
-    mdiPencilOutline
+    mdiPencilOutline,
+    mdiFilePdfBoxOutline
 } from '@mdi/js'
 
 export default {
@@ -196,7 +208,8 @@ export default {
            icons: {
                mdiMagnify,
                mdiDeleteOutline,
-               mdiPencilOutline
+               mdiPencilOutline,
+               mdiFilePdfBoxOutline
            }
         }
     },
@@ -271,6 +284,33 @@ export default {
                this.$swal("Error", error + ", couldn't reach API", "error");  
            })
 
+       },
+
+       exportUserList(){
+         console.log("You clicked me")
+          axios
+                .get(`${config.Base_URL}api/users`)
+                .then((response)=>{
+                    this.userList = response.data
+                    console.log(response.data)
+                    var rows = []
+                    this.userList.forEach(element => {
+                      var temp = [element.name, element.email, element.userrole]
+                      rows.push(temp)
+                    })
+                    const date = new Date();
+                    const doc = new jsPDF()
+                    doc.text('Organisation: Malawi Police', 10, 10)
+                    doc.text('User List Report', 10, 20)
+                    //doc.text('Date', date)
+                    doc.line(0, 35, 400, 35)
+                    autoTable(doc, {
+                       head: [['Fullname', 'Email', 'Userrole']],
+                       margin:{top:50},
+                       body:[...rows]
+                    })
+                    doc.save('user-list.pdf')
+                })  
        }
 
     },
@@ -285,5 +325,9 @@ export default {
   .v-data-table-header {
     white-space: nowrap;
   }
+}
+
+#reports{
+
 }
 </style>
