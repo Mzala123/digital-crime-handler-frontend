@@ -22,6 +22,23 @@
                             outlined
                         ></v-text-field>  
                      </v-col>
+
+                       <v-col
+                        cols="6"
+                        md="4"
+                        >
+
+                <v-btn  color="primary" @click="exportOngoingCrimeList" id="reports">
+                            Export
+                            <v-icon
+                            dark
+                            right
+                        >
+                            {{icons.mdiFilePdfBoxOutline}}
+                        </v-icon>
+                        </v-btn>
+
+                     </v-col>
                        
                     </v-row>
                      <v-card class="auth-card mt-4" elevation="1">
@@ -91,9 +108,11 @@ import {
     mdiDeleteOutline,
     mdiPencilOutline,
     mdiEye,
-    mdiPlusCircleOutline
+    mdiPlusCircleOutline,
+    mdiFilePdfBoxOutline
 } from '@mdi/js'
-
+import jsPDF from 'jspdf'
+import autoTable  from 'jspdf-autotable'
 
 export default {
     data(){
@@ -107,7 +126,8 @@ export default {
                mdiDeleteOutline,
                mdiPencilOutline,
                mdiPlusCircleOutline,
-               mdiEye
+               mdiEye,
+               mdiFilePdfBoxOutline
            },
 
                 items: [
@@ -136,6 +156,24 @@ export default {
                   console.log(response.data)
               })  
          },
+
+         exportOngoingCrimeList(){
+              var rows = []
+               this.suspectList.forEach(list =>{
+              var temp = [list.nationalId, list.firstname+' '+list.lastname, list.crimes[0].category, list.crimes[0].offenseDescription, list.crimes[0].status, list.crimes[0].counts]
+              rows.push(temp)
+            })
+            const doc = new jsPDF()
+            doc.text("Organisation: Malawi Police", 10, 10)
+            doc.text('Ongoing Case Report', 10, 20)
+            doc.line(0, 35, 400, 35)
+            autoTable(doc, {
+                  head: [['National ID', 'Fullname', 'Category', 'Offense Description', 'Status', 'Counts']],
+                       margin:{top:50},
+                       body:[...rows]
+            })
+            doc.save('Ongoing-Case-list.pdf') 
+         }
 
     },
     mounted(){

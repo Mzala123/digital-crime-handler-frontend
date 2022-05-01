@@ -36,8 +36,8 @@
           >
             {{icons.mdiFilePdfBoxOutline}}
           </v-icon>
-          
           </v-btn>
+          
         </v-col>
 
       </v-row>
