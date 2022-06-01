@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-wrapper auth-v1">
+  <div class="auth-wrapper auth-v1" id="logins">
     <div class="auth-inner">
       <v-card class="auth-card" 
        elevation="1">
@@ -203,4 +203,6 @@ export default {
 
 <style lang="scss">
 @import '~@/plugins/vuetify/default-preset/preset/pages/auth.scss';
+
+
 </style>

@@ -65,22 +65,6 @@
           :icon="item.icon"
       ></nav-menu-link>
     </div>
-     <!-- <nav-menu-link
-        title="Dashboard"
-        :to="{ name: 'dashboard' }"
-        :icon="icons.mdiHomeOutline"
-      ></nav-menu-link>
-      <nav-menu-link
-        title="Create Account"
-        :to="{ name: 'create-account'}"
-        :icon="icons.mdiAccountCogOutline"
-      ></nav-menu-link> 
-
-      <nav-menu-link
-        title="User List"
-        :to="{ name: 'user-list'}"
-        :icon="icons.mdiFormatListBulletedSquare"
-      ></nav-menu-link> -->
     </v-list>
   
   </v-navigation-drawer>
