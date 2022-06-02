@@ -127,6 +127,18 @@
                                       >
                                         <v-icon> {{icons.mdiListStatus }}</v-icon>
                                       </v-btn>
+
+                                       <v-btn
+                                        class="ml-3"
+                                        color="success"
+                                        fab
+                                        x-small
+                                        dark
+                                        @click="attachFiles(item._id)"
+                                      >
+                                        <v-icon> {{icons.mdiAttachment}}</v-icon>
+                                      </v-btn>
+
                                        <v-btn
                                        class="ml-3"
                                         color="success"
@@ -413,6 +425,60 @@
            </v-dialog>
 
         <!-- end of status dialog-->
+              <v-dialog
+                  v-model="attachmentDialog"
+                  max-width="700px"
+            >
+              
+                  <v-card
+                    elevation="1"
+                  >
+                    <v-system-bar
+                          dark
+                          color="secondary"
+                          style="color: white; font-weight:bold; height:40px"
+                          
+                      >
+                         Attach Files to Case {{crimeList.category}}
+                      </v-system-bar>
+                      <v-form>
+<!-- 
+                             <v-select
+                               class="mr-5 ml-5 mt-4 pt-4"
+                                dense
+                                v-model="crimeList.status"
+                                 :items="statusOptions"
+                                label="Status"
+                                required
+                             ></v-select>
+
+                             <v-textarea
+                                class="mr-5 ml-5 pt-3 mt-1"
+                                dense
+                                v-model="crimeList.statusDescription"
+                                label="Status description"
+                             ></v-textarea> -->
+
+                              <v-btn
+                            color="primary"
+                            class="mr-5 ml-5 pt-1 mt-5 mb-5"
+                            @click="saveAttachments"
+                            elevation="1"
+                          >
+                            Save
+                          </v-btn>
+
+                      </v-form>
+                  
+                  </v-card>
+
+
+           </v-dialog>
+
+        <!--attachment dialog-->
+        
+   
+
   </v-container>
 </template>
 
@@ -427,7 +493,8 @@ import {
     mdiEye,
     mdiPlusCircleOutline,
     mdiListStatus,
-    mdiEmail
+    mdiEmail,
+    mdiAttachment
 } from '@mdi/js'
 
 
@@ -444,7 +511,8 @@ export default {
                mdiPlusCircleOutline,
                mdiEye,
                mdiListStatus,
-               mdiEmail
+               mdiEmail,
+               mdiAttachment
                
                },
 
@@ -452,6 +520,7 @@ export default {
                dialog: false,
                emailDialog: false,
                statusDialog:  false,
+               attachmentDialog: false,
 
                emailRules: [
                     v => !!v || 'E-mail is required',
@@ -655,6 +724,12 @@ export default {
                      console.log(this.crimeList)
                   }
                 })
+           },
+
+           attachFiles(crimeId){
+             this.attachmentDialog = true
+             this.crimeId = crimeId
+             this.suspectId = this.suspectId._id
            },
 
            saveStatusDetails(){
