@@ -112,6 +112,13 @@
                                 <v-card-text class="mt-3 black--text">
                                 <div> Offense Description - {{ item.offenseDescription }} </div>
                                  </v-card-text>
+                                <v-card-text class="mt-3 black--text">
+                                <div > 
+                                
+                                </div>
+                                
+                                </v-card-text>
+
                               
                               <v-card-text class="text-right">
                                    <div class="">
@@ -499,8 +506,6 @@
                       </v-form>
                   
                   </v-card>
-
-
            </v-dialog>
 
         <!--attachment dialog-->
@@ -780,7 +785,6 @@ export default {
           },
 
            sendAttachments() {
-               
                console.log("Hello" +this.crimeId)
                this.suspectId = this.suspect._id
                console.log("well well "+this.suspectId);
