@@ -442,27 +442,55 @@
                          Attach Files to Case {{crimeList.category}}
                       </v-system-bar>
                       <v-form>
-<!-- 
-                             <v-select
-                               class="mr-5 ml-5 mt-4 pt-4"
-                                dense
-                                v-model="crimeList.status"
-                                 :items="statusOptions"
-                                label="Status"
-                                required
-                             ></v-select>
 
-                             <v-textarea
-                                class="mr-5 ml-5 pt-3 mt-1"
-                                dense
-                                v-model="crimeList.statusDescription"
-                                label="Status description"
-                             ></v-textarea> -->
+                          <div class="mr-5 ml-5 pt-1 mt-5 mb-5">
+                            <label >
+                              <input 
+                               multiple
+                               type="file"
+                               ref="files"
+                               @change="selectFile"
+                               class="file-input"
+                              >
+                            </label>
+                          </div>
+                          <div class="ml-2 pt-1 mt-2 mb-2">
+                          <v-list flat dense>
+                            <v-list-item-group
+                              v-model="selectedItem"
+                              color="primary"
+                            >
+                              <v-list-item
+                               v-for="(file, index) in files" :key="index"
+                              >
+                                
+                                <v-list-item-content>
+                                  {{file.name}}
+                                </v-list-item-content>
+                                <v-list-item-icon>
+                                     <v-btn
+                                        class="ml-1"
+                                        color="error"
+                                        fab
+                                        x-small
+                                        dark
+                                        @click.prevent="files.splice(index, 1)"
+                                      >
+                                        <v-icon> {{icons.mdiClose }}</v-icon>
+                                      </v-btn>
+
+                                </v-list-item-icon>
+                              </v-list-item>
+                            </v-list-item-group>
+                          </v-list>
+
+                          </div>
+                        
 
                               <v-btn
                             color="primary"
                             class="mr-5 ml-5 pt-1 mt-5 mb-5"
-                            @click="saveAttachments"
+                            @click="sendAttachments"
                             elevation="1"
                           >
                             Save
@@ -491,10 +519,13 @@ import {
     mdiDeleteOutline,
     mdiPencilOutline,
     mdiEye,
+    mdiCloudUploadOutline,
     mdiPlusCircleOutline,
     mdiListStatus,
     mdiEmail,
-    mdiAttachment
+    mdiAttachment,
+    mdiClose
+    //mdiclose-circle
 } from '@mdi/js'
 
 
@@ -503,6 +534,9 @@ export default {
         return{
                crimeId: "",
                suspectId: "",
+               files: [],
+               fileName: [],
+               selectedItem: 1,
                
                  icons: {
                mdiMagnify,
@@ -512,7 +546,10 @@ export default {
                mdiEye,
                mdiListStatus,
                mdiEmail,
-               mdiAttachment
+               mdiAttachment,
+               mdiCloudUploadOutline,
+               mdiClose
+
                
                },
 
@@ -588,7 +625,8 @@ export default {
                      to: "",
                      subject: "",
                      message: ""
-                   }
+                   },
+                count: 0
 
         }
     },
@@ -726,10 +764,47 @@ export default {
                 })
            },
 
+          selectFile() {
+           const files = this.$refs.files.files;
+           this.files = [ ...this.files, ...files]
+           let formData = new FormData()
+           for(this.count=0; this.count<this.files.length; this.count++){
+                formData.append('file', files[this.count])
+           }
+           console.log(formData);
+           axios.post(`${config.Base_URL}api/upload_multiple_files`, formData)
+                .then((response)=>{
+                  console.log(this.files);
+                 // this.files = []
+                })
+          },
+
+           sendAttachments() {
+               
+               console.log("Hello" +this.crimeId)
+               this.suspectId = this.suspect._id
+               console.log("well well "+this.suspectId);
+               this.fileName = this.files
+               console.log(this.fileName);
+               for(this.count=0; this.count<this.files.length; this.count++){
+                 console.log(this.files[this.count].name)
+                   axios.post(`${config.Base_URL}api/add_person_suspect/`+this.suspectId+"/add_attachment_names/"+this.crimeId, {
+                     attachments: this.files[this.count].name
+                }) 
+               .then((response)=>{
+                 if(response.status === 201){
+                   this.$swal("Info","Files uploaded", "success")
+                 }
+               })
+             } 
+               this.attachmentDialog = false
+          },
+            
            attachFiles(crimeId){
              this.attachmentDialog = true
              this.crimeId = crimeId
              this.suspectId = this.suspectId._id
+            
            },
 
            saveStatusDetails(){
