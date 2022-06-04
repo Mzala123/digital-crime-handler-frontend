@@ -7,7 +7,7 @@
              <v-overlay absolute opacity="0" :value="overlay">
                                 <v-progress-circular
                                 indeterminate
-                                size="60"
+                                size="50"
                             ></v-progress-circular>
             </v-overlay>
 
@@ -56,6 +56,29 @@
                                 </v-card-text>
 
                             </v-card>
+
+
+
+                          <v-card
+                            class="mx-auto ml-2 mr-2 mt-3"
+                            >
+                               <v-system-bar
+                                        dark
+                                        color="secondary"
+                                        style="color: white; font-weight:bold"
+                                >
+                                 <v-icon
+                                    dark
+                                    right
+                                    style="color:white"
+                                    small
+                                    > 
+                                        {{ icons.mdiFileDocumentMultiple}}  
+                                    </v-icon>
+                                  List of attachments
+                                </v-system-bar>
+                             </v-card>
+
 
                             <v-card
                             class="mx-auto ml-2 mr-2 mt-3"
@@ -129,7 +152,8 @@ import {
     mdiPlusCircleOutline,
     mdiListStatus,
     mdiEmail,
-    mdiArrowLeft
+    mdiArrowLeft,
+    mdiFileDocumentMultiple
 } from '@mdi/js'
 
 export default {
@@ -144,7 +168,8 @@ export default {
                         mdiEye,
                         mdiListStatus,
                         mdiEmail,
-                        mdiArrowLeft
+                        mdiArrowLeft,
+                        mdiFileDocumentMultiple
                         
                },
              overlay: false,

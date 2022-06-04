@@ -3,7 +3,6 @@
     <div class="auth-inner">
       <v-card class="auth-card" 
        elevation="1">
-     
         <v-card-title class="d-flex align-center justify-center">
               <v-img
               :src="require('@/assets/police_logo.png')"

@@ -72,6 +72,35 @@
                                     style="color:white"
                                     small
                                     > 
+                                        {{ icons.mdiFileDocumentMultiple}}  
+                                    </v-icon>
+                                  List of attachments
+                                </v-system-bar>
+                                 <v-card-text class="mt-3 black--text">
+                                   <div v-for="attachment in suspect.crimes.attachments" :key="attachment">
+                                    
+                                    
+                                    <!-- <a href="FilePath+attachment" target="_blank"> {{attachment}}</a> -->
+                                   <a href="#" @click.prevent="opening(attachment)"> {{ attachment }}</a>
+
+                                 </div>  
+                                 </v-card-text>
+                             </v-card>
+
+                            <v-card
+                            class="mx-auto ml-2 mr-2 mt-3"
+                            >
+                               <v-system-bar
+                                        dark
+                                        color="secondary"
+                                        style="color: white; font-weight:bold"
+                                >
+                                 <v-icon
+                                    dark
+                                    right
+                                    style="color:white"
+                                    small
+                                    > 
                                         {{ icons.mdiEmail }}  
                                     </v-icon>
                                   Notifications
@@ -130,7 +159,8 @@ import {
     mdiPlusCircleOutline,
     mdiListStatus,
     mdiEmail,
-    mdiArrowLeft
+    mdiArrowLeft,
+    mdiFileDocumentMultiple
 } from '@mdi/js'
 
 export default {
@@ -145,10 +175,12 @@ export default {
                         mdiEye,
                         mdiListStatus,
                         mdiEmail,
-                        mdiArrowLeft
+                        mdiArrowLeft,
+                        mdiFileDocumentMultiple
                         
                },
-             
+
+             FilePath:`${config.Base_URL}images/`,
              overlay: false,
              suspect: {
                         _id:null,
@@ -185,7 +217,12 @@ export default {
                             this.overlay = false
                             console.log(this.suspect)
                  })  
-         }
+         },
+          opening(file){
+            console.log(this.FilePath+file)
+            window.open(this.FilePath+file, "_blank");
+          },
+       
     },
     mounted(){
         this.get_crime_details(this.$route.params.id, this.$route.params.crimeId)

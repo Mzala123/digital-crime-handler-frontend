@@ -111,15 +111,10 @@
                                
                                 <v-card-text class="mt-3 black--text">
                                 <div> Offense Description - {{ item.offenseDescription }} </div>
-                                 </v-card-text>
-                                <v-card-text class="mt-3 black--text">
-                                <div > 
-                                
-                                </div>
-                                
-                                </v-card-text>
+                                  
+                            </v-card-text>
+ 
 
-                              
                               <v-card-text class="text-right">
                                    <div class="">
 
@@ -185,9 +180,18 @@
 
                                    </div>            
                            </v-card-text>
-
                             </v-card>
                              </div>
+        
+                                <!-- <div v-for="attachment in suspect.crimes.attachments" :key="attachment"> 
+                                   <v-card>
+                                  <v-card-text class="mt-3 black--text">
+                                     Attachment {{attachment}}
+                                   </v-card-text>
+                                   </v-card>
+                                </div>
+                                 -->
+                               
                          </v-col>
                  </v-row> 
                 </v-col>
@@ -529,6 +533,7 @@ import {
     mdiListStatus,
     mdiEmail,
     mdiAttachment,
+    mdiFileDocumentMultiple,
     mdiClose
     //mdiclose-circle
 } from '@mdi/js'
@@ -600,7 +605,8 @@ export default {
                         offenseDate:null,
                         offenseDescription:null,
                         status: null,
-                        statusDescription: null
+                        statusDescription: null,
+                        attachments: null
                     },
 
                     username: "",
@@ -777,9 +783,10 @@ export default {
                 formData.append('file', files[this.count])
            }
            console.log(formData);
-           axios.post(`${config.Base_URL}api/upload_multiple_files`, formData)
+           axios.post(`${config.Base_URL}api/upload_multiple_files`,formData)
                 .then((response)=>{
                   console.log(this.files);
+                  
                  // this.files = []
                 })
           },
