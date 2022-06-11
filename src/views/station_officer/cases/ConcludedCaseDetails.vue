@@ -2,7 +2,21 @@
        <v-container>
         <v-row justify="center">
         <div class="col-md-10 auth-card">
-           <h2 class="mt-4"> SUSPECT AND ALLEGED CRIME DETAILS </h2> 
+           <h2 class="mt-4"> SUSPECT AND ALLEGED CRIME DETAILS 
+              <span>
+             
+              <v-btn
+              class="ml-6"
+              color="secondary"
+              x-small
+              dark
+              @click="createTrackSheet"
+            >
+            <v-icon> {{icons.mdiPdfBox }} </v-icon> Track sheet
+            </v-btn>
+            
+           </span>
+           </h2> 
              <p> <v-divider> </v-divider> </p>
             <v-row>
                <v-col class="col-xs-12">
@@ -143,9 +157,11 @@ import {
     mdiEye,
     mdiPlusCircleOutline,
     mdiListStatus,
-    mdiEmail
+    mdiEmail,
+    mdiPdfBox
 } from '@mdi/js'
-
+import jsPDF from 'jspdf'
+import autoTable  from 'jspdf-autotable'
 
 export default {
     data(){
@@ -159,7 +175,7 @@ export default {
                mdiPlusCircleOutline,
                mdiEye,
                mdiListStatus,
-               mdiEmail
+               mdiEmail, mdiPdfBox
                
                },
                overlay: false,
@@ -221,6 +237,51 @@ export default {
                             console.log(this.suspect)
                         })  
                 },
+
+               createTrackSheet(){
+             const doc = new jsPDF()
+             var Title = []
+             var temp = [doc.addImage(this.PhotoPath+this.suspect.profile_photo,"JPEG",70,35,50,50,this.suspect.profile_photo)]
+             Title.push(temp)
+             var suspectDetails = [];
+             var tempSuspectDetails =[this.suspect.nationalId, this.suspect.gender, this.suspect.age, this.suspect.dob, this.suspect.known_aliases, this.suspect.city_origin, this.suspect.current_city]
+             suspectDetails.push(tempSuspectDetails)
+             var cont_d_suspects = [];
+             var temp_cont_d_suspects =[this.suspect.race, this.suspect.address, this.suspect.height, this.suspect.weight, this.suspect.eye_color, this.suspect.hair_color, this.suspect.skin_tone]
+             cont_d_suspects.push(temp_cont_d_suspects)
+             
+             var crimes = []
+             this.suspect.crimes.forEach(crime =>{
+               var temp_crime = [crime.category, crime.offenseDescription, crime.status, crime.counts, crime.offenseDate]
+               crimes.push(temp_crime)
+             })
+
+             doc.text("Malawi Police: Suspect Track Sheet", 15, 10)
+             doc.text("Name of suspect: "+this.suspect.firstname+" "+this.suspect.lastname, 15, 20)
+             doc.line(0, 30, 400, 30)
+
+             autoTable(doc, {
+                  head: [['National ID', 'Gender', 'Age', 'Date of birth', 'Known Aliases', 'City Of Origin', 'Current City']],
+                       margin:{top:95},
+                       body:[...suspectDetails]
+             })
+             
+             autoTable(doc, {
+                  head: [['Race', 'Address', 'Height', 'Weight', 'Eye Color', 'Hair Color', 'Skin Tone']],
+                       margin:{top:110},
+                       body:[...cont_d_suspects]
+             })
+
+             autoTable(doc, {
+                  head: [['Category', 'Offense Description', 'Status', 'Count', 'Date Crime Committed']],
+                       margin:{top:95},
+                       body:[...crimes]
+             })
+
+             doc.setFontSize("12px")
+             doc.save("suspect tract sheet.pdf");
+             
+           },
 
 
             setUserDetails(){

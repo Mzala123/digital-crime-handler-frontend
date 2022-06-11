@@ -159,12 +159,13 @@ export default {
 
         exportCrimeList(){
            //this.suspectList
+           const doc = new jsPDF()
            var rows = []
-               this.suspectList.forEach(list =>{
+              this.suspectList.forEach(list =>{
               var temp = [list.nationalId, list.firstname+' '+list.lastname, list.crimes[0].category, list.crimes[0].offenseDescription, list.crimes[0].status, list.crimes[0].counts]
               rows.push(temp)
             })
-            const doc = new jsPDF()
+           
             doc.text("Organisation: Malawi Police", 10, 10)
             doc.text('Crime Report', 10, 20)
             doc.line(0, 35, 400, 35)
@@ -174,6 +175,7 @@ export default {
                        body:[...rows]
             })
             doc.save('Crime-list.pdf')
+          
         }
     },
 

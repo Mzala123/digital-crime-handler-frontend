@@ -304,8 +304,8 @@ export default {
                        margin:{top:50},
                        body:[...rows]
                     })
-                    doc.save('user-list.pdf')
-             
+                    doc.save('user-list.pdf')  
+                    
        }
 
     },
