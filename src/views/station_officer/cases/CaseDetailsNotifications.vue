@@ -79,7 +79,7 @@
                                  <v-card-text class="mt-3 black--text">
                                    <div v-for="attachment in suspect.crimes.attachments" :key="attachment">
                                     
-                                    
+    
                                     <!-- <a href="FilePath+attachment" target="_blank"> {{attachment}}</a> -->
                                    <a href="#" @click.prevent="opening(attachment)"> {{ attachment }}</a>
 

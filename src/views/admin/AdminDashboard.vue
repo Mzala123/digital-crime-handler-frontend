@@ -19,7 +19,7 @@
     </v-col>
 
     <v-col cols="12" md="6">
-     <users-by-role-chart-1> </users-by-role-chart-1>
+     <!-- <users-by-role-chart-1> </users-by-role-chart-1> -->
     </v-col>
 
     </v-row>

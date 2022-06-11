@@ -59,7 +59,7 @@
 
 
 
-                          <v-card
+                      <v-card
                             class="mx-auto ml-2 mr-2 mt-3"
                             >
                                <v-system-bar
@@ -77,6 +77,15 @@
                                     </v-icon>
                                   List of attachments
                                 </v-system-bar>
+                                 <v-card-text class="mt-3 black--text">
+                                   <div v-for="attachment in suspect.crimes.attachments" :key="attachment">
+                                    
+    
+                                    <!-- <a href="FilePath+attachment" target="_blank"> {{attachment}}</a> -->
+                                   <a href="#" @click.prevent="opening(attachment)"> {{ attachment }}</a>
+
+                                 </div>  
+                                 </v-card-text>
                              </v-card>
 
 
