@@ -189,6 +189,7 @@ export default {
                   ],
 
                 isSelecting: false,
+                 police_logo: "police_logos.png",
 
                 suspect: {
                         _id:null,
@@ -238,10 +239,13 @@ export default {
                         })  
                 },
 
-               createTrackSheet(){
+             createTrackSheet(){
              const doc = new jsPDF()
+             var logo = []
+             var temp_logo = [doc.addImage(this.PhotoPath+this.police_logo,"JPEG",75,2,40,40,this.police_logo)]
+             logo.push(temp_logo)
              var Title = []
-             var temp = [doc.addImage(this.PhotoPath+this.suspect.profile_photo,"JPEG",70,35,50,50,this.suspect.profile_photo)]
+             var temp = [doc.addImage(this.PhotoPath+this.suspect.profile_photo,"JPEG",150,50,45,45,this.suspect.profile_photo)]
              Title.push(temp)
              var suspectDetails = [];
              var tempSuspectDetails =[this.suspect.nationalId, this.suspect.gender, this.suspect.age, this.suspect.dob, this.suspect.known_aliases, this.suspect.city_origin, this.suspect.current_city]
@@ -256,13 +260,13 @@ export default {
                crimes.push(temp_crime)
              })
 
-             doc.text("Malawi Police: Suspect Track Sheet", 15, 10)
-             doc.text("Name of suspect: "+this.suspect.firstname+" "+this.suspect.lastname, 15, 20)
-             doc.line(0, 30, 400, 30)
+             doc.text("Malawi Police: Suspect Track Sheet", 15, 65)
+             doc.text("Name of suspect: "+this.suspect.firstname+" "+this.suspect.lastname, 15, 75)
+             doc.line(0, 45, 400, 45)
 
              autoTable(doc, {
                   head: [['National ID', 'Gender', 'Age', 'Date of birth', 'Known Aliases', 'City Of Origin', 'Current City']],
-                       margin:{top:95},
+                       margin:{top:105},
                        body:[...suspectDetails]
              })
              
@@ -274,7 +278,7 @@ export default {
 
              autoTable(doc, {
                   head: [['Category', 'Offense Description', 'Status', 'Count', 'Date Crime Committed']],
-                       margin:{top:95},
+                       margin:{top:110},
                        body:[...crimes]
              })
 
@@ -282,8 +286,6 @@ export default {
              doc.save("suspect tract sheet.pdf");
              
            },
-
-
             setUserDetails(){
          const user = JSON.parse(sessionStorage.getItem("user"))
          this.username = user.name

@@ -4,18 +4,18 @@
 
          <v-col
             cols="12"
-            md="6"
+            md="4"
         >
          <all-crimes/>
       </v-col>
  
         <v-col
             cols="12"
-            md="6"
+            md="4"
         >
          <concluded-case-dashboard/>
       </v-col>
-      <!-- <v-col
+      <v-col
             cols="12"
             md="4"
         >
@@ -23,7 +23,7 @@
       </v-col>
       <v-col cols="12" md="6">
            <group-cases-graph/> 
-      </v-col> -->
+      </v-col>
 
 
     </v-row>

@@ -6,13 +6,13 @@
            cols="12"
            md="6"
           >
-          <all-suspects class="mb-4" /> 
-          
+          <all-suspects class="mb-6" /> 
+           <all-crimes />
          </v-col>
 
          <v-col cols="12" md="6">
-           <all-crimes />
-            <!-- <suspects-by-gender />   -->
+          
+             <suspects-by-gender />  
           </v-col>
           <v-col cols="12" md="12">
              <crimes-by-category /> 

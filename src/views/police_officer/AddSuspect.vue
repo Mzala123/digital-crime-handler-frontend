@@ -180,7 +180,7 @@
       class="mt-2"
       dense
       v-model="race"
-      label="Race/Tribe"
+      label="Tribe"
       outlined
     ></v-text-field> </v-col>
 

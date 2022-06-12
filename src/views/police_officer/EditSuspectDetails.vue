@@ -185,7 +185,7 @@
       class="mt-2"
       dense
       v-model="suspect.race"
-      label="Race/Tribe"
+      label="Tribe"
       outlined
     ></v-text-field> </v-col>
 
