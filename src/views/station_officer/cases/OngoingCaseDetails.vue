@@ -145,7 +145,7 @@
                                         <v-icon> {{icons.mdiListStatus }}</v-icon>
                                       </v-btn>
 
-                                       <v-btn
+                                       <!-- <v-btn
                                         class="ml-3"
                                         color="success"
                                         fab
@@ -154,7 +154,7 @@
                                         @click="attachFiles(item._id)"
                                       >
                                         <v-icon> {{icons.mdiAttachment}}</v-icon>
-                                      </v-btn>
+                                      </v-btn> -->
 
                                        <v-btn
                                        class="ml-3"

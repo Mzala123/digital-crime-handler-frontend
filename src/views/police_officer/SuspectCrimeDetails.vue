@@ -147,6 +147,18 @@
                                       >
                                         <v-icon> {{icons.mdiListStatus }}</v-icon>
                                       </v-btn>
+
+                                        <v-btn
+                                        class="ml-3"
+                                        color="success"
+                                        fab
+                                        x-small
+                                        dark
+                                        @click="attachFiles(item._id)"
+                                      >
+                                        <v-icon> {{icons.mdiAttachment}}</v-icon>
+                                      </v-btn>
+
                                        <v-btn
                                        class="ml-3"
                                         color="success"
@@ -432,6 +444,86 @@
            </v-dialog>
 
         <!-- end of status dialog-->
+        <!-- start of attachment dialog -->
+          <v-dialog
+                  v-model="attachmentDialog"
+                  max-width="700px"
+            >
+              
+                  <v-card
+                    elevation="1"
+                  >
+                    <v-system-bar
+                          dark
+                          color="secondary"
+                          style="color: white; font-weight:bold; height:40px"
+                          
+                      >
+                         Attach Files to Case {{crimeList.category}}
+                      </v-system-bar>
+                      <v-form>
+
+                          <div class="mr-5 ml-5 pt-1 mt-5 mb-5">
+                            <label >
+                              <input 
+                               multiple
+                               type="file"
+                               ref="files"
+                               @change="selectFile"
+                               class="file-input"
+                              >
+                            </label>
+                          </div>
+                          <div class="ml-2 pt-1 mt-2 mb-2">
+                          <v-list flat dense>
+                            <v-list-item-group
+                              v-model="selectedItem"
+                              color="primary"
+                            >
+                              <v-list-item
+                               v-for="(file, index) in files" :key="index"
+                              >
+                                
+                                <v-list-item-content>
+                                  {{file.name}}
+                                </v-list-item-content>
+                                <v-list-item-icon>
+                                     <v-btn
+                                        class="ml-1"
+                                        color="error"
+                                        fab
+                                        x-small
+                                        dark
+                                        @click.prevent="files.splice(index, 1)"
+                                      >
+                                        <v-icon> {{icons.mdiClose }}</v-icon>
+                                      </v-btn>
+
+                                </v-list-item-icon>
+                              </v-list-item>
+                            </v-list-item-group>
+                          </v-list>
+
+                          </div>
+                        
+
+                              <v-btn
+                            color="primary"
+                            class="mr-5 ml-5 pt-1 mt-5 mb-5"
+                            @click="sendAttachments"
+                            elevation="1"
+                          >
+                            Save
+                          </v-btn>
+
+                      </v-form>
+                  
+                  </v-card>
+           </v-dialog>
+
+        <!--attachment dialog-->
+        
+
 
 
   </v-container>
@@ -449,7 +541,8 @@ import {
     mdiPlusCircleOutline,
     mdiListStatus,
     mdiEmail,
-    mdiPdfBox
+    mdiPdfBox, mdiClose,
+    mdiAttachment
 } from '@mdi/js'
 import jsPDF from 'jspdf'
 import autoTable  from 'jspdf-autotable'
@@ -468,12 +561,16 @@ export default {
                mdiEye,
                mdiListStatus,
                mdiEmail
-               ,mdiPdfBox
+               ,mdiPdfBox, mdiAttachment,mdiClose
                },
                overlay: false,
                dialog: false,
                emailDialog: false,
                statusDialog:  false,
+               attachmentDialog:false,
+               files: [],
+               fileName: [],
+               selectedItem: 1,
 
                emailRules: [
                     v => !!v || 'E-mail is required',
@@ -746,6 +843,49 @@ export default {
              doc.setFontSize("12px")
              doc.save("suspect tract sheet.pdf");
              
+           },
+
+           selectFile() {
+           const files = this.$refs.files.files;
+           this.files = [ ...this.files, ...files]
+           let formData = new FormData()
+           for(this.count=0; this.count<this.files.length; this.count++){
+                formData.append('file', files[this.count])
+           }
+           console.log(formData);
+           axios.post(`${config.Base_URL}api/upload_multiple_files`,formData)
+                .then((response)=>{
+                  console.log(this.files);
+                  
+                 // this.files = []
+                })
+          },
+
+           sendAttachments() {
+               console.log("Hello" +this.crimeId)
+               this.suspectId = this.suspect._id
+               console.log("well well "+this.suspectId);
+               this.fileName = this.files
+               console.log(this.fileName);
+               for(this.count=0; this.count<this.files.length; this.count++){
+                 console.log(this.files[this.count].name)
+                   axios.post(`${config.Base_URL}api/add_person_suspect/`+this.suspectId+"/add_attachment_names/"+this.crimeId, {
+                     attachments: this.files[this.count].name
+                }) 
+               .then((response)=>{
+                 if(response.status === 201){
+                   this.$swal("Info","Files uploaded", "success")
+                 }
+               })
+             } 
+               this.attachmentDialog = false
+          },
+            
+            attachFiles(crimeId){
+             this.attachmentDialog = true
+             this.crimeId = crimeId
+             this.suspectId = this.suspectId._id
+            
            },
 
             setUserDetails(){

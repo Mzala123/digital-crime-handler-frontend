@@ -182,6 +182,7 @@ export default {
                         
                },
              overlay: false,
+             FilePath:`${config.Base_URL}images/`,
              suspect: {
                         _id:null,
                         nationalId: null,
@@ -215,7 +216,12 @@ export default {
                             this.overlay = false
                             console.log(this.suspect)
                  })  
-         }
+         },
+
+         opening(file){
+            console.log(this.FilePath+file)
+            window.open(this.FilePath+file, "_blank");
+          },
     },
     mounted(){
         this.get_crime_details(this.$route.params.id, this.$route.params.crimeId)
