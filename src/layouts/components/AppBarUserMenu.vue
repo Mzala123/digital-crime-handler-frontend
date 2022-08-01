@@ -45,7 +45,7 @@
           style="vertical-align:middle"
         >
           <small><span class="text--primary font-weight-semibold mb-n1"> 
-            {{username}}
+            {{store.username}}
           </span> </small>
           <small class="text--disabled text-capitalize">{{userrole}}</small>
         </div>
@@ -95,6 +95,8 @@ import {
   mdiLogoutVariant,
 } from '@mdi/js'
 
+import {store} from '@/store.js'
+
 export default {
   data() {
     return {
@@ -113,6 +115,7 @@ export default {
      userrole:"",
      userId :"",
      PhotoPath:"http://localhost:3000/images/",
+     store
 
     }
   },
@@ -120,7 +123,7 @@ export default {
   methods: {
        setUserDetails(){
          const user = JSON.parse(sessionStorage.getItem("user"))
-         this.username = user.name
+         this.store.username = user.name
          this.userrole = user.userrole
          this.imagename = user.imagename
          this.userId = user._id

@@ -4,6 +4,7 @@
     elevation="1"
     flat
     class="pa-3 mt-2"
+    id="inspire"
     >
  <v-row justify="center">
   <div class=col-md-10>
@@ -121,6 +122,8 @@
       required
       outlined
     ></v-text-field> </v-col>
+
+     
 
     </v-row>
 
@@ -365,7 +368,7 @@ export default {
                    
                      this.overlay=false
                      this.$swal("Info","Suspect details added", "success")
-                       .then(()=>{
+                      .then(()=>{
                          this.$router.push({path:"/list_suspects"})
                       })
                 }else if(response.status === 404 ){

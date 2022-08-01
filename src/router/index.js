@@ -27,11 +27,7 @@ const routes = [
       layout: 'blank',
     },
   },*/
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('@/views/dashboard/Dashboard.vue'),
-  }, 
+ 
   {
     path: '/admin_dashboard',
     name: 'admin-dashboard',

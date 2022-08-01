@@ -100,6 +100,7 @@ import { mdiAccountOutline, mdiEmailOutline,
 
 
 import axios from 'axios'
+import {store} from '@/store.js'
 
 export default {
        data(){
@@ -114,6 +115,7 @@ export default {
       valid: true,
       PhotoPath:"http://localhost:3000/images/",
       userId :"",
+      store,
 
        user: {
              name: null,
@@ -175,6 +177,9 @@ export default {
            })
            .then((response)=>{
              if(response.status === 200){
+                    console.log("The new username is"+this.user.name)
+                    this.store.username = this.user.name
+                    console.log("The new username2 is"+this.store.username )
                     this.$swal("Information","User Updated", "success")
              }else{
                this.$swal("error","There was an error which changing a userrole", "error")

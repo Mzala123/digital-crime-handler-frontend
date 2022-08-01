@@ -102,6 +102,7 @@
 import {mdiFacebook, mdiTwitter, mdiGithub, mdiGoogle, mdiEyeOutline, mdiEyeOffOutline, mdiEmail, mdiLogin } from '@mdi/js'
 import axios from 'axios'
 import config from '@/config'
+import {store} from '@/store.js'
 
 export default {
   name: 'LoginView',
@@ -113,6 +114,7 @@ export default {
       email: '',
       password: '',
       overlay: false,
+     
 
      socialLink : [
             {
@@ -160,7 +162,7 @@ export default {
                password: this.password
           })
           .then((response)=>{
-            console.log(response.status)
+           
                  if(response.status === 201){
                    sessionStorage.setItem("Authorization", response.data.token)
                    console.log(sessionStorage.getItem("Authorization"))
@@ -170,6 +172,7 @@ export default {
                    console.log(sessionStorage.getItem("temp_pass"))
                    this.overlay = false
                    const user = JSON.parse(sessionStorage.getItem("user"))
+                  
                    let userrole = user.userrole
                    let userId = user._id
 
